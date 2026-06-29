@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────── Snagd design tokens ─────────────
+   Near-black with a green undertone (not pure black),
+   money-green as the one signal color, amber for "maybe",
+   red for "pass". Retune the whole brand here. */
+:root {
+  --bg: #0a0f0c;
+  --surface: #111813;
+  --surface-2: #16201a;
+  --line: #1f2a23;
+  --ink: #eaf2ec;
+  --muted: #8a988f;
+  --profit: #3ddc84;
+  --profit-dim: #1f7a47;
+  --amber: #ffb02e;
+  --pass: #ff5d5d;
+  --font-display: 'Archivo', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ambient green wash behind the hero — subtle, used once. */
+.bg-grid {
+  background-image:
+    radial-gradient(60% 50% at 50% -10%, rgba(61, 220, 132, 0.10), transparent 70%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 44px 44px, 44px 44px;
+}
+
+/* Mono numerals lock width so prices/scores don't jitter. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Focus ring — visible, on-brand, meets the quality floor. */
+:focus-visible {
+  outline: 2px solid var(--profit);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Thin scrollbar inside horizontal strips */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
