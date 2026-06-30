@@ -162,3 +162,193 @@ TypeError: __webpack_modules__[moduleId] is not a function
     at t (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115581) {
   page: '/'
 }
+ ⨯ ./src/components/app/DealCard.tsx
+Error: 
+  [31mx[0m Expected ',', got '{'
+    ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\DealCard.tsx[0m:53:1]
+ [2m53[0m |   }
+ [2m54[0m |   return (`n    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+ [2m55[0m |       <div className="flex gap-3 p-3">
+ [2m56[0m |         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+    : [31;1m                                ^[0m
+ [2m57[0m |           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
+ [2m58[0m |           <span className="absolute bottom-2 right-2 rounded-full bg-black/55 px-2 py-1 text-[10px] text-ink">{deal.distance}</span>
+ [2m59[0m |         </Link>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/DealCard.tsx
+ ⨯ ./src/components/app/DealCard.tsx
+Error: 
+  [31mx[0m Expected ',', got 'n'
+    ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\DealCard.tsx[0m:51:1]
+ [2m51[0m |       </article>
+ [2m52[0m |     );
+ [2m53[0m |   }
+ [2m54[0m |   return (`r`n    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+    : [31;1m             ^[0m
+ [2m55[0m |       <div className="flex gap-3 p-3">
+ [2m56[0m |         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+ [2m57[0m |           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/DealCard.tsx
+ ⨯ ./src/components/app/DealCard.tsx
+Error: 
+  [31mx[0m Expected ',', got 'n'
+    ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\DealCard.tsx[0m:51:1]
+ [2m51[0m |       </article>
+ [2m52[0m |     );
+ [2m53[0m |   }
+ [2m54[0m |   return (`r`n    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+    : [31;1m             ^[0m
+ [2m55[0m |       <div className="flex gap-3 p-3">
+ [2m56[0m |         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+ [2m57[0m |           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/DealCard.tsx
+ ⨯ ./src/components/app/DealCard.tsx
+Error: 
+  [31mx[0m Expected ',', got 'n'
+    ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\DealCard.tsx[0m:51:1]
+ [2m51[0m |       </article>
+ [2m52[0m |     );
+ [2m53[0m |   }
+ [2m54[0m |   return (`r`n    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+    : [31;1m             ^[0m
+ [2m55[0m |       <div className="flex gap-3 p-3">
+ [2m56[0m |         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+ [2m57[0m |           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/DealCard.tsx
+ ⨯ ./src/components/app/DealCard.tsx
+Error: 
+  [31mx[0m Expected ',', got 'n'
+    ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\DealCard.tsx[0m:51:1]
+ [2m51[0m |       </article>
+ [2m52[0m |     );
+ [2m53[0m |   }
+ [2m54[0m |   return (`r`n    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+    : [31;1m             ^[0m
+ [2m55[0m |       <div className="flex gap-3 p-3">
+ [2m56[0m |         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+ [2m57[0m |           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/DealCard.tsx
+ ⨯ ./src/components/app/DealCard.tsx
+Error: 
+  [31mx[0m Expected ',', got 'n'
+    ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\DealCard.tsx[0m:51:1]
+ [2m51[0m |       </article>
+ [2m52[0m |     );
+ [2m53[0m |   }
+ [2m54[0m |   return (`r`n    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+    : [31;1m             ^[0m
+ [2m55[0m |       <div className="flex gap-3 p-3">
+ [2m56[0m |         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+ [2m57[0m |           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/DealCard.tsx
+ ⨯ ./src/components/app/DealCard.tsx
+Error: 
+  [31mx[0m Expected ',', got 'n'
+    ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\DealCard.tsx[0m:51:1]
+ [2m51[0m |       </article>
+ [2m52[0m |     );
+ [2m53[0m |   }
+ [2m54[0m |   return (`r`n    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+    : [31;1m             ^[0m
+ [2m55[0m |       <div className="flex gap-3 p-3">
+ [2m56[0m |         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+ [2m57[0m |           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/DealCard.tsx
+ ⨯ ./src/components/app/DealCard.tsx
+Error: 
+  [31mx[0m Expected ',', got 'n'
+    ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\DealCard.tsx[0m:51:1]
+ [2m51[0m |       </article>
+ [2m52[0m |     );
+ [2m53[0m |   }
+ [2m54[0m |   return (`r`n    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+    : [31;1m             ^[0m
+ [2m55[0m |       <div className="flex gap-3 p-3">
+ [2m56[0m |         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+ [2m57[0m |           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/DealCard.tsx
+ ⨯ ./src/components/app/DealCard.tsx
+Error: 
+  [31mx[0m Expected ',', got 'n'
+    ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\DealCard.tsx[0m:51:1]
+ [2m51[0m |       </article>
+ [2m52[0m |     );
+ [2m53[0m |   }
+ [2m54[0m |   return (`r`n    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+    : [31;1m             ^[0m
+ [2m55[0m |       <div className="flex gap-3 p-3">
+ [2m56[0m |         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+ [2m57[0m |           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/DealCard.tsx
+ ⨯ ./src/components/app/DealCard.tsx
+Error: 
+  [31mx[0m Expected ',', got 'n'
+    ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\DealCard.tsx[0m:51:1]
+ [2m51[0m |       </article>
+ [2m52[0m |     );
+ [2m53[0m |   }
+ [2m54[0m |   return (`r`n    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+    : [31;1m             ^[0m
+ [2m55[0m |       <div className="flex gap-3 p-3">
+ [2m56[0m |         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+ [2m57[0m |           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/DealCard.tsx

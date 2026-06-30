@@ -1,10 +1,10 @@
-# Snagd Web
+﻿# Snagd Web
 
 Snagd is a mobile-first reseller command center for local flips worth chasing.
 
 ## What is included
 
-- Tokyo Night and Tokyo Day theme toggle saved in localStorage.
+- Snagd Day and Tokyo Night theme toggle saved in localStorage.
 - Public Home, Pricing, Creators, Login, and Signup pages.
 - Mock auth and onboarding with localStorage session state.
 - App dashboard, deal feed, analyzer, watchlists, alerts, Vehicle Mode, billing, and account pages.
