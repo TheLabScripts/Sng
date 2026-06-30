@@ -1,4 +1,4 @@
-import type { Alert } from "@/types/snagd";
+﻿import type { Alert } from "@/types/snagd";
 
 export const mockAlerts: Alert[] = [
   {

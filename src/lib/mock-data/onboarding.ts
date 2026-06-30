@@ -1,4 +1,4 @@
-import type { OnboardingProfile } from "@/types/snagd";
+﻿import type { OnboardingProfile } from "@/types/snagd";
 
 export const defaultOnboardingProfile: OnboardingProfile = {
   preset: "Everything profitable",
@@ -10,4 +10,6 @@ export const defaultOnboardingProfile: OnboardingProfile = {
   minimumSnagdScore: 76,
   alertPreference: "Fast in-app + email",
   everythingMode: true,
+  automotiveMode: false,
+  defaultFeedCategories: ["AI Picks", "Everything"],
 };

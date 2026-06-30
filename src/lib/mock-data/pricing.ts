@@ -1,4 +1,4 @@
-import type { PricingPlan } from "@/types/snagd";
+﻿import type { PricingPlan } from "@/types/snagd";
 
 export const pricingPlans: PricingPlan[] = [
   {
@@ -59,7 +59,9 @@ export const addOnPacks = [
   { name: "SMS alert pack", price: 9 },
   { name: "Priority alert boost", price: 12 },
   { name: "Advanced comps pack", price: 19 },
-  { name: "VIN check packs", price: 15 },
+  { name: "10 VIN Checks", price: 5 },
+  { name: "50 VIN Checks", price: 19 },
+  { name: "200 VIN Checks", price: 59 },
 ];
 
 export const goodPaywalls = [

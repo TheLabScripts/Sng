@@ -1,4 +1,4 @@
-export const snagdMotion = {
+﻿export const snagdMotion = {
   page: "motion-slide",
   card: "motion-card",
   press: "motion-press",

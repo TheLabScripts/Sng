@@ -1,4 +1,4 @@
-import type { ConfidenceLevel, CompetitionLevel, DealAnalysisInput, DealAnalysisResult, DemandLevel, Recommendation, RiskLevel } from "@/types/snagd";
+﻿import type { ConfidenceLevel, CompetitionLevel, DealAnalysisInput, DealAnalysisResult, DemandLevel, Recommendation, RiskLevel } from "@/types/snagd";
 import { similarSales } from "@/lib/mock-data/deals";
 
 const commonFastFlipTerms = [

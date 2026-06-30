@@ -1,4 +1,4 @@
-import type { VehicleVinResult } from "@/types/snagd";
+﻿import type { VehicleVinResult } from "@/types/snagd";
 import { mockVehicleVinResult } from "@/lib/mock-data";
 
 export type VinService = {

@@ -1,1 +1,1 @@
-export const marketplaceListingProvider = { async normalizeListing(input: unknown) { return { input, source: "Safe source-layer placeholder", flow: "source input -> normalized listing -> AI score -> alert decision -> user notification" }; } };
+﻿export const marketplaceListingProvider = { async normalizeListing(input: unknown) { return { input, source: "Safe source-layer placeholder", flow: "source input -> normalized listing -> AI score -> alert decision -> user notification" }; } };

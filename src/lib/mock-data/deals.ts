@@ -1,4 +1,4 @@
-import type { Deal, SimilarSale } from "@/types/snagd";
+﻿import type { Deal, SimilarSale } from "@/types/snagd";
 
 export const similarSales: SimilarSale[] = [
   { id: "sale-sectional-1", itemTitle: "Brown leather sectional, clean", thumbnailTone: "violet", price: 260, condition: "Good", source: "Mock sold comp", date: "Jun 26", matchConfidence: "High", notes: "Similar size, fast local pickup." },

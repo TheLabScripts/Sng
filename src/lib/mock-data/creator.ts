@@ -1,4 +1,4 @@
-import type { CreatorStats } from "@/types/snagd";
+﻿import type { CreatorStats } from "@/types/snagd";
 
 export const mockCreatorStats: CreatorStats = {
   creatorCode: "SNAGD-MAYA30",

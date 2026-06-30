@@ -12,3 +12,4 @@ export const aiScoringService: AiScoringService = {
     return analyzeDeal(input);
   },
 };
+

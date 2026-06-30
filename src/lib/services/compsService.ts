@@ -1,4 +1,4 @@
-export type CompsEstimate = {
+﻿export type CompsEstimate = {
   source: string;
   range: string;
   confidence: "Low" | "Medium" | "High";

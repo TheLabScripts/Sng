@@ -1,4 +1,4 @@
-import type { Watchlist } from "@/types/snagd";
+﻿import type { Watchlist } from "@/types/snagd";
 
 export const nichePresets = [
   "Furniture flipper",
@@ -9,6 +9,9 @@ export const nichePresets = [
   "Appliance reseller",
   "Car parts reseller",
   "Vehicle flipper",
+  "Cars & Vehicles",
+  "Dealer/auction buyer",
+  "Automotive",
   "Free item hunter",
   "Garage sale hunter",
   "Everything profitable",

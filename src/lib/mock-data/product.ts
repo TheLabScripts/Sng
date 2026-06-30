@@ -1,4 +1,4 @@
-import type { FieldScanResult, LifetimeStats, PriceAlert, TrendingCategory } from "@/types/snagd";
+﻿import type { FieldScanResult, LifetimeStats, PriceAlert, TrendingCategory } from "@/types/snagd";
 import { mockDeals, savedDealSeeds, similarSales } from "./deals";
 
 export const todaysProfitOpportunities = {

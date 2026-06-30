@@ -1,4 +1,4 @@
-export type DistanceEstimate = {
+﻿export type DistanceEstimate = {
   miles: number;
   pickupCost: number;
   driveTime: string;

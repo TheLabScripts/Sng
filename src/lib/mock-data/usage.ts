@@ -1,4 +1,4 @@
-import type { UsageSummary } from "@/types/snagd";
+﻿import type { UsageSummary } from "@/types/snagd";
 
 export const mockUsage: UsageSummary = {
   plan: "Founder",

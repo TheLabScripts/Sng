@@ -1,1 +1,1 @@
-export const vehicleHistoryService = { async getHistoryRisk(vin: string) { return { vin, source: "NMVTIS-approved history provider placeholder", risk: "Medium", notes: "No real provider connected in dev." }; } };
+﻿export const vehicleHistoryService = { async getHistoryRisk(vin: string) { return { vin, source: "NMVTIS-approved history provider placeholder", risk: "Medium", notes: "No real provider connected in dev." }; } };

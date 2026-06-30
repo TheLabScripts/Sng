@@ -1,4 +1,4 @@
-export type NotificationPreference = "in-app" | "email" | "sms" | "discord" | "push";
+﻿export type NotificationPreference = "in-app" | "email" | "sms" | "discord" | "push";
 
 export type NotificationService = {
   sendTestAlert(method: NotificationPreference): Promise<{ ok: boolean; message: string }>;

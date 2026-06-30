@@ -1,4 +1,4 @@
-import type { VehicleVinResult } from "@/types/snagd";
+﻿import type { VehicleVinResult } from "@/types/snagd";
 
 export const mockVehicleVinResult: VehicleVinResult = {
   vin: "1HGCM82633A004352",
