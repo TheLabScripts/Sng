@@ -33,7 +33,7 @@ export function HowItWorks() {
             key={s.n}
             className="relative rounded-card border border-line bg-surface p-6 shadow-card"
           >
-            <span className="font-mono text-sm font-bold text-profit">{s.n}</span>
+            <span className="font-mono text-sm font-bold text-brand">{s.n}</span>
             <h3 className="mt-3 font-display text-lg font-bold text-ink">{s.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted">{s.body}</p>
           </li>
@@ -42,4 +42,5 @@ export function HowItWorks() {
     </Section>
   );
 }
+
 

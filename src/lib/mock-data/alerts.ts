@@ -4,23 +4,23 @@ export const mockAlerts: Alert[] = [
   {
     id: "alert-new-good-deal",
     type: "New good deal found",
-    item: "Leather sectional couch",
+    item: "2021 Toyota Camry XLE",
     score: 91,
-    profit: "$100-$150",
-    distance: "7 miles",
+    profit: "$5,200-$6,500",
+    distance: "3.2 miles",
     timePosted: "12 min ago",
-    why: "Score cleared your 75 minimum with low pickup distance and strong resale range.",
+    why: "Score cleared your 75 minimum with clean-title upside and strong private-party resale range.",
     severity: "profit",
   },
   {
     id: "alert-high-score",
     type: "High Snagd Score",
-    item: "Milwaukee tool bundle",
+    item: "PlayStation 5 Disc console",
     score: 84,
-    profit: "$75-$120",
-    distance: "12 miles",
+    profit: "$110-$140",
+    distance: "2.1 miles",
     timePosted: "28 min ago",
-    why: "Brand demand and bundle pricing suggest fast resale if tools test clean.",
+    why: "Console bundle pricing suggests fast resale if the serial and accessories check out.",
     severity: "profit",
   },
   {
@@ -101,3 +101,4 @@ export const mockAlerts: Alert[] = [
     severity: "risk",
   },
 ];
+

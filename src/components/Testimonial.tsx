@@ -28,7 +28,7 @@ export function Testimonial() {
               &ldquo;{q.quote}&rdquo;
             </blockquote>
             <figcaption className="mt-5 flex items-center gap-3">
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-profit/15 font-mono text-sm font-bold text-profit">
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-brand/15 font-mono text-sm font-bold text-brand">
                 {q.name.charAt(0)}
               </span>
               <span className="text-sm">
@@ -45,4 +45,5 @@ export function Testimonial() {
     </Container>
   );
 }
+
 

@@ -9,8 +9,8 @@ export const todaysProfitOpportunities = {
 };
 
 export const priceAlerts: PriceAlert[] = [
-  { id: "price-sectional", item: "Leather sectional", copy: "Leather sectional is 32% under market", impact: "Message seller before this disappears" },
-  { id: "price-tools", item: "Milwaukee bundle", copy: "Milwaukee bundle dropped $40", impact: "Your tools watchlist is hot today" },
+  { id: "price-sectional", item: "2021 Camry XLE", copy: "2021 Camry XLE is 32% under market", impact: "Message seller before this disappears" },
+  { id: "price-tools", item: "PS5 Disc console", copy: "PS5 Disc console is $140 under resale midpoint", impact: "Electronics watchlist is moving fast today" },
   { id: "price-dresser", item: "Free dresser", copy: "Free dresser has $90 resale potential", impact: "Pickup space is the only blocker" },
 ];
 
@@ -29,8 +29,8 @@ export const lifetimeStats: LifetimeStats = {
   monthlyProfit: 1240,
   weeklyProfitOpportunities: 2240,
   averageProfitPerFlip: 146,
-  bestCategory: "Furniture",
-  bestDeal: "Leather sectional couch",
+  bestCategory: "Vehicles",
+  bestDeal: "2021 Toyota Camry XLE",
   dealsBought: 38,
   dealsSold: 32,
   dealsPassed: 71,
@@ -66,3 +66,5 @@ export const fieldScanResult: FieldScanResult = {
 
 export const savedFieldScans = [fieldScanResult];
 export const savedVehicleChecks = ["2012 Honda Civic", "2008 Toyota Tacoma"];
+
+

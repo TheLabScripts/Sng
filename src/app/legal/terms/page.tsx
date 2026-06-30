@@ -9,7 +9,7 @@ export default function TermsPage() {
     <Container className="py-16 sm:py-20">
       <LegalBody
         title="Terms of Service"
-        updated="This is placeholder copy. Replace with reviewed terms before launch."
+        updated="Draft terms. Legal review required before launch."
         sections={[
           ["The service", "Snagd provides estimated deal scores, resale ranges, and recommendations to help resellers evaluate listings. Estimates are guidance, not guarantees."],
           ["Your responsibility", "You make your own buying decisions. Snagd is a tool to inform them, not financial advice or a promise of profit."],
@@ -21,4 +21,5 @@ export default function TermsPage() {
     </Container>
   );
 }
+
 

@@ -162,7 +162,7 @@ export function WatchlistsClient() {
                 <h3 className="text-lg font-bold text-ink">{watchlist.name}</h3>
                 <p className="mt-1 text-sm text-muted">{watchlist.nichePreset} / {watchlist.location}</p>
               </div>
-              <span className={`rounded-card border px-2.5 py-1 text-xs font-bold ${watchlist.everythingMode ? "border-brand/45 bg-brand/15 text-profit" : "border-line text-muted"}`}>
+              <span className={`rounded-card border px-2.5 py-1 text-xs font-bold ${watchlist.everythingMode ? "border-brand/45 bg-brand/15 text-brand" : "border-line text-muted"}`}>
                 {watchlist.everythingMode ? "Everything" : "Niche"}
               </span>
             </div>
@@ -212,3 +212,4 @@ function Metric({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
+

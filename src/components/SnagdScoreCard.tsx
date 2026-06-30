@@ -8,7 +8,7 @@ export type DealCard = {
   resale: string;
   profit: string;
   maxOffer?: string;
-  score: number; // 0-100
+  score: number;
   verdict: Verdict;
   distance?: string;
   risk?: "Low" | "Medium" | "High";
@@ -16,13 +16,13 @@ export type DealCard = {
 };
 
 const verdictStyles: Record<Verdict, { text: string; ring: string; bar: string }> = {
-  BUY: { text: "text-profit", ring: "border-profit/40", bar: "bg-profit" },
+  BUY: { text: "text-brand", ring: "border-brand/40", bar: "bg-brand" },
   MAYBE: { text: "text-amber", ring: "border-amber/40", bar: "bg-amber" },
   PASS: { text: "text-pass", ring: "border-pass/40", bar: "bg-pass" },
 };
 
 const riskColor: Record<NonNullable<DealCard["risk"]>, string> = {
-  Low: "text-profit",
+  Low: "text-info",
   Medium: "text-amber",
   High: "text-pass",
 };
@@ -38,10 +38,9 @@ export function SnagdScoreCard({
   return (
     <div
       className={`relative overflow-hidden rounded-card border bg-surface p-5 shadow-card ${
-        featured ? `${v.ring} ${deal.verdict === "BUY" ? "shadow-glow" : ""}` : "border-line"
+        featured ? `${v.ring} ` : "border-line"
       }`}
     >
-      {/* HUD scan line accent */}
       <div className={`absolute inset-x-0 top-0 h-px ${v.bar} opacity-60`} aria-hidden />
 
       <div className="flex items-start justify-between gap-4">
@@ -60,8 +59,6 @@ export function SnagdScoreCard({
           {deal.verdict}
         </span>
       </div>
-
-      {/* Score readout */}
       <div className="mt-4 flex items-end gap-3">
         <div className="flex items-baseline gap-1">
           <span className={`font-mono text-5xl font-bold leading-none tnum ${v.text}`}>
@@ -81,8 +78,6 @@ export function SnagdScoreCard({
           </p>
         </div>
       </div>
-
-      {/* Money grid */}
       <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-line pt-4">
         <Row label="Asking" value={deal.asking} />
         <Row label="Est. resale" value={deal.resale} />
@@ -125,4 +120,5 @@ function Row({
     </div>
   );
 }
+
 

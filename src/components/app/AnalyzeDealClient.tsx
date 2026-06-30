@@ -39,7 +39,7 @@ export function AnalyzeDealClient() {
     <div className="mx-auto grid max-w-shell gap-4 lg:grid-cols-[1fr_0.9fr]">
       <AppCard>
         <h2 className="text-2xl font-bold text-ink">Analyze a deal</h2>
-        <p className="mt-1 text-sm text-muted">Run a deterministic mock score using price, category, condition, risk, and distance.</p>
+        <p className="mt-1 text-sm text-muted">Score a listing using price, category, condition, risk, distance, and local resale signals.</p>
 
         <form className="mt-5 grid gap-4" onSubmit={handleSubmit}>
           <Field label="Listing title">
@@ -105,14 +105,14 @@ export function AnalyzeDealClient() {
             />
           </Field>
 
-          <Field label="Optional screenshot upload placeholder">
+          <Field label="Optional screenshot upload">
             <input
               className="field file:mr-3 file:rounded-card file:border-0 file:bg-surface-3 file:px-3 file:py-2 file:text-ink"
               type="file"
               accept="image/*"
               onChange={(event) => setScreenshotName(event.target.files?.[0]?.name ?? "")}
             />
-            {screenshotName && <p className="mt-2 text-xs text-muted">Attached locally for demo: {screenshotName}</p>}
+            {screenshotName && <p className="mt-2 text-xs text-muted">Attached locally: {screenshotName}</p>}
           </Field>
 
           <Field label="Notes">
@@ -144,7 +144,7 @@ export function AnalyzeDealClient() {
             <div className="flex items-center justify-between gap-3">
               <RecommendationBadge value={result.recommendation} />
               <div className="text-right">
-                <p className="font-mono text-4xl font-bold text-profit tnum">{result.snagdScore}</p>
+                <p className="font-mono text-4xl font-bold text-brand tnum">{result.snagdScore}</p>
                 <p className="text-xs text-muted">Snagd Score</p>
               </div>
             </div>
@@ -231,3 +231,4 @@ function ResultMetric({ label, value, accent = false }: { label: string; value: 
     </div>
   );
 }
+

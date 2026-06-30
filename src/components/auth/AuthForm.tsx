@@ -7,11 +7,11 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const isSignup = mode === "signup";
-  const [name, setName] = useState("Demo reseller");
-  const [email, setEmail] = useState("demo@snagd.app");
+  const [name, setName] = useState("Snagd tester");
+  const [email, setEmail] = useState("tester@snagd.app");
 
   function storeSession(nextPath: string) {
-    window.localStorage.setItem("snagd-session", JSON.stringify({ name, email, plan: "Founder" }));
+    window.localStorage.setItem("snagd-session", JSON.stringify({ name, email, plan: "Starter" }));
     window.location.href = nextPath;
   }
 
@@ -32,7 +32,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           <p className="text-sm text-muted">{isSignup ? "Start your reseller command center" : "Welcome back"}</p>
           <h1 className="mt-2 text-3xl font-bold text-ink">{isSignup ? "Create your Snagd account" : "Log into Snagd"}</h1>
           <p className="mt-3 text-sm leading-6 text-muted">
-            Mock auth is localStorage only, so you can test the app without a backend.
+            This preview stores a local test session on your device so you can explore the app quickly.
           </p>
 
           <form className="mt-6 grid gap-4" onSubmit={handleSubmit}>
@@ -59,7 +59,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
               type="button"
               onClick={() => storeSession("/app/")}
             >
-              Continue with demo
+              Continue with test account
             </button>
           </form>
 
@@ -85,3 +85,4 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     </main>
   );
 }
+

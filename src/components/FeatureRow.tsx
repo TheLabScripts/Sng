@@ -21,7 +21,7 @@ export function FeatureRow({
     <Container className="py-12 sm:py-16">
       <div className="grid items-center gap-10 md:grid-cols-2">
         <div className={flip ? "md:order-2" : ""}>
-          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-profit">
+          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand">
             {eyebrow}
           </span>
           <h3 className="mt-3 font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
@@ -32,7 +32,7 @@ export function FeatureRow({
             <ul className="mt-5 space-y-2.5">
               {bullets.map((b) => (
                 <li key={b} className="flex items-start gap-2.5 text-sm text-ink">
-                  <span className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-profit/15 text-profit">
+                  <span className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-brand/15 text-brand">
                     <Check className="h-3 w-3" />
                   </span>
                   {b}
@@ -46,4 +46,5 @@ export function FeatureRow({
     </Container>
   );
 }
+
 

@@ -1,4 +1,4 @@
-export type Faq = { q: string; a: string };
+﻿export type Faq = { q: string; a: string };
 
 export const faqs = [
   {
@@ -7,7 +7,7 @@ export const faqs = [
   },
   {
     q: "Does Snagd scrape marketplaces or automate logins?",
-    a: "No. This dev build uses user-supplied listings, mock source-layer data, and integration placeholders only.",
+    a: "No. This preview uses user-supplied listings, seeded marketplace data, and planned integration boundaries.",
   },
   {
     q: "What is a Deal Check?",
@@ -19,10 +19,11 @@ export const faqs = [
   },
   {
     q: "Is auth real yet?",
-    a: "No. Login, signup, onboarding, watchlists, and session state use localStorage so the app can be tested without a backend.",
+    a: "No. Login, signup, onboarding, watchlists, and session state use localStorage so the app can be tested while backend services are being connected.",
   },
   {
     q: "Will Vehicle Mode use real APIs later?",
     a: "The service layer is structured for VIN decode, recalls, market data, vehicle history, comps, maps, notifications, and billing providers.",
   },
 ];
+

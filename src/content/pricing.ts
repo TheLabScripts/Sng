@@ -1,92 +1,114 @@
-export type Plan = {
-  id: "founder" | "pro" | "power";
+﻿export type Plan = {
+  id: "starter" | "pro" | "power";
   name: string;
   monthly: number;
-  annualMonthly: number;
   annualTotal: number;
+  annualSavings: number;
   blurb: string;
   highlight?: boolean;
   badge?: string;
   dealChecks: string;
   watchlists: string;
+  vinChecks: string;
+  annualLabel: string;
   features: string[];
 };
 
 export const plans: Plan[] = [
   {
-    id: "founder",
-    name: "Founder",
+    id: "starter",
+    name: "Starter",
     monthly: 20,
-    annualMonthly: 20,
-    annualTotal: 240,
-    blurb: "For the part-time flipper who wants better decisions.",
-    dealChecks: "100 Deal Checks / mo",
+    annualTotal: 99,
+    annualSavings: 141,
+    blurb: "For part-time flippers who want cleaner decisions and fewer wasted pickups.",
+    dealChecks: "100 Deal Checks/month",
     watchlists: "5 Watchlists",
+    vinChecks: "Manual analyzer",
+    annualLabel: "Founding Annual",
     features: [
-      "Snagd Score on every checked listing",
-      "Buy / Maybe / Pass verdicts",
-      "Estimated resale, profit, and max offer",
-      "Everything Mode",
-      "In-app and email alerts",
-      "Basic resale estimates",
-      "Basic risk warnings",
-      "Creator code support",
+      "100 Deal Checks/month",
+      "5 Watchlists",
+      "Manual listing analyzer",
+      "Basic similar sales",
+      "In-app/email alerts",
+      "Save/share deals",
+      "Basic profit tracking",
     ],
   },
   {
     id: "pro",
     name: "Pro",
     monthly: 39,
-    annualMonthly: 39,
-    annualTotal: 468,
-    blurb: "For active resellers running more niches.",
+    annualTotal: 199,
+    annualSavings: 269,
+    blurb: "For active resellers watching more categories, markets, and price drops.",
     highlight: true,
-    badge: "Most flexible",
-    dealChecks: "500 Deal Checks / mo",
+    badge: "Most Popular",
+    dealChecks: "500 Deal Checks/month",
     watchlists: "20 Watchlists",
+    vinChecks: "Basic VIN lookup",
+    annualLabel: "Founding Annual",
     features: [
-      "Everything in Founder",
+      "500 Deal Checks/month",
+      "20 Watchlists",
       "Faster alerts",
-      "More niche presets",
+      "Better similar sales",
       "Advanced filters",
-      "Better comps",
-      "SMS and Discord alerts when available",
-      "Priority alert settings",
+      "Price drop alerts",
+      "Basic VIN lookup",
+      "Better stats/profit tracking",
     ],
   },
   {
     id: "power",
-    name: "Power Flipper",
+    name: "Power",
     monthly: 79,
-    annualMonthly: 79,
-    annualTotal: 948,
-    blurb: "For high-volume flippers and teams.",
-    dealChecks: "Higher usage limits",
-    watchlists: "Expanded Watchlists",
+    annualTotal: 399,
+    annualSavings: 549,
+    blurb: "For high-volume flips, vehicle-heavy workflows, and bigger-ticket opportunities.",
+    dealChecks: "1,500 Deal Checks/month",
+    watchlists: "50 Watchlists",
+    vinChecks: "Vehicle/VIN Intelligence",
+    annualLabel: "Founding Annual",
     features: [
-      "Everything in Pro",
+      "1,500 Deal Checks/month",
+      "50 Watchlists",
       "Priority alerts",
+      "Vehicle/VIN Intelligence",
+      "More VIN checks",
+      "Bulk similar sales lookup",
+      "Advanced profit tracker",
+      "SMS/Discord alerts (planned)",
       "High-ticket presets",
-      "Bulk deal review",
-      "Team access",
-      "Advanced analytics",
-      "Vehicle tools expanded",
     ],
   },
 ];
 
 export const addOns = [
-  { name: "50 extra Deal Checks", price: 5 },
-  { name: "150 extra Deal Checks", price: 12 },
-  { name: "500 extra Deal Checks", price: 29 },
-  { name: "Extra Watchlists", price: 8 },
-  { name: "SMS alert pack", price: 9 },
-  { name: "Priority alert boost", price: 12 },
+  { name: "50 Deal Checks", price: 5, cadence: "one-time" },
+  { name: "150 Deal Checks", price: 12, cadence: "one-time" },
+  { name: "500 Deal Checks", price: 29, cadence: "one-time" },
+  { name: "10 VIN Checks", price: 5, cadence: "one-time" },
+  { name: "50 VIN Checks", price: 19, cadence: "one-time" },
+  { name: "200 VIN Checks", price: 59, cadence: "one-time" },
+  { name: "Extra 10 Watchlists", price: 5, cadence: "monthly" },
+  { name: "SMS Alert Pack", price: 9, cadence: "monthly" },
 ];
 
 export const trial = {
   days: 7,
-  dealChecks: 20,
-  watchlists: 3,
-  note: "Demo trial copy. Production billing should connect through Stripe.",
+  note: "Every plan starts with a 7-day free trial. Annual plans keep the same monthly limits, renewed each month.",
+};
+
+export const creatorCommission = {
+  rate: 30,
+  copy: "Creators earn 30% recurring commission while referred subscribers stay active.",
+};
+
+export const annualPlanCopy = {
+  label: "Founding Annual",
+  headline: "Pay once, flip all year.",
+  note: "Founding annual pricing is limited and may increase for new users later.",
+  limits: "Annual users keep the same monthly usage limits, renewed each month.",
 };

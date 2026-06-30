@@ -1,8 +1,5 @@
 ﻿import { site } from "@/content/site";
 
-// App-store download buttons. If the real store URLs aren't set yet (pre-launch),
-// they fall back to the waitlist URL or a disabled "coming soon" state â€” the
-// site never ships a dead button.
 function StoreBadge({
   href,
   kicker,
@@ -16,7 +13,7 @@ function StoreBadge({
 }) {
   const live = href !== "";
   const target = live ? href : site.waitlistUrl || "#";
-  const label = live ? kicker : "Coming soon â€”";
+  const label = live ? kicker : "Coming soon -";
 
   return (
     <a
@@ -55,14 +52,13 @@ export function StoreButtons({ className = "" }: { className?: string }) {
         store="Google Play"
         glyph={
           <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden>
-            <path d="M4 3.5 14 12 4 20.5c-.4-.2-.6-.6-.6-1.1V4.6c0-.5.2-.9.6-1.1Z" fill="#bb9af7" />
-            <path d="m14 12 3-2.6 2.8 1.6c.8.5.8 1.5 0 2L17 14.6 14 12Z" fill="#7aa2f7" />
-            <path d="M4 3.5c.3-.1.7-.1 1 .1L17 9.4 14 12 4 3.5Z" fill="#c0caf5" opacity=".85" />
-            <path d="M4 20.5 14 12l3 2.6-12 6.8c-.3.2-.7.2-1 .1Z" fill="#f7768e" opacity=".85" />
+            <path d="M4 3.5 14 12 4 20.5c-.4-.2-.6-.6-.6-1.1V4.6c0-.5.2-.9.6-1.1Z" fill="#2563eb" />
+            <path d="m14 12 3-2.6 2.8 1.6c.8.5.8 1.5 0 2L17 14.6 14 12Z" fill="#0ea5e9" />
+            <path d="M4 3.5c.3-.1.7-.1 1 .1L17 9.4 14 12 4 3.5Z" fill="#93c5fd" opacity=".9" />
+            <path d="M4 20.5 14 12l3 2.6-12 6.8c-.3.2-.7.2-1 .1Z" fill="#f59e0b" opacity=".86" />
           </svg>
         }
       />
     </div>
   );
 }
-

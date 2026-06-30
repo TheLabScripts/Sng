@@ -16,11 +16,11 @@ export function OnboardingClient() {
     const enrichedProfile = {
       ...nextProfile,
       automotiveMode,
-      defaultFeedCategories: automotiveMode ? ["Vehicles", "Tools"] : [nextProfile.preset, "AI Picks"]
+      defaultFeedCategories: automotiveMode ? ["Vehicles", "Tools"] : [nextProfile.preset, "Smart Picks"]
     };
     window.localStorage.setItem("snagd-onboarding-profile", JSON.stringify(enrichedProfile));
     window.localStorage.setItem("snagd-automotive-mode", automotiveMode ? "true" : "false");
-    window.localStorage.setItem("snagd-session", JSON.stringify({ name: "Demo reseller", email: "demo@snagd.app", plan: "Founder", isAdmin: false }));
+    window.localStorage.setItem("snagd-session", JSON.stringify({ name: "Snagd tester", email: "tester@snagd.app", plan: "Starter", isAdmin: false }));
     window.location.href = "/app/";
   }
 
@@ -39,7 +39,7 @@ export function OnboardingClient() {
       <div className="mx-auto mt-8 max-w-3xl rounded-card border border-line bg-surface p-5 shadow-card sm:p-6">
         <p className="text-sm text-muted">Onboarding</p>
         <h1 className="mt-2 text-3xl font-bold text-ink">Tune Snagd to your hunt</h1>
-        <p className="mt-3 text-sm leading-6 text-muted">These settings drive mock watchlists, alerts, Everything Mode, automotive priority, and Deal Check thresholds.</p>
+        <p className="mt-3 text-sm leading-6 text-muted">These settings tune watchlists, alerts, Everything Mode, automotive priority, and Deal Check thresholds.</p>
 
         <form className="mt-6 grid gap-5" onSubmit={handleSubmit}>
           <div>
@@ -75,7 +75,7 @@ export function OnboardingClient() {
             <NumberField label="Minimum Snagd Score" value={profile.minimumSnagdScore} onChange={(value) => setProfile({ ...profile, minimumSnagdScore: value })} />
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2"><button className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-white" type="submit">Finish onboarding</button><button className="h-12 rounded-card border border-line bg-surface-2 px-5 text-sm font-bold text-ink" type="button" onClick={() => finish(defaultOnboardingProfile)}>Use demo settings</button></div>
+          <div className="grid gap-3 sm:grid-cols-2"><button className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-white" type="submit">Finish onboarding</button><button className="h-12 rounded-card border border-line bg-surface-2 px-5 text-sm font-bold text-ink" type="button" onClick={() => finish(defaultOnboardingProfile)}>Use starter settings</button></div>
         </form>
       </div>
 
@@ -86,3 +86,4 @@ export function OnboardingClient() {
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) { return <label className="grid gap-2"><span className="text-sm font-bold text-ink">{label}</span>{children}</label>; }
 function NumberField({ label, value, onChange }: { label: string; value: number; onChange: (value: number) => void }) { return <Field label={label}><input className="field" type="number" min="0" value={value} onChange={(event) => onChange(Number(event.target.value))} /></Field>; }
+

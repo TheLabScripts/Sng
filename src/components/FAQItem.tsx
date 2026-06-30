@@ -24,7 +24,7 @@ function FAQItem({ faq }: { faq: Faq }) {
       >
         <span className="font-display text-base font-semibold text-ink">{faq.q}</span>
         <span
-          className={`grid h-6 w-6 shrink-0 place-items-center rounded-full border border-line text-profit transition-transform ${
+          className={`grid h-6 w-6 shrink-0 place-items-center rounded-full border border-line text-brand transition-transform ${
             open ? "rotate-45" : ""
           }`}
           aria-hidden
@@ -38,4 +38,5 @@ function FAQItem({ faq }: { faq: Faq }) {
     </div>
   );
 }
+
 

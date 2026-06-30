@@ -25,7 +25,7 @@ export function Footer() {
             <p className="mt-4 max-w-sm text-sm leading-6 text-muted">
               Snagd watches your area, filters the junk, and tells you what is actually worth chasing.
             </p>
-            <p className="mt-4 text-sm font-bold text-profit">Get Snag&apos;d.</p>
+            <p className="mt-4 text-sm font-bold text-brand">Get Snag&apos;d.</p>
           </div>
 
           <FooterColumn title="Product" links={productLinks} />
@@ -55,3 +55,4 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
     </div>
   );
 }
+

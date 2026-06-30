@@ -26,7 +26,7 @@ export default function SupportPage() {
           </p>
           <a
             href={`mailto:${site.supportEmail}`}
-            className="mt-6 inline-block font-mono text-sm text-profit hover:underline"
+            className="mt-6 inline-block font-mono text-sm text-brand hover:underline"
           >
             {site.supportEmail}
           </a>
@@ -51,4 +51,5 @@ export default function SupportPage() {
     </>
   );
 }
+
 

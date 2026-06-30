@@ -38,7 +38,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const existing = window.localStorage.getItem("snagd-session");
     if (!existing) {
-      const demo = { name: "Demo reseller", email: "demo@snagd.app", plan: "Founder", isAdmin: false };
+      const demo = { name: "Snagd tester", email: "demo@snagd.app", plan: "Starter", isAdmin: false };
       window.localStorage.setItem("snagd-session", JSON.stringify(demo));
       setSession(demo);
       return;
@@ -121,5 +121,6 @@ function MoreIcon() { return iconPath(<path d="M5 12h.01M12 12h.01M19 12h.01" st
 function SearchIcon() { return iconPath(<path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />); }
 function CompsIcon() { return iconPath(<path d="M4 7h16M4 12h10M4 17h7m7-3 2 2 3-4" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />); }
 function ShieldIcon() { return iconPath(<path d="M12 3 20 6v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" />); }
+
 
 

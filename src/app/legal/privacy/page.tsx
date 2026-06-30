@@ -9,7 +9,7 @@ export default function PrivacyPage() {
     <Container className="py-16 sm:py-20">
       <LegalBody
         title="Privacy Policy"
-        updated="This is placeholder copy. Replace with a reviewed policy before launch."
+        updated="Draft policy. Legal review required before launch."
         sections={[
           ["What we collect", "Account details you provide (email, plan), the listings you choose to analyze, and basic usage data to run and improve Snagd."],
           ["How we use it", "To deliver deal scoring, send the alerts you set up, process billing, and improve the product. We do not sell your personal data."],
@@ -21,4 +21,5 @@ export default function PrivacyPage() {
     </Container>
   );
 }
+
 
