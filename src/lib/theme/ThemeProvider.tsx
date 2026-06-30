@@ -6,7 +6,7 @@ export type SnagdTheme = "snagd-light" | "snagd-black";
 
 type ThemeContextValue = { theme: SnagdTheme; setTheme: (theme: SnagdTheme) => void; toggleTheme: () => void; };
 const ThemeContext = createContext<ThemeContextValue | null>(null);
-const themeStorageKey = "snagd-theme-v2";
+const themeStorageKey = "snagd-theme-v3";
 
 function normalizeTheme(value: string | null): SnagdTheme {
   return value === "snagd-black" ? "snagd-black" : "snagd-light";
@@ -49,3 +49,4 @@ export function useSnagdTheme() {
   if (!context) throw new Error("useSnagdTheme must be used inside ThemeProvider");
   return context;
 }
+

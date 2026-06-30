@@ -91,6 +91,20 @@ button { touch-action: manipulation; }
 .scanner-frame { background: linear-gradient(90deg, var(--brand), var(--info)); animation: scan-line 1.35s ease-in-out infinite alternate; }
 @keyframes scan-line { from { transform: translateY(0); } to { transform: translateY(150px); } }
 
+
+html[data-theme="snagd-light"] .mock-phone-shell {
+  background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 34%, #eef1f7 100%);
+  box-shadow: 0 0 0 1px rgba(17, 24, 39, 0.04), 0 28px 90px -42px rgba(17, 24, 39, 0.25);
+}
+
+html[data-theme="snagd-light"] .app-card-glass {
+  background: #ffffff;
+  border-color: #e5e7eb;
+}
+
+html[data-theme="snagd-light"] .profit-hero {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.14), rgba(109, 93, 252, 0.08) 56%, rgba(37, 99, 235, 0.06));
+}
 html[data-theme="snagd-black"] .mock-phone-shell {
   background: #000000;
   box-shadow: none;
@@ -116,5 +130,6 @@ html[data-theme="snagd-black"] .brand-panel {
 }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.001ms !important; } }
+
 
 
