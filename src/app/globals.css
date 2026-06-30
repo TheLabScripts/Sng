@@ -32,13 +32,13 @@ html[data-theme="snagd-black"] {
   color-scheme: dark;
   --bg: #000000;
   --bg-soft: #08090b;
-  --surface: #0f1115;
+  --surface: #000000;
   --surface-2: #16181c;
-  --surface-3: #1f2329;
+  --surface-3: #202327;
   --line: #2f3336;
-  --ink: #f5f5f5;
-  --muted: #8b98a5;
-  --muted-strong: #68717d;
+  --ink: #e7e9ea;
+  --muted: #71767b;
+  --muted-strong: #536471;
   --profit: #22c55e;
   --amber: #f59e0b;
   --pass: #ef4444;
@@ -91,6 +91,24 @@ button { touch-action: manipulation; }
 .scanner-frame { background: linear-gradient(90deg, var(--brand), var(--info)); animation: scan-line 1.35s ease-in-out infinite alternate; }
 @keyframes scan-line { from { transform: translateY(0); } to { transform: translateY(150px); } }
 
+html[data-theme="snagd-black"] .mock-phone-shell {
+  background: #000000;
+  box-shadow: none;
+}
+
+html[data-theme="snagd-black"] .app-card-glass {
+  background: #000000;
+  border-color: #2f3336;
+}
+
+html[data-theme="snagd-black"] .profit-hero {
+  background: #000000;
+  border-color: color-mix(in srgb, var(--profit) 34%, var(--line));
+}
+
+html[data-theme="snagd-black"] .brand-panel {
+  background: #000000;
+}
 @media (max-width: 767px) {
   .mock-phone-shell { max-width: 430px; margin-inline: auto; background: radial-gradient(circle at 50% -10%, color-mix(in srgb, var(--brand) 8%, transparent), transparent 34%), linear-gradient(180deg, color-mix(in srgb, var(--surface) 48%, var(--bg)) 0%, var(--bg) 28%, color-mix(in srgb, var(--bg-soft) 42%, var(--bg)) 100%); min-height: 100svh; box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 28px 90px -42px rgba(0,0,0,.45); }
   html[data-theme="snagd-light"] body { background: #dfe5ef; }
@@ -98,4 +116,5 @@ button { touch-action: manipulation; }
 }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.001ms !important; } }
+
 

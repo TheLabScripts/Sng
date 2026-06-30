@@ -6,6 +6,7 @@ export type SnagdTheme = "snagd-light" | "snagd-black";
 
 type ThemeContextValue = { theme: SnagdTheme; setTheme: (theme: SnagdTheme) => void; toggleTheme: () => void; };
 const ThemeContext = createContext<ThemeContextValue | null>(null);
+const themeStorageKey = "snagd-theme-v2";
 
 function normalizeTheme(value: string | null): SnagdTheme {
   return value === "snagd-black" ? "snagd-black" : "snagd-light";
@@ -20,7 +21,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<SnagdTheme>("snagd-light");
 
   useEffect(() => {
-    const nextTheme = normalizeTheme(window.localStorage.getItem("snagd-theme"));
+    const nextTheme = normalizeTheme(window.localStorage.getItem(themeStorageKey));
     setThemeState(nextTheme);
     applyTheme(nextTheme);
   }, []);
@@ -29,13 +30,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     theme,
     setTheme(nextTheme) {
       setThemeState(nextTheme);
-      window.localStorage.setItem("snagd-theme", nextTheme);
+      window.localStorage.setItem(themeStorageKey, nextTheme);
       applyTheme(nextTheme);
     },
     toggleTheme() {
       const nextTheme = theme === "snagd-light" ? "snagd-black" : "snagd-light";
       setThemeState(nextTheme);
-      window.localStorage.setItem("snagd-theme", nextTheme);
+      window.localStorage.setItem(themeStorageKey, nextTheme);
       applyTheme(nextTheme);
     }
   }), [theme]);
@@ -48,4 +49,3 @@ export function useSnagdTheme() {
   if (!context) throw new Error("useSnagdTheme must be used inside ThemeProvider");
   return context;
 }
-

@@ -48,7 +48,7 @@ export const viewport: Viewport = {
 const themeScript = `
 (function () {
   try {
-    var stored = localStorage.getItem("snagd-theme");
+    var stored = localStorage.getItem("snagd-theme-v2");
     var theme = stored === "snagd-black" ? "snagd-black" : "snagd-light";
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme === "snagd-light" ? "light" : "dark";
@@ -78,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+
 
 
 
