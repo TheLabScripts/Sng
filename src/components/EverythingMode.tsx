@@ -1,4 +1,4 @@
-import { Container } from "./Container";
+﻿import { Container } from "./Container";
 import { Bolt } from "./icons";
 
 export function EverythingMode() {
@@ -14,7 +14,7 @@ export function EverythingMode() {
             Don&rsquo;t want a niche? Flip anything with a margin.
           </h3>
           <p className="mt-4 text-base leading-relaxed text-muted">
-            Some hustlers don&rsquo;t care what it is — if there&rsquo;s profit, they&rsquo;re in.
+            Some hustlers don&rsquo;t care what it is â€” if there&rsquo;s profit, they&rsquo;re in.
             Everything Mode watches your area for any local item with real upside, based on your
             budget, profit target, and pickup distance. Furniture today, a tool bundle tomorrow,
             a free dresser on the curb tonight.
@@ -24,3 +24,4 @@ export function EverythingMode() {
     </Container>
   );
 }
+

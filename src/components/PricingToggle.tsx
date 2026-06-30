@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { plans } from "@/content/pricing";
@@ -41,3 +41,4 @@ export function PricingToggle() {
     </div>
   );
 }
+

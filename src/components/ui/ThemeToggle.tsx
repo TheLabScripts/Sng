@@ -4,11 +4,12 @@ import { useSnagdTheme } from "@/lib/theme/ThemeProvider";
 
 export function ThemeToggle({ compact = false }: { compact?: boolean }) {
   const { theme, toggleTheme } = useSnagdTheme();
-  const isDay = theme === "snagd-day";
+  const isLight = theme === "snagd-light";
+  const nextLabel = isLight ? "Snagd Black" : "Snagd Light";
   return (
-    <button type="button" onClick={toggleTheme} className="inline-grid h-10 w-10 shrink-0 place-items-center rounded-card border border-line bg-surface text-ink shadow-soft transition hover:border-info hover:text-info" aria-label={isDay ? "Switch to Tokyo Night" : "Switch to Snagd Day"} title={isDay ? "Tokyo Night" : "Snagd Day"}>
-      {isDay ? <MoonIcon /> : <SunIcon />}
-      {!compact && <span className="sr-only">{isDay ? "Tokyo Night" : "Snagd Day"}</span>}
+    <button type="button" onClick={toggleTheme} className="inline-grid h-10 w-10 shrink-0 place-items-center rounded-card border border-line bg-surface text-ink shadow-soft transition hover:border-info hover:text-info" aria-label={`Switch to ${nextLabel}`} title={nextLabel}>
+      {isLight ? <MoonIcon /> : <SunIcon />}
+      {!compact && <span className="sr-only">{nextLabel}</span>}
     </button>
   );
 }

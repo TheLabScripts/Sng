@@ -1,4 +1,4 @@
-import { marketplaces } from "@/content/site";
+﻿import { marketplaces } from "@/content/site";
 
 export function MarketplaceStrip() {
   return (
@@ -16,3 +16,4 @@ export function MarketplaceStrip() {
     </div>
   );
 }
+

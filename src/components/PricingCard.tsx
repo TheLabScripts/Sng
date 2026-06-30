@@ -1,4 +1,4 @@
-import { Check } from "./icons";
+﻿import { Check } from "./icons";
 import { CTAButton } from "./CTAButton";
 import type { Plan } from "@/content/pricing";
 
@@ -17,7 +17,7 @@ export function PricingCard({
       }`}
     >
       {plan.badge && (
-        <span className="absolute -top-3 left-7 rounded-full bg-profit px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-bg">
+        <span className="absolute -top-3 left-7 rounded-full bg-profit px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-white">
           {plan.badge}
         </span>
       )}
@@ -62,3 +62,4 @@ export function PricingCard({
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-export function LegalBody({
+﻿export function LegalBody({
   title,
   updated,
   sections,
@@ -24,3 +24,4 @@ export function LegalBody({
     </div>
   );
 }
+

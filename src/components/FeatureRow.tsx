@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+﻿import { ReactNode } from "react";
 import { Container } from "./Container";
 import { Check } from "./icons";
 
@@ -46,3 +46,4 @@ export function FeatureRow({
     </Container>
   );
 }
+

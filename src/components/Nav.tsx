@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -32,7 +32,7 @@ export function Nav() {
           <ThemeToggle compact />
           <Link
             href="/signup/"
-            className="rounded-card bg-brand px-4 py-2 text-sm font-bold text-bg transition hover:brightness-105"
+            className="rounded-card bg-brand px-4 py-2 text-sm font-bold text-white transition hover:brightness-105"
           >
             Get Snagd
           </Link>
@@ -71,7 +71,7 @@ export function Nav() {
             <Link
               href="/signup/"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-card bg-brand px-3 py-3 text-center text-sm font-bold text-bg"
+              className="mt-2 rounded-card bg-brand px-3 py-3 text-center text-sm font-bold text-white"
             >
               Get Snagd
             </Link>

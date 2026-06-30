@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+﻿import { ReactNode } from "react";
 import { Container } from "./Container";
 import { Eyebrow } from "./Eyebrow";
 
@@ -36,3 +36,4 @@ export function Section({
     </section>
   );
 }
+

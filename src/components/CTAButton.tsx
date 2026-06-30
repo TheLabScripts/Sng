@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ReactNode } from "react";
 
 type Variant = "primary" | "ghost";
@@ -18,7 +18,7 @@ export function CTAButton({
     "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-150 active:scale-[0.98]";
   const styles =
     variant === "primary"
-      ? "bg-brand text-bg hover:brightness-110 shadow-[0_14px_38px_-18px_rgba(187,154,247,0.8)]"
+      ? "bg-brand text-white hover:brightness-110 shadow-[0_14px_38px_-18px_rgba(187,154,247,0.8)]"
       : "border border-line bg-surface text-ink hover:border-brand/50 hover:text-brand";
 
   const external = href.startsWith("http");
@@ -35,3 +35,4 @@ export function CTAButton({
     </Link>
   );
 }
+

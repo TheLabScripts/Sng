@@ -1,4 +1,4 @@
-import type { Recommendation, RiskLevel } from "@/types/snagd";
+﻿import type { Recommendation, RiskLevel } from "@/types/snagd";
 
 const recommendationClasses: Record<Recommendation, string> = {
   BUY: "border-profit/45 bg-profit/15 text-profit",

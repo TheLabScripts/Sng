@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
@@ -51,7 +51,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
               <input className="field" type="password" value="password" readOnly />
             </label>
 
-            <button className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-bg" type="submit">
+            <button className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-white" type="submit">
               {isSignup ? "Continue to onboarding" : "Log in"}
             </button>
             <button

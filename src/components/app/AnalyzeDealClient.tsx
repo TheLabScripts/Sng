@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { FormEvent, useState } from "react";
 import { AppCard } from "@/components/app/AppCard";
@@ -123,7 +123,7 @@ export function AnalyzeDealClient() {
             />
           </Field>
 
-          <button type="submit" className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-bg transition hover:brightness-105">
+          <button type="submit" className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-white transition hover:brightness-105">
             Score deal
           </button>
         </form>

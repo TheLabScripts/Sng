@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import type { Faq } from "@/content/faqs";
@@ -38,3 +38,4 @@ function FAQItem({ faq }: { faq: Faq }) {
     </div>
   );
 }
+

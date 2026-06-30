@@ -122,3 +122,4 @@ function SearchIcon() { return iconPath(<path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 
 function CompsIcon() { return iconPath(<path d="M4 7h16M4 12h10M4 17h7m7-3 2 2 3-4" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />); }
 function ShieldIcon() { return iconPath(<path d="M12 3 20 6v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" />); }
 
+

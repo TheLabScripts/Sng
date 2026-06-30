@@ -1,7 +1,7 @@
-import { site } from "@/content/site";
+﻿import { site } from "@/content/site";
 
 // App-store download buttons. If the real store URLs aren't set yet (pre-launch),
-// they fall back to the waitlist URL or a disabled "coming soon" state — the
+// they fall back to the waitlist URL or a disabled "coming soon" state â€” the
 // site never ships a dead button.
 function StoreBadge({
   href,
@@ -16,7 +16,7 @@ function StoreBadge({
 }) {
   const live = href !== "";
   const target = live ? href : site.waitlistUrl || "#";
-  const label = live ? kicker : "Coming soon —";
+  const label = live ? kicker : "Coming soon â€”";
 
   return (
     <a
@@ -65,3 +65,4 @@ export function StoreButtons({ className = "" }: { className?: string }) {
     </div>
   );
 }
+

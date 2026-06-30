@@ -1,4 +1,4 @@
-import { Pin } from "./icons";
+﻿import { Pin } from "./icons";
 
 export type Verdict = "BUY" | "MAYBE" | "PASS";
 
@@ -125,3 +125,4 @@ function Row({
     </div>
   );
 }
+

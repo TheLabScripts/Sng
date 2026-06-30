@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { SnagdLogo } from "@/components/ui/SnagdLogo";
 
 const productLinks = [
