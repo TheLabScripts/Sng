@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -27,8 +27,32 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
   function messageSeller() { if (deal.messageUrl) window.open(deal.messageUrl, "_blank", "noopener,noreferrer"); else if (deal.listingUrl) window.open(deal.listingUrl, "_blank", "noopener,noreferrer"); else pulse("This source did not provide a direct message link"); }
   function setStatus(nextStatus: DealStatus) { const next = { ...statuses, [deal.id]: nextStatus }; setStatuses(next); writeJson(statusKey, next); pulse(`Marked ${nextStatus}`); }
 
+  if (compact) {
+    return (
+      <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
+        <Link href={`/app/deal/${deal.id}/`} className={`relative block aspect-[1.12] overflow-hidden border-b border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+          <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-white">{deal.recommendation === "BUY" ? "STEAL" : deal.recommendation}</span>
+          <button type="button" onClick={(event) => { event.preventDefault(); toggleSaved(); }} className={`absolute right-2 top-2 grid h-8 w-8 place-items-center rounded-full border ${saved ? "border-brand bg-brand text-white" : "border-white/35 bg-black/35 text-white"}`} aria-label={saved ? "Unsave deal" : "Save deal"}><HeartIcon filled={saved} /></button>
+        </Link>
+        <div className="p-3">
+          <div className="flex items-start justify-between gap-2">
+            <p className="font-mono text-lg font-extrabold text-ink">{deal.askingLabel}</p>
+            <p className="font-mono text-sm font-bold text-amber">{deal.estimatedProfit}</p>
+          </div>
+          <p className="mt-1 text-[11px] text-muted">Est. value {deal.estimatedResale}</p>
+          <Link href={`/app/deal/${deal.id}/`} className="mt-2 line-clamp-2 block min-h-[36px] text-sm font-bold leading-tight text-ink">{deal.itemName}</Link>
+          <p className="mt-1 truncate text-[11px] text-muted">{deal.condition} / {deal.distance} away</p>
+          <div className="mt-3 flex items-center justify-between gap-2">
+            <span className="rounded-full bg-brand/12 px-2 py-1 text-[11px] font-bold text-brand">Score {deal.score}</span>
+            <span className="text-[11px] font-bold text-brand">-{deal.underMarketPercent}%</span>
+          </div>
+          <p className="mt-2 text-[10px] text-muted">Based on {deal.similarSalesCount} similar sales</p>
+        </div>
+      </article>
+    );
+  }
   return (
-    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-[#111827]/90 shadow-card">
+    <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
       <div className="flex gap-3 p-3">
         <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-bg">NEW</span>
@@ -51,7 +75,7 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
         </div>
       </div>
 
-      <div className="mx-3 rounded-[14px] border border-line bg-[#151b2b] p-3">
+      <div className="mx-3 rounded-[14px] border border-line bg-surface-2 p-3">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2"><span className="grid h-8 w-8 place-items-center rounded-lg bg-brand/18 text-brand"><SnagdGlyph /></span><div><p className="text-[11px] text-muted">Snagd Score</p><p className="font-mono text-lg font-bold text-brand">{deal.score}</p></div></div>
           <p className="text-sm font-bold text-brand">Under market by {deal.underMarketPercent}%</p>
@@ -84,3 +108,5 @@ function Metric({ label, value, accent = false }: { label: string; value: string
 function HeartIcon({ filled }: { filled: boolean }) { return <svg viewBox="0 0 24 24" className="h-4 w-4" fill={filled ? "currentColor" : "none"} aria-hidden><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>; }
 function SnagdGlyph() { return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden><path d="M7.4 14.8c.8 1.8 2.4 2.8 4.7 2.8 2.1 0 3.5-.8 3.5-2.1 0-1.1-.8-1.7-2.8-2.1l-2-.4C7.8 12.4 6 10.8 6 8.2 6 5 8.7 3 12.4 3c3 0 5.2 1.2 6.3 3.7l-3.1 1.6c-.6-1.4-1.7-2-3.3-2-1.8 0-2.9.7-2.9 1.8 0 1 .7 1.6 2.6 2l2.1.4c3.4.7 5 2.3 5 4.9 0 3.3-2.8 5.2-7.1 5.2-3.6 0-6.2-1.5-7.4-4.2l2.8-1.6Z" /></svg>; }
 export function thumbnailClass(tone: string) { if (tone === "amber") return "bg-[radial-gradient(circle_at_30%_25%,rgba(255,158,100,.62),transparent_35%),linear-gradient(145deg,var(--surface-3),var(--surface-2))]"; if (tone === "red") return "bg-[radial-gradient(circle_at_30%_25%,rgba(247,118,142,.58),transparent_35%),linear-gradient(145deg,var(--surface-3),var(--surface-2))]"; if (tone === "blue") return "bg-[radial-gradient(circle_at_30%_25%,rgba(122,162,247,.6),transparent_35%),linear-gradient(145deg,var(--surface-3),var(--surface-2))]"; return "image-card-violet"; }
+
+

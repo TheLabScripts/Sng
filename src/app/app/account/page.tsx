@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { AppCard } from "@/components/app/AppCard";
 import { mockCreatorStats, mockUsage } from "@/lib/mock-data";
 import { currency, numberCompact } from "@/lib/format";
@@ -13,7 +13,7 @@ export default function AccountPage() {
             <AccountRow label="Name" value="Demo reseller" />
             <AccountRow label="Email" value="demo@snagd.app" />
             <AccountRow label="Plan" value={mockUsage.plan} />
-            <AccountRow label="Theme" value="Tokyo Night / Tokyo Day saved locally" />
+            <AccountRow label="Theme" value="Snagd Day / Tokyo Night saved locally" />
           </div>
         </AppCard>
 

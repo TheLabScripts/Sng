@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import { SiteChrome } from "@/components/SiteChrome";
 import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import "./globals.css";
@@ -49,9 +49,9 @@ const themeScript = `
 (function () {
   try {
     var stored = localStorage.getItem("snagd-theme");
-    var theme = stored === "tokyo-day" ? "tokyo-day" : "tokyo-night";
+    var theme = stored === "snagd-day" ? "snagd-day" : "tokyo-night";
     document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = theme === "tokyo-day" ? "light" : "dark";
+    document.documentElement.style.colorScheme = theme === "snagd-day" ? "light" : "dark";
   } catch (error) {
     document.documentElement.dataset.theme = "tokyo-night";
   }
@@ -78,3 +78,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+
