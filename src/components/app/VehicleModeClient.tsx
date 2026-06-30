@@ -5,11 +5,14 @@ import { AppCard } from "@/components/app/AppCard";
 import { RiskBadge } from "@/components/app/Badges";
 import { currency } from "@/lib/format";
 import { vinService } from "@/lib/services/vinService";
+import { playScanBeep } from "@/lib/services/audioFeedbackService";
 import type { VehicleVinResult } from "@/types/snagd";
 
 export function VehicleModeClient() {
   const [vin, setVin] = useState("1HGCM82633A004352");
   const [result, setResult] = useState<VehicleVinResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   async function decodeVin() {
     setResult(await vinService.decodeVin(vin));
@@ -33,7 +36,7 @@ export function VehicleModeClient() {
             />
           </label>
           <button type="button" onClick={decodeVin} className="mt-4 h-11 w-full rounded-card bg-profit px-4 text-sm font-bold text-bg">
-            Decode and score vehicle
+            Scan VIN / run lookup
           </button>
         </AppCard>
 
@@ -62,7 +65,9 @@ export function VehicleModeClient() {
       <div className="grid content-start gap-4">
         <AppCard>
           <h3 className="text-lg font-bold text-ink">VIN result</h3>
-          {!result ? (
+          {loading ? (
+            <div className="mt-4 grid gap-3">{["Scanning VIN", "Decoding vPIC placeholder", "Checking recall/risk modules", "Comparing vehicle comps", "Building offer"].map((step) => <div key={step} className="rounded-card border border-line p-4 shimmer text-transparent">{step}</div>)}</div>
+          ) : !result ? (
             <p className="mt-3 text-sm leading-6 text-muted">
               Decode a VIN to populate the mock vPIC, recall, market value, title/history, and profit estimate modules.
             </p>
@@ -81,6 +86,9 @@ export function VehicleModeClient() {
                 <VehicleMetric label="Private-party comps" value={result.privatePartyComps} />
                 <VehicleMetric label="Suggested max offer" value={currency(result.suggestedMaxOffer)} accent />
                 <VehicleMetric label="Flip profit estimate" value={result.estimatedFlipProfit} accent />
+                <VehicleMetric label="Comparable vehicles" value={`${result.comparableVehicleCount ?? 18}`} />
+                <VehicleMetric label="Days to sell" value={result.daysToSellEstimate ?? "10-21 days"} />
+                <VehicleMetric label="Market demand" value={result.marketDemand ?? "High"} />
               </div>
 
               <div className="flex flex-wrap gap-2">

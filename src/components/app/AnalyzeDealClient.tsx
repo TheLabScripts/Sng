@@ -23,6 +23,7 @@ export function AnalyzeDealClient() {
   const [input, setInput] = useState<DealAnalysisInput>(initialInput);
   const [screenshotName, setScreenshotName] = useState("");
   const [result, setResult] = useState<DealAnalysisResult | null>(null);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -130,7 +131,9 @@ export function AnalyzeDealClient() {
 
       <AppCard className="lg:sticky lg:top-24 lg:self-start">
         <h2 className="text-2xl font-bold text-ink">Deal result</h2>
-        {!result ? (
+        {loading ? (
+          <div className="mt-5 grid gap-3">{["Reading listing", "Comparing market data", "Estimating resale value", "Checking risk signals", "Building recommendation"].map((step) => <div key={step} className="rounded-card border border-line p-4 shimmer text-transparent">{step}</div>)}</div>
+        ) : !result ? (
           <div className="mt-5 rounded-card border border-line bg-surface-2 p-4">
             <p className="text-sm leading-6 text-muted">
               Submit the form to see a Buy / Maybe / Pass result, Snagd Score, estimated profit, max offer, risk, and seller message.
@@ -155,6 +158,10 @@ export function AnalyzeDealClient() {
               <ResultMetric label="Repair cost" value={currency(result.repairCostEstimate)} />
               <ResultMetric label="Confidence" value={result.confidenceLevel} />
               <ResultMetric label="Time to sell" value={result.timeToSellEstimate} />
+              <ResultMetric label="Based on sales" value={`${result.similarSalesCount}`} />
+              <ResultMetric label="Under market" value={`${result.underMarketPercent}%`} accent />
+              <ResultMetric label="Demand" value={result.demand} />
+              <ResultMetric label="Competition" value={result.competition} />
             </div>
 
             <div className="flex flex-wrap gap-2">

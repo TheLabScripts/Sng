@@ -3,6 +3,7 @@ export * from "./creator";
 export * from "./deals";
 export * from "./onboarding";
 export * from "./pricing";
+export * from "./product";
 export * from "./usage";
 export * from "./vehicle";
 export * from "./watchlists";

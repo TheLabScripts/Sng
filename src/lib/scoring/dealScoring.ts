@@ -1,4 +1,5 @@
-import type { ConfidenceLevel, DealAnalysisInput, DealAnalysisResult, Recommendation, RiskLevel } from "@/types/snagd";
+import type { ConfidenceLevel, CompetitionLevel, DealAnalysisInput, DealAnalysisResult, DemandLevel, Recommendation, RiskLevel } from "@/types/snagd";
+import { similarSales } from "@/lib/mock-data/deals";
 
 const commonFastFlipTerms = [
   "couch",
@@ -44,6 +45,10 @@ export function analyzeDeal(input: DealAnalysisInput): DealAnalysisResult {
   const recommendation = getRecommendation(snagdScore, riskLevel, estimatedProfit);
   const suggestedMaxOffer = Math.max(0, Math.round(resaleValue * 0.62 - pickupCost - repairCost));
   const redFlags = buildRedFlags(combined, riskLevel, estimatedProfit, distance, askingPrice);
+  const demand = estimateDemand(combined);
+  const competition = estimateCompetition(combined, distance);
+  const similarSalesCount = isVehicle(combined) ? 15 : combined.includes("iphone") ? 18 : commonFastFlipTerms.some((term) => combined.includes(term)) ? 37 : 22;
+  const underMarketPercent = Math.max(0, Math.min(100, Math.round(((resaleValue - askingPrice) / Math.max(resaleValue, 1)) * 100)));
 
   return {
     recommendation,
@@ -60,6 +65,11 @@ export function analyzeDeal(input: DealAnalysisInput): DealAnalysisResult {
     suggestedSellerMessage: buildSellerMessage(input.title, suggestedMaxOffer),
     redFlags,
     explanation: buildExplanation(recommendation, estimatedProfit, distance, riskLevel, confidenceLevel, askingPrice),
+    similarSalesCount,
+    underMarketPercent,
+    demand,
+    competition,
+    similarSales,
   };
 }
 
@@ -146,6 +156,18 @@ function buildExplanation(
     return `There may be upside, but the deal needs verification. Estimated profit is $${profit}, pickup is ${distance} miles, and risk is ${risk.toLowerCase()}. Negotiate below the asking price of $${askingPrice}.`;
   }
   return `Pass for now. The projected margin is too thin or the risk is too high compared with the pickup and repair assumptions.`;
+}
+
+function estimateDemand(combined: string): DemandLevel {
+  if (combined.includes("tool") || combined.includes("milwaukee") || combined.includes("couch") || combined.includes("breville") || isVehicle(combined)) return "High";
+  if (combined.includes("broken") || combined.includes("crack")) return "Medium";
+  return "Medium";
+}
+
+function estimateCompetition(combined: string, distance: number): CompetitionLevel {
+  if (distance <= 8 && !combined.includes("iphone")) return "Low";
+  if (combined.includes("iphone") || isVehicle(combined)) return "High";
+  return "Medium";
 }
 
 function estimateTimeToSell(combined: string, risk: RiskLevel) {

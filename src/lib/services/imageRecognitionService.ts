@@ -1,0 +1,1 @@
+export const imageRecognitionService = { async identifyImage() { return { item: "Breville Barista Express espresso machine", confidence: "High", source: "Mock visual recognition" }; } };

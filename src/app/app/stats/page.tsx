@@ -1,0 +1,9 @@
+import { AppCard } from "@/components/app/AppCard";
+import { lifetimeStats } from "@/lib/mock-data";
+import { currency } from "@/lib/format";
+
+export default function StatsPage() {
+  const stats = [["Lifetime earnings", currency(lifetimeStats.lifetimeEarnings)], ["Lifetime profit", currency(lifetimeStats.lifetimeProfit)], ["Monthly profit", currency(lifetimeStats.monthlyProfit)], ["Weekly opportunities", currency(lifetimeStats.weeklyProfitOpportunities)], ["Average profit", currency(lifetimeStats.averageProfitPerFlip)], ["Best category", lifetimeStats.bestCategory], ["Best deal", lifetimeStats.bestDeal], ["Deals bought", String(lifetimeStats.dealsBought)], ["Deals sold", String(lifetimeStats.dealsSold)], ["Deals passed", String(lifetimeStats.dealsPassed)], ["Deals lost", String(lifetimeStats.dealsLost)], ["Estimated missed profit", currency(lifetimeStats.estimatedMissedProfit)], ["Saved deals", String(lifetimeStats.savedDealsCount)], ["Active watchlists", String(lifetimeStats.activeWatchlists)]];
+  return <div className="mx-auto max-w-shell"><h2 className="text-2xl font-bold text-ink">Stats / Profit Tracking</h2><p className="mt-1 text-sm text-muted">Mature retention signals, real profit tracking, no childish leveling.</p><div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{stats.map(([label, value]) => <AppCard key={label}><p className="text-sm text-muted">{label}</p><p className="mt-2 font-mono text-2xl font-bold text-amber">{value}</p></AppCard>)}</div><AppCard className="mt-5"><h3 className="text-lg font-bold text-ink">Streaks</h3><div className="mt-4 grid gap-3 sm:grid-cols-3"><Streak value={lifetimeStats.dealStreak} /><Streak value={lifetimeStats.profitStreak} /><Streak value={lifetimeStats.weeklyActionStreak} /></div></AppCard></div>;
+}
+function Streak({ value }: { value: string }) { return <div className="rounded-card border border-brand/35 bg-brand/10 p-4 text-sm font-bold text-brand">{value}</div>; }

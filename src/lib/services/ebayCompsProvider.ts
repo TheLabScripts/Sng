@@ -1,0 +1,1 @@
+export const ebayCompsProvider = { async getComps(query: string) { return { query, source: "eBay Browse/comps provider placeholder", connected: false, note: "No real sold-history API connected in this dev build." }; } };

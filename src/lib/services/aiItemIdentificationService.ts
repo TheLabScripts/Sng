@@ -1,0 +1,1 @@
+export const aiItemIdentificationService = { async identifyItemFromScan() { return { item: "Breville Barista Express espresso machine", category: "Appliances", confidence: "High", provider: "AI item identification abstraction" }; } };

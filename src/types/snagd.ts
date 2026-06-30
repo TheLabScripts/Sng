@@ -1,10 +1,29 @@
 export type Recommendation = "BUY" | "MAYBE" | "PASS";
 export type RiskLevel = "Low" | "Medium" | "High";
 export type ConfidenceLevel = "Low" | "Medium" | "High";
+export type DemandLevel = "Low" | "Medium" | "High";
+export type CompetitionLevel = "Low" | "Medium" | "High";
+export type DealStatus = "New" | "Saved" | "Messaged Seller" | "Planning Pickup" | "Bought" | "Passed" | "Lost / Sold to Someone Else" | "Listed for Resale" | "Sold";
+
+export type SimilarSale = {
+  id: string;
+  itemTitle: string;
+  thumbnailTone: string;
+  price: number;
+  condition: string;
+  source: string;
+  date: string;
+  matchConfidence: ConfidenceLevel;
+  notes: string;
+};
 
 export type Deal = {
   id: string;
   itemName: string;
+  thumbnailTone: string;
+  sellerRating?: string;
+  listingUrl?: string;
+  messageUrl?: string;
   askingPrice: number;
   askingLabel: string;
   estimatedResale: string;
@@ -24,125 +43,26 @@ export type Deal = {
   timePosted: string;
   reason: string;
   note?: string;
+  similarSalesCount: number;
+  underMarketPercent: number;
+  demand: DemandLevel;
+  competition: CompetitionLevel;
+  confidence: ConfidenceLevel;
+  reasonTags: string[];
+  similarSales: SimilarSale[];
+  status?: DealStatus;
 };
 
-export type Alert = {
-  id: string;
-  type: string;
-  item: string;
-  score: number;
-  profit: string;
-  distance: string;
-  timePosted: string;
-  why: string;
-  severity: "profit" | "amber" | "risk" | "info";
-};
-
-export type Watchlist = {
-  id: string;
-  name: string;
-  nichePreset: string;
-  everythingMode: boolean;
-  location: string;
-  radius: number;
-  maxPickupDistance: number;
-  category: string;
-  includeKeywords: string;
-  excludeKeywords: string;
-  maxBuyPrice: number;
-  minimumEstimatedProfit: number;
-  minimumSnagdScore: number;
-  conditionPreference: string;
-  alertSpeedPreference: string;
-  notificationMethod: string;
-};
-
-export type PricingPlan = {
-  id: "founder" | "pro" | "power";
-  name: string;
-  price: number;
-  summary: string;
-  features: string[];
-  highlighted?: boolean;
-};
-
-export type UsageSummary = {
-  plan: string;
-  dealChecksUsed: number;
-  dealChecksLimit: number;
-  watchlistsUsed: number;
-  watchlistsLimit: number;
-  everythingMode: boolean;
-  billingCycleEnds: string;
-};
-
-export type CreatorStats = {
-  creatorCode: string;
-  referralClicks: number;
-  trialSignups: number;
-  paidSubscribers: number;
-  activeSubscribers: number;
-  monthlyRecurringCommission: number;
-  estimatedPayout: number;
-  conversionRate: number;
-};
-
-export type OnboardingProfile = {
-  preset: string;
-  location: string;
-  searchRadius: number;
-  maxPickupDistance: number;
-  maxBuyPrice: number;
-  minimumProfitTarget: number;
-  minimumSnagdScore: number;
-  alertPreference: string;
-  everythingMode: boolean;
-};
-
-export type DealAnalysisInput = {
-  title: string;
-  askingPrice: number;
-  category: string;
-  condition: string;
-  location: string;
-  description: string;
-  listingUrl?: string;
-  estimatedPickupDistance: number;
-  notes?: string;
-};
-
-export type DealAnalysisResult = {
-  recommendation: Recommendation;
-  snagdScore: number;
-  askingPrice: number;
-  estimatedResaleValue: number;
-  estimatedProfit: number;
-  suggestedMaxOffer: number;
-  confidenceLevel: ConfidenceLevel;
-  riskLevel: RiskLevel;
-  pickupCostEstimate: number;
-  repairCostEstimate: number;
-  timeToSellEstimate: string;
-  suggestedSellerMessage: string;
-  redFlags: string[];
-  explanation: string;
-};
-
-export type VehicleVinResult = {
-  vin: string;
-  year: string;
-  make: string;
-  model: string;
-  trim: string;
-  bodyClass: string;
-  engine: string;
-  recalls: string[];
-  marketValueRange: string;
-  privatePartyComps: string;
-  titleHistoryRisk: RiskLevel;
-  mileageRisk: RiskLevel;
-  repairRisks: string[];
-  suggestedMaxOffer: number;
-  estimatedFlipProfit: string;
-  walkAwayWarnings: string[];
-};
+export type Alert = { id: string; type: string; item: string; score: number; profit: string; distance: string; timePosted: string; why: string; severity: "profit" | "amber" | "risk" | "info"; };
+export type Watchlist = { id: string; name: string; nichePreset: string; everythingMode: boolean; location: string; radius: number; maxPickupDistance: number; category: string; includeKeywords: string; excludeKeywords: string; maxBuyPrice: number; minimumEstimatedProfit: number; minimumSnagdScore: number; conditionPreference: string; alertSpeedPreference: string; notificationMethod: string; producingDeals?: number; hotToday?: boolean; };
+export type PricingPlan = { id: "founder" | "pro" | "power"; name: string; price: number; summary: string; features: string[]; highlighted?: boolean; };
+export type UsageSummary = { plan: string; dealChecksUsed: number; dealChecksLimit: number; watchlistsUsed: number; watchlistsLimit: number; everythingMode: boolean; billingCycleEnds: string; vinChecksUsed?: number; vinChecksLimit?: number; };
+export type CreatorStats = { creatorCode: string; referralClicks: number; trialSignups: number; paidSubscribers: number; activeSubscribers: number; monthlyRecurringCommission: number; estimatedPayout: number; conversionRate: number; };
+export type OnboardingProfile = { preset: string; location: string; searchRadius: number; maxPickupDistance: number; maxBuyPrice: number; minimumProfitTarget: number; minimumSnagdScore: number; alertPreference: string; everythingMode: boolean; };
+export type DealAnalysisInput = { title: string; askingPrice: number; category: string; condition: string; location: string; description: string; listingUrl?: string; estimatedPickupDistance: number; notes?: string; };
+export type DealAnalysisResult = { recommendation: Recommendation; snagdScore: number; askingPrice: number; estimatedResaleValue: number; estimatedProfit: number; suggestedMaxOffer: number; confidenceLevel: ConfidenceLevel; riskLevel: RiskLevel; pickupCostEstimate: number; repairCostEstimate: number; timeToSellEstimate: string; suggestedSellerMessage: string; redFlags: string[]; explanation: string; similarSalesCount: number; underMarketPercent: number; demand: DemandLevel; competition: CompetitionLevel; similarSales: SimilarSale[]; };
+export type FieldScanResult = { id: string; itemDetected: string; confidence: ConfidenceLevel; suggestedCategory: string; estimatedRetailPrice: number; estimatedResalePrice: string; likelySaleRange: string; recentSimilarSales: SimilarSale[]; basedOnSales: number; sellThroughSpeed: string; suggestedMaxBuyPrice: number; estimatedProfit: string; demand: DemandLevel; recommendation: Recommendation; riskNotes: string[]; };
+export type LifetimeStats = { lifetimeEarnings: number; lifetimeProfit: number; monthlyProfit: number; weeklyProfitOpportunities: number; averageProfitPerFlip: number; bestCategory: string; bestDeal: string; dealsBought: number; dealsSold: number; dealsPassed: number; dealsLost: number; estimatedMissedProfit: number; savedDealsCount: number; activeWatchlists: number; totalDealsTracked: number; winRate: number; totalEstimatedOpportunitiesFound: number; dealStreak: string; profitStreak: string; weeklyActionStreak: string; };
+export type TrendingCategory = { name: string; newDeals: number; averageProfit: number; demand: DemandLevel; trend: "up" | "steady" | "down"; };
+export type PriceAlert = { id: string; copy: string; item: string; impact: string; };
+export type VehicleVinResult = { vin: string; year: string; make: string; model: string; trim: string; bodyClass: string; engine: string; recalls: string[]; marketValueRange: string; privatePartyComps: string; titleHistoryRisk: RiskLevel; mileageRisk: RiskLevel; repairRisks: string[]; suggestedMaxOffer: number; estimatedFlipProfit: string; walkAwayWarnings: string[]; askingPrice?: number; riskLevel?: RiskLevel; marketDemand?: DemandLevel; comparableVehicleCount?: number; daysToSellEstimate?: string; aiSummary?: string; recommendation?: Recommendation; savedChecks?: number; };
