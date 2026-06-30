@@ -1,0 +1,164 @@
+ ⨯ ./src/components/app/AnalyzeDealClient.tsx
+Error: 
+  [31mx[0m Expected ';', '}' or <eof>
+     ,-[[36;1;4mC:\Users\Blanks\Desktop\Snagd\snagd-web\src\components\app\AnalyzeDealClient.tsx[0m:22:1]
+ [2m 22[0m |     export function AnalyzeDealClient() {
+ [2m 23[0m |       const [input, setInput] = useState<DealAnalysisInput>(initialInput);
+ [2m 24[0m |       const [screenshotName, setScreenshotName] = useState("");
+ [2m 25[0m | [31;1m,[0m[31;1m-[0m[31;1m>[0m   const [result, setResult] = useState<DealAnalysisResult | null>(null);`n  const [loading, setLoading] = useState(false);
+ [2m 26[0m | [31;1m|[0m   
+ [2m 27[0m | [31;1m|[0m     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+ [2m 28[0m | [31;1m|[0m       event.preventDefault();
+ [2m 29[0m | [31;1m|[0m       const nextResult = await aiScoringService.scoreDeal(input);
+ [2m 30[0m | [31;1m|[0m       setResult(nextResult);
+ [2m 31[0m | [31;1m|[0m     }
+ [2m 32[0m | [31;1m|[0m   
+ [2m 33[0m | [31;1m|[0m     function updateField<K extends keyof DealAnalysisInput>(key: K, value: DealAnalysisInput[K]) {
+ [2m 34[0m | [31;1m|[0m       setInput((current) => ({ ...current, [key]: value }));
+ [2m 35[0m | [31;1m|[0m     }
+ [2m 36[0m | [31;1m|[0m   
+ [2m 37[0m | [31;1m|[0m     return (
+ [2m 38[0m | [31;1m|[0m       <div className="mx-auto grid max-w-shell gap-4 lg:grid-cols-[1fr_0.9fr]">
+ [2m 39[0m | [31;1m|[0m         <AppCard>
+ [2m 40[0m | [31;1m|[0m           <h2 className="text-2xl font-bold text-ink">Analyze a deal</h2>
+ [2m 41[0m | [31;1m|[0m           <p className="mt-1 text-sm text-muted">Run a deterministic mock score using price, category, condition, risk, and distance.</p>
+ [2m 42[0m | [31;1m|[0m   
+ [2m 43[0m | [31;1m|[0m           <form className="mt-5 grid gap-4" onSubmit={handleSubmit}>
+ [2m 44[0m | [31;1m|[0m             <Field label="Listing title">
+ [2m 45[0m | [31;1m|[0m               <input className="field" value={input.title} onChange={(event) => updateField("title", event.target.value)} />
+ [2m 46[0m | [31;1m|[0m             </Field>
+ [2m 47[0m | [31;1m|[0m   
+ [2m 48[0m | [31;1m|[0m             <div className="grid gap-4 sm:grid-cols-2">
+ [2m 49[0m | [31;1m|[0m               <Field label="Asking price">
+ [2m 50[0m | [31;1m|[0m                 <input
+ [2m 51[0m | [31;1m|[0m                   className="field"
+ [2m 52[0m | [31;1m|[0m                   type="number"
+ [2m 53[0m | [31;1m|[0m                   min="0"
+ [2m 54[0m | [31;1m|[0m                   value={input.askingPrice}
+ [2m 55[0m | [31;1m|[0m                   onChange={(event) => updateField("askingPrice", Number(event.target.value))}
+ [2m 56[0m | [31;1m|[0m                 />
+ [2m 57[0m | [31;1m|[0m               </Field>
+ [2m 58[0m | [31;1m|[0m               <Field label="Estimated pickup distance">
+ [2m 59[0m | [31;1m|[0m                 <input
+ [2m 60[0m | [31;1m|[0m                   className="field"
+ [2m 61[0m | [31;1m|[0m                   type="number"
+ [2m 62[0m | [31;1m|[0m                   min="0"
+ [2m 63[0m | [31;1m|[0m                   value={input.estimatedPickupDistance}
+ [2m 64[0m | [31;1m|[0m                   onChange={(event) => updateField("estimatedPickupDistance", Number(event.target.value))}
+ [2m 65[0m | [31;1m|[0m                 />
+ [2m 66[0m | [31;1m|[0m               </Field>
+ [2m 67[0m | [31;1m|[0m             </div>
+ [2m 68[0m | [31;1m|[0m   
+ [2m 69[0m | [31;1m|[0m             <div className="grid gap-4 sm:grid-cols-2">
+ [2m 70[0m | [31;1m|[0m               <Field label="Category">
+ [2m 71[0m | [31;1m|[0m                 <select className="field" value={input.category} onChange={(event) => updateField("category", event.target.value)}>
+ [2m 72[0m | [31;1m|[0m                   {["Furniture", "Tools", "Electronics", "Appliances", "Sneakers/clothing", "Video games", "Car parts", "Vehicle", "Other"].map((item) => (
+ [2m 73[0m | [31;1m|[0m                     <option key={item}>{item}</option>
+ [2m 74[0m | [31;1m|[0m                   ))}
+ [2m 75[0m | [31;1m|[0m                 </select>
+ [2m 76[0m | [31;1m|[0m               </Field>
+ [2m 77[0m | [31;1m|[0m               <Field label="Condition">
+ [2m 78[0m | [31;1m|[0m                 <select className="field" value={input.condition} onChange={(event) => updateField("condition", event.target.value)}>
+ [2m 79[0m | [31;1m|[0m                   {["Like new", "Good", "Fair", "Damaged", "Untested", "Runs and drives"].map((item) => (
+ [2m 80[0m | [31;1m|[0m                     <option key={item}>{item}</option>
+ [2m 81[0m | [31;1m|[0m                   ))}
+ [2m 82[0m | [31;1m|[0m                 </select>
+ [2m 83[0m | [31;1m|[0m               </Field>
+ [2m 84[0m | [31;1m|[0m             </div>
+ [2m 85[0m | [31;1m|[0m   
+ [2m 86[0m | [31;1m|[0m             <Field label="Location / ZIP">
+ [2m 87[0m | [31;1m|[0m               <input className="field" value={input.location} onChange={(event) => updateField("location", event.target.value)} />
+ [2m 88[0m | [31;1m|[0m             </Field>
+ [2m 89[0m | [31;1m|[0m   
+ [2m 90[0m | [31;1m|[0m             <Field label="Description">
+ [2m 91[0m | [31;1m|[0m               <textarea
+ [2m 92[0m | [31;1m|[0m                 className="field min-h-[120px] resize-y"
+ [2m 93[0m | [31;1m|[0m                 value={input.description}
+ [2m 94[0m | [31;1m|[0m                 onChange={(event) => updateField("description", event.target.value)}
+ [2m 95[0m | [31;1m|[0m               />
+ [2m 96[0m | [31;1m|[0m             </Field>
+ [2m 97[0m | [31;1m|[0m   
+ [2m 98[0m | [31;1m|[0m             <Field label="Optional listing URL">
+ [2m 99[0m | [31;1m|[0m               <input
+ [2m100[0m | [31;1m|[0m                 className="field"
+ [2m101[0m | [31;1m|[0m                 placeholder="https://example.com/listing"
+ [2m102[0m | [31;1m|[0m                 value={input.listingUrl}
+ [2m103[0m | [31;1m|[0m                 onChange={(event) => updateField("listingUrl", event.target.value)}
+ [2m104[0m | [31;1m|[0m               />
+ [2m105[0m | [31;1m|[0m             </Field>
+ [2m106[0m | [31;1m|[0m   
+ [2m107[0m | [31;1m|[0m             <Field label="Optional screenshot upload placeholder">
+ [2m108[0m | [31;1m|[0m               <input
+ [2m109[0m | [31;1m|[0m                 className="field file:mr-3 file:rounded-card file:border-0 file:bg-surface-3 file:px-3 file:py-2 file:text-ink"
+ [2m110[0m | [31;1m|[0m                 type="file"
+ [2m111[0m | [31;1m|[0m                 accept="image/*"
+ [2m112[0m | [31;1m|[0m                 onChange={(event) => setScreenshotName(event.target.files?.[0]?.name ?? "")}
+ [2m113[0m | [31;1m|[0m               />
+ [2m114[0m | [31;1m|[0m               {screenshotName && <p className="mt-2 text-xs text-muted">Attached locally for demo: {screenshotName}</p>}
+ [2m115[0m | [31;1m|[0m             </Field>
+ [2m116[0m | [31;1m|[0m   
+ [2m117[0m | [31;1m|[0m             <Field label="Notes">
+ [2m118[0m | [31;1m|[0m               <textarea
+ [2m119[0m | [31;1m|[0m                 className="field min-h-[82px] resize-y"
+ [2m120[0m | [31;1m|[0m                 value={input.notes}
+ [2m121[0m | [31;1m|[0m                 onChange={(event) => updateField("notes", event.target.value)}
+ [2m122[0m | [31;1m|[0m               />
+ [2m123[0m | [31;1m|[0m             </Field>
+ [2m124[0m | [31;1m|[0m   
+ [2m125[0m | [31;1m|[0m             <button type="submit" className="h-12 rounded-card bg-profit px-5 text-sm font-bold text-bg transition hover:brightness-105">
+ [2m126[0m | [31;1m|[0m               Score deal
+ [2m127[0m | [31;1m|[0m             </button>
+ [2m128[0m | [31;1m|[0m           </form>
+ [2m129[0m | [31;1m|[0m         </AppCard>
+ [2m130[0m | [31;1m|[0m   
+ [2m131[0m | [31;1m|[0m         <AppCard className="lg:sticky lg:top-24 lg:self-start">
+ [2m132[0m | [31;1m|[0m           <h2 className="text-2xl font-bold text-ink">Deal result</h2>
+ [2m133[0m | [31;1m|[0m[31;1m-[0m[31;1m>[0m         {loading ? (`n          <div className="mt-5 grid gap-3">{["Reading listing", "Comparing market data", "Estimating resale value", "Checking risk signals", "Building recommendation"].map((step) => <div key={step} className="rounded-card border border-line p-4 shimmer text-transparent">{step}</div>)}</div>`n        ) : !result ? (
+     : [31;1m`[0m[31;1m---[0m[33;1m                     ^[0m
+     : [31;1m`[0m[31;1m---[0m[31;1m-[0m [31;1mThis is the expression part of an expression statement[0m
+ [2m134[0m |               <div className="mt-5 rounded-card border border-line bg-surface-2 p-4">
+ [2m135[0m |                 <p className="text-sm leading-6 text-muted">
+ [2m136[0m |                   Submit the form to see a Buy / Maybe / Pass result, Snagd Score, estimated profit, max offer, risk, and seller message.
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/app/AnalyzeDealClient.tsx
+ ⨯ TypeError: __webpack_modules__[moduleId] is not a function
+    at Object.__webpack_require__ [as require] (C:\Users\Blanks\Desktop\Snagd\snagd-web\.next\server\webpack-runtime.js:33:42)
+    at JSON.parse (<anonymous>)
+digest: "564374072"
+TypeError: __webpack_modules__[moduleId] is not a function
+    at Object.__webpack_require__ [as require] (C:\Users\Blanks\Desktop\Snagd\snagd-web\.next\server\webpack-runtime.js:33:42)
+    at require (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:40:20064)
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:108376
+    at ea (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:108583)
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:110813
+    at Object._fromJSON (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:111370)
+    at JSON.parse (<anonymous>)
+    at ec (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:109078)
+    at eo (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:108123)
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115291
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115308
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115341
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115358
+    at t (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115581)
+ ⨯ TypeError: __webpack_modules__[moduleId] is not a function
+    at Object.__webpack_require__ [as require] (C:\Users\Blanks\Desktop\Snagd\snagd-web\.next\server\webpack-runtime.js:33:42)
+    at require (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:40:20064)
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:108376
+    at ea (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:108583)
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:110813
+    at Object._fromJSON (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:111370)
+    at JSON.parse (<anonymous>)
+    at ec (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:109078)
+    at eo (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:108123)
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115291
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115308
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115341
+    at C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115358
+    at t (C:\Users\Blanks\Desktop\Snagd\snagd-web\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:115581) {
+  page: '/'
+}

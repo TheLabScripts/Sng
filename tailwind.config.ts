@@ -18,31 +18,20 @@ const config: Config = {
         amber: "var(--amber)",
         pass: "var(--pass)",
         info: "var(--info)",
+        brand: "var(--brand)",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
         sans: ["var(--font-body)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
-      borderRadius: {
-        card: "8px",
-      },
-      boxShadow: {
-        card: "var(--shadow-card)",
-        soft: "var(--shadow-soft)",
-      },
-      maxWidth: {
-        shell: "1180px",
-      },
+      borderRadius: { card: "12px" },
+      boxShadow: { card: "var(--shadow-card)", soft: "var(--shadow-soft)" },
+      maxWidth: { shell: "1180px" },
       keyframes: {
-        rise: {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
+        rise: { "0%": { opacity: "0", transform: "translateY(10px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
       },
-      animation: {
-        rise: "rise 0.45s cubic-bezier(0.22,1,0.36,1) both",
-      },
+      animation: { rise: "rise 0.45s cubic-bezier(0.22,1,0.36,1) both" },
     },
   },
   plugins: [],

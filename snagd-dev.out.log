@@ -41,3 +41,77 @@
  ○ Compiling /app/account ...
  ✓ Compiled /app/account in 570ms (610 modules)
  GET /app/account/ 200 in 672ms
+ ✓ Compiled in 1307ms (297 modules)
+ ✓ Compiled in 1008ms (297 modules)
+ ✓ Compiled in 332ms (298 modules)
+ ✓ Compiled in 274ms (298 modules)
+ ✓ Compiled in 268ms (298 modules)
+ ✓ Compiled in 177ms (298 modules)
+ ✓ Compiled in 352ms (298 modules)
+ ✓ Compiled in 508ms (298 modules)
+ ✓ Compiled in 304ms (298 modules)
+ ✓ Compiled in 558ms (298 modules)
+ ✓ Compiled in 352ms (298 modules)
+ ✓ Compiled in 410ms (298 modules)
+ ✓ Compiled in 296ms (298 modules)
+ ✓ Compiled / in 344ms (264 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 2.2s (775 modules)
+ GET / 500 in 3477ms
+ ✓ Compiled /pricing in 280ms (307 modules)
+ GET /pricing/ 200 in 459ms
+ ✓ Compiled /creators in 162ms (310 modules)
+ GET /creators/ 200 in 304ms
+ ✓ Compiled /login in 147ms (318 modules)
+ GET /login/ 200 in 298ms
+ ✓ Compiled /signup in 158ms (320 modules)
+ GET /signup/ 200 in 309ms
+ ✓ Compiled /onboarding in 224ms (335 modules)
+ GET /onboarding/ 200 in 320ms
+ ○ Compiling /app ...
+ ✓ Compiled /app in 714ms (821 modules)
+ GET /app/ 200 in 821ms
+ ✓ Compiled /app/deal-feed in 407ms (825 modules)
+ GET /app/deal-feed/ 200 in 498ms
+ ✓ Compiled /app/analyze in 310ms (360 modules)
+ GET /app/analyze/ 200 in 399ms
+ ✓ Compiled /app/watchlists in 236ms (365 modules)
+ GET /app/watchlists/ 200 in 348ms
+ ✓ Compiled /app/alerts in 470ms (841 modules)
+ GET /app/alerts/ 200 in 568ms
+ ○ Compiling /app/field-scan ...
+ ✓ Compiled /app/field-scan in 565ms (847 modules)
+ GET /app/field-scan/ 200 in 653ms
+ ✓ Compiled /app/vehicle-mode in 264ms (377 modules)
+ GET /app/vehicle-mode/ 200 in 381ms
+ ✓ Compiled /app/saved in 477ms (855 modules)
+ GET /app/saved/ 200 in 562ms
+ ○ Compiling /app/stats ...
+ ✓ Compiled /app/stats in 573ms (859 modules)
+ GET /app/stats/ 200 in 681ms
+ ✓ Compiled /app/billing in 288ms (384 modules)
+ GET /app/billing/ 200 in 403ms
+ ○ Compiling /app/creator ...
+ ✓ Compiled /app/creator in 521ms (863 modules)
+ GET /app/creator/ 200 in 649ms
+ ✓ Compiled /app/account in 339ms (388 modules)
+ GET /app/account/ 200 in 462ms
+ GET / 200 in 91ms
+ GET / 200 in 35ms
+ GET /pricing/ 200 in 49ms
+ GET /creators/ 200 in 73ms
+ GET /login/ 200 in 42ms
+ GET /signup/ 200 in 40ms
+ GET /onboarding/ 200 in 76ms
+ GET /app/ 200 in 133ms
+ GET /app/deal-feed/ 200 in 61ms
+ GET /app/analyze/ 200 in 47ms
+ GET /app/watchlists/ 200 in 69ms
+ GET /app/alerts/ 200 in 44ms
+ GET /app/field-scan/ 200 in 65ms
+ GET /app/vehicle-mode/ 200 in 65ms
+ GET /app/saved/ 200 in 80ms
+ GET /app/stats/ 200 in 49ms
+ GET /app/billing/ 200 in 69ms
+ GET /app/creator/ 200 in 77ms
+ GET /app/account/ 200 in 30ms
