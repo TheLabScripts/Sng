@@ -115,3 +115,12 @@
  GET /app/billing/ 200 in 69ms
  GET /app/creator/ 200 in 77ms
  GET /app/account/ 200 in 30ms
+ ✓ Compiled in 1750ms (538 modules)
+ ✓ Compiled in 263ms (490 modules)
+ ✓ Compiled in 945ms (490 modules)
+ ✓ Compiled in 831ms (490 modules)
+ ✓ Compiled in 883ms (490 modules)
+ ✓ Compiled in 347ms (490 modules)
+ ✓ Compiled in 510ms (538 modules)
+ ✓ Compiled in 397ms (491 modules)
+ ✓ Compiled in 392ms (491 modules)
