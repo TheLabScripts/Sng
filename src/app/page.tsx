@@ -1,241 +1,197 @@
 import Link from "next/link";
-import { Container } from "@/components/Container";
-import { Section } from "@/components/Section";
-import { Eyebrow } from "@/components/Eyebrow";
-import { CTAButton } from "@/components/CTAButton";
-import { StoreButtons } from "@/components/StoreButtons";
-import { MarketplaceStrip } from "@/components/MarketplaceStrip";
-import { HowItWorks } from "@/components/HowItWorks";
-import { FeatureRow } from "@/components/FeatureRow";
-import { EverythingMode } from "@/components/EverythingMode";
-import { Testimonial } from "@/components/Testimonial";
-import { SnagdScoreCard } from "@/components/SnagdScoreCard";
-import { FAQList } from "@/components/FAQItem";
-import { Bolt, Filter, Gauge, Tag } from "@/components/icons";
-import { mockDeals, heroDeal } from "@/components/mockDeals";
-import { faqs } from "@/content/faqs";
-import { trial } from "@/content/pricing";
+import { mockAlerts, mockDeals, pricingPlans } from "@/lib/mock-data";
 
 export default function HomePage() {
   return (
     <>
-      {/* ───────── Hero ───────── */}
-      <section className="bg-grid">
-        <Container className="grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="animate-rise">
-            <Eyebrow>The AI deal scout for local reselling</Eyebrow>
-            <h1 className="mt-5 font-display text-4xl font-black leading-[1.05] tracking-tight text-ink sm:text-6xl">
-              Stop scrolling.
-              <br />
-              Start <span className="text-profit">snagging.</span>
+      <section className="relative overflow-hidden border-b border-line bg-bg">
+        <ProductScene />
+        <div className="relative mx-auto flex min-h-[82svh] max-w-shell flex-col justify-center px-4 py-16 sm:px-6">
+          <div className="max-w-2xl animate-rise">
+            <p className="text-sm font-bold text-profit">Find local flips worth chasing.</p>
+            <h1 className="mt-4 text-5xl font-extrabold leading-[1.02] text-ink sm:text-6xl lg:text-7xl">
+              Stop scrolling. Start snagging.
             </h1>
-            <p className="mt-5 max-w-md text-lg leading-relaxed text-muted">
-              Know what to buy, what to offer, and what you can make — before you message the
-              seller. Snagd scores local flips and tells you straight: Buy, Maybe, or Pass.
+            <p className="mt-5 max-w-xl text-lg leading-8 text-muted">
+              Snagd is the reseller command center for watchlists, alerts, deal scoring, usage, and vehicle checks. Know the profit before you buy.
             </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <CTAButton href="/pricing/#download" className="px-7 py-3.5 text-base">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/signup/" className="inline-flex h-12 items-center justify-center rounded-card bg-profit px-6 text-sm font-bold text-bg">
                 Get Snagd
-              </CTAButton>
-              <CTAButton href="#how" variant="ghost" className="px-7 py-3.5 text-base">
+              </Link>
+              <Link href="#how" className="inline-flex h-12 items-center justify-center rounded-card border border-line bg-surface/85 px-6 text-sm font-bold text-ink">
                 See how it works
-              </CTAButton>
+              </Link>
             </div>
-
-            <div className="mt-6">
-              <StoreButtons />
-              <p className="mt-3 font-mono text-xs text-muted">
-                {trial.days}-day free trial · cancel anytime
-              </p>
-            </div>
+            <p className="mt-5 text-sm text-muted">
+              Built for furniture flippers, tool hunters, electronics resellers, vehicle flippers, and anyone who wants better decisions from local listings.
+            </p>
           </div>
-
-          {/* Signature: the live deal-terminal readout */}
-          <div className="animate-rise [animation-delay:120ms]">
-            <div className="relative mx-auto max-w-sm">
-              <div className="absolute -inset-4 -z-10 rounded-[28px] bg-profit/5 blur-2xl" aria-hidden />
-              <SnagdScoreCard deal={heroDeal} featured />
-              <div className="mt-3 grid grid-cols-2 gap-3">
-                <MiniStat label="Scanned today" value="1,284" />
-                <MiniStat label="Avg. profit found" value="$118" accent />
-              </div>
-            </div>
-          </div>
-        </Container>
+        </div>
       </section>
 
-      <MarketplaceStrip />
-
-      {/* ───────── Problem ───────── */}
-      <Section
-        eyebrow="The grind"
-        title="The good flips are gone in minutes. You can't watch all day."
-        intro="Most of what's listed is junk, overpriced, or already spoken for. By the time you scroll past it, message, and do the math in your head — someone with cash already showed up."
-      >
-        <div className="grid gap-4 sm:grid-cols-3">
-          {[
-            { t: "Endless scrolling", d: "Hours lost sifting listings to find one flip that's actually worth the drive." },
-            { t: "Guessing the math", d: "Eyeballing resale value and hoping there's profit after pickup and repairs." },
-            { t: "Beaten to it", d: "The underpriced gems sell fast — usually before you've even decided." },
-          ].map((p) => (
-            <div key={p.t} className="rounded-card border border-line bg-surface p-6">
-              <h3 className="font-display text-lg font-bold text-ink">{p.t}</h3>
-              <p className="mt-2 text-sm text-muted">{p.d}</p>
-            </div>
-          ))}
+      <Section id="how" eyebrow="How it works" title="Don't just get more alerts. Get better decisions.">
+        <div className="grid gap-4 md:grid-cols-3">
+          <Feature title="Set your hunt" body="Choose a niche preset, ZIP or city, budget, pickup distance, minimum profit, and minimum Snagd Score." />
+          <Feature title="Let Snagd filter" body="Watchlists and Everything Mode surface only the leads that match your area, budget, and margin rules." />
+          <Feature title="Move with confidence" body="Deal Analyzer returns Buy, Maybe, or Pass with resale value, profit, max offer, risks, and a seller message." />
         </div>
       </Section>
 
-      <HowItWorks />
-
-      {/* ───────── Feature: AI scoring ───────── */}
-      <FeatureRow
-        eyebrow="AI Snagd Score"
-        title="A profit verdict, not just a price."
-        body="Swoopa shows you a valuation and leaves the call to you. Snagd does the math and makes the call — a 0–100 score and a clear Buy, Maybe, or Pass, with the profit range and the most you should pay."
-        bullets={[
-          "Estimated resale value & profit range",
-          "Suggested max offer so you never overpay",
-          "Confidence and risk level on every deal",
-          "Plain-English reason for the verdict",
-        ]}
-        visual={
-          <div className="mx-auto max-w-sm">
-            <SnagdScoreCard deal={mockDeals[1]} featured />
+      <Section eyebrow="Why it makes money" title="The math is visible before you message the seller.">
+        <div className="grid gap-4 lg:grid-cols-[1fr_1fr]">
+          <div className="rounded-card border border-line bg-surface p-5 shadow-card">
+            <h3 className="text-xl font-bold text-ink">A $20/month command center</h3>
+            <p className="mt-3 text-sm leading-6 text-muted">
+              One avoided bad pickup or one faster profitable buy can cover the Founder plan. Snagd focuses on time saved, better offers, and fewer thin-margin mistakes.
+            </p>
+            <div className="mt-5 grid grid-cols-2 gap-4">
+              <MiniMetric label="Founder plan" value="$20/mo" />
+              <MiniMetric label="Deal Checks" value="100/mo" />
+              <MiniMetric label="Watchlists" value="5" />
+              <MiniMetric label="Everything Mode" value="Included" />
+            </div>
           </div>
-        }
-      />
-
-      {/* ───────── Feature: alerts/watchlists ───────── */}
-      <FeatureRow
-        flip
-        eyebrow="Watchlists & alerts"
-        title="Set your hunt once. Snagd watches for you."
-        body="Build Watchlists for the niches and areas you work. Snagd surfaces matching deals and pings you the moment something with real margin shows up — so you're first to the seller, not last."
-        bullets={[
-          "Saved deal watches by niche, area & budget",
-          "High-score, underpriced & price-drop alerts",
-          "Seller-urgency and free-item detection",
-          "In-app + email now · SMS & Discord coming",
-        ]}
-        visual={
-          <div className="mx-auto grid max-w-sm gap-3">
-            {mockDeals.slice(2, 4).map((d) => (
-              <SnagdScoreCard key={d.title} deal={d} />
+          <div className="grid gap-4">
+            {mockDeals.slice(0, 3).map((deal) => (
+              <div key={deal.id} className="rounded-card border border-line bg-surface p-4 shadow-card">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="font-bold text-ink">{deal.itemName}</h3>
+                    <p className="mt-1 text-sm text-muted">{deal.reason}</p>
+                  </div>
+                  <span className="font-mono text-xl font-bold text-profit tnum">{deal.score}</span>
+                </div>
+              </div>
             ))}
           </div>
-        }
-      />
-
-      {/* ───────── Feature: filtering ───────── */}
-      <Section
-        eyebrow="Less junk"
-        title="Filters that cut the garbage, not the good stuff"
-        intro="Snagd hides the overpriced, the broken, and the no-margin listings before they ever reach you — so the feed you see is only flips worth chasing."
-      >
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            { icon: <Gauge />, t: "Margin filter", d: "Auto-hide anything without real profit room." },
-            { icon: <Filter />, t: "Keyword controls", d: "Block 'broken', 'as-is', and your own no-go terms." },
-            { icon: <Tag />, t: "Niche presets", d: "Furniture, tools, sneakers, appliances & more." },
-            { icon: <Bolt />, t: "Everything Mode", d: "Watch for any item with strong upside." },
-          ].map((f) => (
-            <div key={f.t} className="rounded-card border border-line bg-surface p-6">
-              <span className="grid h-10 w-10 place-items-center rounded-lg bg-profit/12 text-profit">
-                {f.icon}
-              </span>
-              <h3 className="mt-4 font-display text-base font-bold text-ink">{f.t}</h3>
-              <p className="mt-1.5 text-sm text-muted">{f.d}</p>
-            </div>
-          ))}
         </div>
       </Section>
 
-      <EverythingMode />
-      <Testimonial />
-
-      {/* ───────── Pricing teaser ───────── */}
-      <Section
-        eyebrow="Priced for flippers, not dealers"
-        title="More than Swoopa. A fraction of the price."
-        intro="Swoopa's cheapest usable plan runs $47/mo and they built it for car dealers. Snagd starts at $19/mo billed yearly — built for everyday local flippers."
-      >
-        <div className="mx-auto flex max-w-md flex-col items-center gap-5 rounded-card border border-profit/40 bg-surface p-8 text-center shadow-glow">
-          <span className="font-mono text-[11px] uppercase tracking-widest text-profit">
-            Founder plan
-          </span>
-          <div className="flex items-baseline gap-1.5">
-            <span className="font-mono text-5xl font-bold tnum text-ink">$19</span>
-            <span className="text-muted">/mo billed yearly</span>
-          </div>
-          <p className="text-sm text-muted">
-            100 Deal Checks · 5 Watchlists · Everything Mode · Buy/Maybe/Pass on every listing.
-          </p>
-          <CTAButton href="/pricing/" className="w-full">
-            See all plans
-          </CTAButton>
-        </div>
-      </Section>
-
-      {/* ───────── Creator teaser ───────── */}
-      <Container className="py-12 sm:py-16">
-        <div className="flex flex-col items-start justify-between gap-6 rounded-card border border-line bg-gradient-to-r from-surface to-surface-2 p-8 sm:flex-row sm:items-center sm:p-10">
-          <div className="max-w-xl">
-            <Eyebrow>Creators &amp; partners</Eyebrow>
-            <h3 className="mt-3 font-display text-2xl font-extrabold text-ink">
-              If your audience flips, you should be earning from it.
-            </h3>
-            <p className="mt-2 text-sm text-muted">
-              Earn 30% recurring commission for every subscriber you bring — every month they stay.
+      <Section eyebrow="Everything Mode" title="No niche? Snagd can watch anything profitable.">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-card border border-line bg-surface p-5 shadow-card">
+            <p className="text-sm leading-6 text-muted">
+              Everything Mode watches for any deal that clears your budget, distance, profit target, and minimum Snagd Score. It is built for resellers who care about margin more than category.
             </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {["Furniture", "Tools", "Electronics", "Appliances", "Vehicles", "Free finds", "High-ticket", "Fast flips"].map((item) => (
+                <span key={item} className="rounded-card border border-line bg-surface-2 px-3 py-2 text-sm text-muted">{item}</span>
+              ))}
+            </div>
           </div>
-          <CTAButton href="/creators/" variant="ghost" className="shrink-0">
-            Become a partner
-          </CTAButton>
+          <div className="rounded-card border border-line bg-surface p-5 shadow-card">
+            <h3 className="text-lg font-bold text-ink">Recent alert logic</h3>
+            <div className="mt-4 grid gap-3">
+              {mockAlerts.slice(0, 4).map((alert) => (
+                <div key={alert.id} className="border-b border-line pb-3 last:border-b-0 last:pb-0">
+                  <p className="font-bold text-ink">{alert.type}</p>
+                  <p className="mt-1 text-sm text-muted">{alert.why}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </Container>
-
-      {/* ───────── FAQ ───────── */}
-      <Section eyebrow="Questions" title="Need a hand?">
-        <FAQList faqs={faqs.slice(0, 6)} />
-        <p className="mt-6 text-center text-sm text-muted">
-          More questions?{" "}
-          <Link href="/support/" className="text-profit hover:underline">
-            Visit support
-          </Link>
-          .
-        </p>
       </Section>
 
-      {/* ───────── Final CTA ───────── */}
-      <section className="border-t border-line bg-grid">
-        <Container className="py-20 text-center">
-          <h2 className="mx-auto max-w-2xl font-display text-3xl font-black tracking-tight text-ink sm:text-5xl">
-            Your area&rsquo;s next flip is already listed.
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-muted">
-            Let Snagd find it, score it, and tell you what it&rsquo;s worth. Get Snag&rsquo;d.
+      <Section eyebrow="Built safely" title="Source-layer placeholders now. Real integrations later.">
+        <div className="grid gap-4 md:grid-cols-3">
+          <Feature title="No unsafe scraping" body="The dev build uses user-supplied listings, manual source layers, and compliant placeholder data." />
+          <Feature title="No login automation" body="Snagd does not ask for marketplace credentials or automate marketplace accounts." />
+          <Feature title="Ready for APIs" body="Services are abstracted for scoring, VIN, comps, distance, notifications, and billing." />
+        </div>
+      </Section>
+
+      <section className="border-t border-line bg-surface/40">
+        <div className="mx-auto max-w-shell px-4 py-14 text-center sm:px-6">
+          <h2 className="text-3xl font-bold text-ink sm:text-4xl">Your next flip is already listed.</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted">
+            Get alerted before the good flips are gone, then use Deal Analyzer to know what to offer.
           </p>
-          <div className="mt-8 flex flex-col items-center gap-4">
-            <CTAButton href="/pricing/#download" className="px-8 py-4 text-base">
+          <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link href="/signup/" className="inline-flex h-12 items-center justify-center rounded-card bg-profit px-6 text-sm font-bold text-bg">
               Get Snagd
-            </CTAButton>
-            <StoreButtons />
+            </Link>
+            <Link href="/app/" className="inline-flex h-12 items-center justify-center rounded-card border border-line bg-surface px-6 text-sm font-bold text-ink">
+              Open demo app
+            </Link>
           </div>
-        </Container>
+        </div>
       </section>
     </>
   );
 }
 
-function MiniStat({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) {
+function ProductScene() {
   return (
-    <div className="rounded-xl border border-line bg-surface px-4 py-3">
-      <p className="font-mono text-[10px] uppercase tracking-widest text-muted">{label}</p>
-      <p className={`mt-1 font-mono text-xl font-bold tnum ${accent ? "text-profit" : "text-ink"}`}>
-        {value}
-      </p>
+    <div className="pointer-events-none absolute inset-0 overflow-hidden soft-grid opacity-75">
+      <div className="absolute right-[-8rem] top-12 hidden w-[720px] rotate-[-4deg] rounded-card border border-line bg-surface/85 p-4 shadow-card lg:block">
+        <div className="grid grid-cols-[1fr_0.8fr] gap-4">
+          <div className="rounded-card border border-line bg-surface-2 p-4">
+            <p className="text-sm text-muted">Dashboard</p>
+            <h3 className="mt-2 text-2xl font-bold text-ink">Leather sectional couch</h3>
+            <div className="mt-4 grid grid-cols-3 gap-3">
+              <MiniMetric label="Ask" value="$90" />
+              <MiniMetric label="Profit" value="$100-$150" />
+              <MiniMetric label="Score" value="91" />
+            </div>
+          </div>
+          <div className="rounded-card border border-line bg-surface-2 p-4">
+            <p className="text-sm text-muted">Everything Mode</p>
+            <p className="mt-3 text-4xl font-bold text-profit">On</p>
+            <p className="mt-3 text-sm text-muted">Budget, distance, profit, and score filters active.</p>
+          </div>
+        </div>
+        <div className="mt-4 grid grid-cols-3 gap-4">
+          {mockDeals.slice(1, 4).map((deal) => (
+            <div key={deal.id} className="rounded-card border border-line bg-surface-2 p-3">
+              <p className="truncate text-sm font-bold text-ink">{deal.itemName}</p>
+              <p className="mt-1 text-xs text-muted">{deal.estimatedProfit}</p>
+              <p className="mt-2 font-mono text-lg font-bold text-profit">{deal.score}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Section({
+  id,
+  eyebrow,
+  title,
+  children,
+}: {
+  id?: string;
+  eyebrow: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section id={id} className="border-b border-line bg-bg px-4 py-14 sm:px-6">
+      <div className="mx-auto max-w-shell">
+        <p className="text-sm font-bold text-profit">{eyebrow}</p>
+        <h2 className="mt-3 max-w-3xl text-3xl font-bold text-ink sm:text-4xl">{title}</h2>
+        <div className="mt-8">{children}</div>
+      </div>
+    </section>
+  );
+}
+
+function Feature({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-card border border-line bg-surface p-5 shadow-card">
+      <h3 className="text-lg font-bold text-ink">{title}</h3>
+      <p className="mt-3 text-sm leading-6 text-muted">{body}</p>
+    </div>
+  );
+}
+
+function MiniMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-xs text-muted">{label}</p>
+      <p className="mt-1 font-mono text-sm font-bold text-profit tnum">{value}</p>
     </div>
   );
 }

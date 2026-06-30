@@ -29,7 +29,7 @@ export function PricingCard({
         <span className="text-sm text-muted">/mo</span>
       </div>
       <p className="mt-1 text-xs text-muted">
-        {annual ? `Billed yearly · $${plan.annualTotal}/yr` : "Billed monthly"}
+        {annual ? `Billed yearly / $${plan.annualTotal}/yr` : "Billed monthly"}
       </p>
 
       <div className="mt-5 flex flex-wrap gap-2">

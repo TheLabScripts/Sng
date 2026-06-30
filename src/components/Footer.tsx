@@ -1,70 +1,57 @@
 import Link from "next/link";
-import { nav, site } from "@/content/site";
-import { Wordmark } from "./Nav";
-import { StoreButtons } from "./StoreButtons";
+import { SnagdLogo } from "@/components/ui/SnagdLogo";
+
+const productLinks = [
+  { label: "Pricing", href: "/pricing/" },
+  { label: "Creators", href: "/creators/" },
+  { label: "Login", href: "/login/" },
+  { label: "Sign up", href: "/signup/" },
+];
+
+const appLinks = [
+  { label: "Dashboard demo", href: "/app/" },
+  { label: "Analyze a deal", href: "/app/analyze/" },
+  { label: "Vehicle Mode", href: "/app/vehicle-mode/" },
+  { label: "Billing", href: "/app/billing/" },
+];
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-surface/40">
-      <div className="mx-auto max-w-shell px-5 py-12 sm:px-6">
-        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
-          <div className="max-w-sm">
-            <Wordmark />
-            <p className="mt-3 text-sm text-muted">
-              {site.tagline} Snagd watches your area, filters the junk, and tells you what&rsquo;s
-              actually worth chasing.
+    <footer className="border-t border-line bg-surface/55">
+      <div className="mx-auto max-w-shell px-4 py-12 sm:px-6">
+        <div className="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr]">
+          <div>
+            <SnagdLogo />
+            <p className="mt-4 max-w-sm text-sm leading-6 text-muted">
+              Snagd watches your area, filters the junk, and tells you what is actually worth chasing.
             </p>
-            <StoreButtons className="mt-5" />
+            <p className="mt-4 text-sm font-bold text-profit">Get Snag&apos;d.</p>
           </div>
 
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
-            <FooterCol title="Product">
-              {nav.map((n) => (
-                <FooterLink key={n.href} href={n.href}>
-                  {n.label}
-                </FooterLink>
-              ))}
-            </FooterCol>
-            <FooterCol title="Company">
-              <FooterLink href="/creators/">Creators &amp; Partners</FooterLink>
-              <FooterLink href="/support/">Support</FooterLink>
-              <FooterLink href={`mailto:${site.supportEmail}`}>{site.supportEmail}</FooterLink>
-            </FooterCol>
-            <FooterCol title="Legal">
-              <FooterLink href="/legal/privacy/">Privacy Policy</FooterLink>
-              <FooterLink href="/legal/terms/">Terms</FooterLink>
-            </FooterCol>
-          </div>
+          <FooterColumn title="Product" links={productLinks} />
+          <FooterColumn title="App demo" links={appLinks} />
         </div>
 
         <div className="mt-10 flex flex-col gap-2 border-t border-line pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Snagd. All rights reserved.</p>
-          <p className="font-mono">Local flips worth chasing.</p>
+          <p>Copyright {new Date().getFullYear()} Snagd. All rights reserved.</p>
+          <p>Safe source layers only. No marketplace login automation.</p>
         </div>
       </div>
     </footer>
   );
 }
 
-function FooterCol({ title, children }: { title: string; children: React.ReactNode }) {
+function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
-    <div className="flex flex-col gap-3">
-      <p className="font-mono text-[11px] uppercase tracking-widest text-muted">{title}</p>
-      <div className="flex flex-col gap-2.5">{children}</div>
+    <div>
+      <h3 className="text-sm font-bold text-ink">{title}</h3>
+      <div className="mt-4 grid gap-3">
+        {links.map((link) => (
+          <Link key={link.href} href={link.href} className="text-sm text-muted transition hover:text-ink">
+            {link.label}
+          </Link>
+        ))}
+      </div>
     </div>
-  );
-}
-function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
-  const external = href.startsWith("http") || href.startsWith("mailto");
-  if (external)
-    return (
-      <a href={href} className="text-sm text-muted transition-colors hover:text-ink">
-        {children}
-      </a>
-    );
-  return (
-    <Link href={href} className="text-sm text-muted transition-colors hover:text-ink">
-      {children}
-    </Link>
   );
 }

@@ -2,27 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ───────────── Snagd design tokens ─────────────
-   Near-black with a green undertone (not pure black),
-   money-green as the one signal color, amber for "maybe",
-   red for "pass". Retune the whole brand here. */
-:root {
-  --bg: #0a0f0c;
-  --surface: #111813;
-  --surface-2: #16201a;
-  --line: #1f2a23;
-  --ink: #eaf2ec;
-  --muted: #8a988f;
-  --profit: #3ddc84;
-  --profit-dim: #1f7a47;
-  --amber: #ffb02e;
-  --pass: #ff5d5d;
-  --font-display: 'Archivo', system-ui, sans-serif;
+:root,
+html[data-theme="tokyo-night"] {
+  color-scheme: dark;
+  --bg: #1a1b26;
+  --bg-soft: #161824;
+  --surface: #24283b;
+  --surface-2: #1f2335;
+  --surface-3: #2b3048;
+  --line: #3b4261;
+  --ink: #c0caf5;
+  --muted: #8b94bf;
+  --muted-strong: #565f89;
+  --profit: #9ece6a;
+  --amber: #ff9e64;
+  --pass: #f7768e;
+  --info: #7dcfff;
+  --shadow-card: 0 18px 45px -30px rgba(0, 0, 0, 0.72);
+  --shadow-soft: 0 10px 28px -24px rgba(0, 0, 0, 0.7);
+  --font-display: 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
+html[data-theme="tokyo-day"] {
+  color-scheme: light;
+  --bg: #f7f5ef;
+  --bg-soft: #eeebe3;
+  --surface: #ffffff;
+  --surface-2: #f1f3f7;
+  --surface-3: #e7ebf2;
+  --line: #d8deea;
+  --ink: #1f2335;
+  --muted: #626b83;
+  --muted-strong: #7b849b;
+  --profit: #5f8f3f;
+  --amber: #c96f32;
+  --pass: #c94f67;
+  --info: #347ca3;
+  --shadow-card: 0 18px 40px -32px rgba(31, 35, 53, 0.35);
+  --shadow-soft: 0 12px 26px -24px rgba(31, 35, 53, 0.28);
+}
+
 * {
+  box-sizing: border-box;
   border-color: var(--line);
 }
 
@@ -31,32 +54,53 @@ html {
 }
 
 body {
+  min-height: 100vh;
   background: var(--bg);
   color: var(--ink);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Ambient green wash behind the hero — subtle, used once. */
-.bg-grid {
-  background-image:
-    radial-gradient(60% 50% at 50% -10%, rgba(61, 220, 132, 0.10), transparent 70%),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 100% 100%, 44px 44px, 44px 44px;
+a {
+  color: inherit;
 }
 
-/* Mono numerals lock width so prices/scores don't jitter. */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--info) 34%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+}
+
 .tnum {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
 }
 
-/* Focus ring — visible, on-brand, meets the quality floor. */
-:focus-visible {
-  outline: 2px solid var(--profit);
-  outline-offset: 2px;
-  border-radius: 4px;
+.soft-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--line) 28%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--line) 24%, transparent) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -65,11 +109,7 @@ body {
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
   }
 }
-
-/* Thin scrollbar inside horizontal strips */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

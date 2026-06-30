@@ -1,128 +1,87 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/Container";
-import { Section } from "@/components/Section";
-import { Eyebrow } from "@/components/Eyebrow";
-import { StoreButtons } from "@/components/StoreButtons";
-import { PricingToggle } from "@/components/PricingToggle";
-import { FAQList } from "@/components/FAQItem";
-import { Check } from "@/components/icons";
-import { addOns, trial, competitor } from "@/content/pricing";
-import { faqs } from "@/content/faqs";
+import Link from "next/link";
+import { addOnPacks, goodPaywalls, pricingPlans } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description:
-    "Snagd plans from $19/mo billed yearly. More features than Swoopa at a fraction of the price — built for everyday local resellers. 7-day free trial.",
+  description: "Snagd pricing for reseller deal checks, watchlists, Everything Mode, alerts, and vehicle tools.",
 };
 
 export default function PricingPage() {
   return (
     <>
-      <section className="bg-grid">
-        <Container className="py-16 text-center sm:py-20">
-          <Eyebrow>Pricing</Eyebrow>
-          <h1 className="mx-auto mt-5 max-w-2xl font-display text-4xl font-black tracking-tight text-ink sm:text-5xl">
-            Pick a plan after your free trial
+      <section className="border-b border-line bg-bg px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-shell text-center">
+          <p className="text-sm font-bold text-profit">Pricing</p>
+          <h1 className="mx-auto mt-4 max-w-3xl text-4xl font-extrabold text-ink sm:text-5xl">
+            Start with the $20/month Founder plan. Upgrade only when usage makes sense.
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-muted">
-            Start free for {trial.days} days with full features. Commit when you&rsquo;re ready.
-            Cancel anytime — no penalties, no fees.
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-muted">
+            Snagd charges for more Deal Checks, more watchlists, faster alerts, advanced comps, and high-ticket workflows - not random locked buttons.
           </p>
-        </Container>
+        </div>
       </section>
 
-      <Container className="pb-8">
-        <PricingToggle />
-        <p className="mt-6 text-center font-mono text-xs text-muted">{trial.note}</p>
-      </Container>
-
-      {/* Competitor comparison */}
-      <Section
-        eyebrow="The honest comparison"
-        title="Why pay dealer prices to flip a couch?"
-        intro="Swoopa pivoted to car dealers and priced like it. Here's the same money laid side by side."
-      >
-        <div className="mx-auto max-w-3xl overflow-hidden rounded-card border border-line">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-surface-2 font-mono text-[11px] uppercase tracking-widest text-muted">
-              <tr>
-                <th className="px-5 py-4">Tier</th>
-                <th className="px-5 py-4 text-profit">Snagd</th>
-                <th className="px-5 py-4">{competitor.name}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-line">
-              <tr className="bg-surface">
-                <td className="px-5 py-4 text-muted">Entry plan</td>
-                <td className="px-5 py-4 font-mono font-bold text-profit">$19–29/mo</td>
-                <td className="px-5 py-4 font-mono text-ink">
-                  ${competitor.entryCommitted}–{competitor.entryMonthly}/mo
-                </td>
-              </tr>
-              <tr className="bg-surface">
-                <td className="px-5 py-4 text-muted">Most popular</td>
-                <td className="px-5 py-4 font-mono font-bold text-profit">$39–59/mo</td>
-                <td className="px-5 py-4 font-mono text-ink">
-                  ${competitor.popularCommitted}–{competitor.popularMonthly}/mo
-                </td>
-              </tr>
-              <tr className="bg-surface">
-                <td className="px-5 py-4 text-muted">Built for</td>
-                <td className="px-5 py-4 text-ink">Everyday local flippers</td>
-                <td className="px-5 py-4 text-muted">Car dealers</td>
-              </tr>
-              <tr className="bg-surface">
-                <td className="px-5 py-4 text-muted">Buy / Maybe / Pass verdict</td>
-                <td className="px-5 py-4 text-profit"><Check /></td>
-                <td className="px-5 py-4 text-muted">—</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p className="mx-auto mt-4 max-w-3xl text-center font-mono text-[11px] text-muted">
-          {competitor.name} pricing from their public site, shown for comparison. Snagd is not
-          affiliated with {competitor.name}.
-        </p>
-      </Section>
-
-      {/* Add-ons */}
-      <Section eyebrow="Top-ups" title="Need more? Grab a pack." className="pt-0">
-        <div className="mx-auto grid max-w-3xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {addOns.map((a) => (
-            <div
-              key={a.name}
-              className="flex items-center justify-between rounded-card border border-line bg-surface px-5 py-4"
-            >
-              <span className="text-sm text-ink">{a.name}</span>
-              <span className="font-mono font-bold text-profit">${a.price}</span>
-            </div>
+      <section className="bg-bg px-4 py-14 sm:px-6">
+        <div className="mx-auto grid max-w-shell gap-4 lg:grid-cols-3">
+          {pricingPlans.map((plan) => (
+            <article key={plan.id} className={`rounded-card border bg-surface p-5 shadow-card ${plan.highlighted ? "border-profit/55" : "border-line"}`}>
+              <p className="text-sm text-muted">{plan.highlighted ? "Most room to grow" : "Plan"}</p>
+              <h2 className="mt-2 text-2xl font-bold text-ink">{plan.name}</h2>
+              <div className="mt-5 flex items-end gap-1">
+                <span className="font-mono text-5xl font-bold text-profit tnum">${plan.price}</span>
+                <span className="pb-2 text-sm text-muted">/month</span>
+              </div>
+              <p className="mt-4 text-sm leading-6 text-muted">{plan.summary}</p>
+              <ul className="mt-5 grid gap-2 text-sm text-muted">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex gap-2">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-profit" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link href="/signup/" className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-card bg-profit px-4 text-sm font-bold text-bg">
+                Get Snagd
+              </Link>
+            </article>
           ))}
         </div>
-        <p className="mx-auto mt-5 max-w-xl text-center text-sm text-muted">
-          One Deal Check = one listing scored in depth. Watchlist alerts that surface deals
-          don&rsquo;t burn your Deal Checks.
-        </p>
-      </Section>
-
-      {/* Download CTA */}
-      <section id="download" className="border-t border-line bg-grid">
-        <Container className="py-16 text-center">
-          <h2 className="font-display text-3xl font-black tracking-tight text-ink sm:text-4xl">
-            Get Snagd on your phone
-          </h2>
-          <p className="mx-auto mt-3 max-w-md text-muted">
-            Snagd is a free download for iOS and Android. Your {trial.days}-day trial starts when
-            you set up your first hunt.
-          </p>
-          <div className="mt-7 flex justify-center">
-            <StoreButtons />
-          </div>
-        </Container>
       </section>
 
-      <Section eyebrow="Questions" title="Pricing FAQ">
-        <FAQList faqs={faqs} />
-      </Section>
+      <section className="border-t border-line bg-surface/35 px-4 py-14 sm:px-6">
+        <div className="mx-auto max-w-shell">
+          <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <p className="text-sm font-bold text-profit">Add-ons</p>
+              <h2 className="mt-3 text-3xl font-bold text-ink">Buy capacity without changing your whole plan.</h2>
+              <p className="mt-3 text-sm leading-6 text-muted">
+                Add-on placeholders cover extra Deal Checks, watchlists, SMS, priority alerting, advanced comps, and VIN checks.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {addOnPacks.map((pack) => (
+                <div key={pack.name} className="flex items-center justify-between rounded-card border border-line bg-surface p-4">
+                  <span className="text-sm text-muted">{pack.name}</span>
+                  <span className="font-mono font-bold text-profit tnum">${pack.price}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-line bg-bg px-4 py-14 sm:px-6">
+        <div className="mx-auto max-w-shell">
+          <p className="text-sm font-bold text-profit">Fair paywalls</p>
+          <h2 className="mt-3 text-3xl font-bold text-ink">Good limits are tied to real cost and power usage.</h2>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {goodPaywalls.map((item) => (
+              <span key={item} className="rounded-card border border-line bg-surface px-3 py-2 text-sm text-muted">{item}</span>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }

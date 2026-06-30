@@ -5,13 +5,13 @@ const quotes = [
     quote:
       "I stopped doom-scrolling Marketplace at midnight. Snagd tells me what's worth the drive and I skip the rest.",
     name: "Marcus T.",
-    role: "Furniture flipper · Ohio",
+    role: "Furniture flipper / Ohio",
   },
   {
     quote:
       "The max-offer number alone paid for it. I used to overpay on tools — now I walk in knowing my ceiling.",
     name: "Dani R.",
-    role: "Tool & electronics reseller · Texas",
+    role: "Tool & electronics reseller / Texas",
   },
 ];
 

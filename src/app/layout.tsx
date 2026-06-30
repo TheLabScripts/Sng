@@ -1,60 +1,79 @@
 import type { Metadata, Viewport } from "next";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/Footer";
+import { SiteChrome } from "@/components/SiteChrome";
+import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import "./globals.css";
-
-// Fonts are loaded at runtime via <link> (see <head> below) rather than
-// next/font's build-time fetch. This keeps the static export building in any
-// environment (including offline CI) and avoids a build-time network dependency.
-// Family → CSS variable mapping lives in globals.css.
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://snagd.app"),
+  applicationName: "Snagd",
   title: {
-    default: "Snagd — Local flips worth chasing.",
-    template: "%s — Snagd",
+    default: "Snagd - Local flips worth chasing",
+    template: "%s - Snagd",
   },
   description:
-    "Snagd is the AI deal scout for local resellers. Score listings, see estimated profit and a max offer, and get a Buy / Maybe / Pass before you message the seller. iOS & Android.",
+    "Snagd is a reseller command center for finding local flips, scoring deals, managing watchlists, and tracking Deal Checks.",
   keywords: [
-    "reseller app",
+    "reseller software",
     "flipping app",
-    "marketplace deal alerts",
-    "facebook marketplace flipping",
-    "local reselling",
-    "deal scoring",
+    "deal analyzer",
+    "watchlist alerts",
+    "local resale tools",
+    "vehicle flip tools",
   ],
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    title: "Snagd",
+    statusBarStyle: "black-translucent",
+  },
   openGraph: {
-    title: "Snagd — Local flips worth chasing.",
+    title: "Snagd - Local flips worth chasing",
     description:
-      "Stop scrolling. Start snagging. Know the profit before you buy with AI deal scoring built for local resellers.",
+      "Stop scrolling. Start snagging. Know the profit before you buy and get alerted before good flips are gone.",
     siteName: "Snagd",
     type: "website",
   },
-  twitter: { card: "summary_large_image" },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0f0c",
+  themeColor: "#1a1b26",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
+
+const themeScript = `
+(function () {
+  try {
+    var stored = localStorage.getItem("snagd-theme");
+    var theme = stored === "tokyo-day" ? "tokyo-day" : "tokyo-night";
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme === "tokyo-day" ? "light" : "dark";
+  } catch (error) {
+    document.documentElement.dataset.theme = "tokyo-night";
+  }
+})();
+`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="tokyo-night" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
           rel="stylesheet"
         />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="font-sans">
-        <Nav />
-        <main>{children}</main>
-        <Footer />
+      <body>
+        <ThemeProvider>
+          <SiteChrome>{children}</SiteChrome>
+        </ThemeProvider>
       </body>
     </html>
   );
