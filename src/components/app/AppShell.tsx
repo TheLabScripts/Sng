@@ -49,7 +49,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   function signOut() { window.localStorage.removeItem("snagd-session"); window.location.href = "/login/"; }
 
   return (
-    <div className="min-h-screen bg-bg text-ink">
+    <div className="min-h-screen bg-bg text-ink mock-phone-shell">
       <div className="mx-auto flex min-h-screen max-w-[1440px]">
         <aside className="hidden w-72 shrink-0 border-r border-line bg-surface/70 px-4 py-5 md:block">
           <SnagdLogo href="/app/" />
@@ -59,10 +59,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-40 border-b border-line bg-bg/92 px-4 py-3 backdrop-blur sm:px-6">
+          <header className="sticky top-0 z-40 bg-transparent px-4 pb-2 pt-4 backdrop-blur sm:px-6">
             <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0"><p className="text-xs text-muted">Snagd app</p><h1 className="truncate text-xl font-bold text-ink">{activeItem.label}</h1></div>
-              <div className="flex items-center gap-2"><span className="hidden rounded-card border border-line bg-surface px-3 py-2 text-xs text-muted sm:inline-flex">Demo session</span><ThemeToggle compact /><button type="button" onClick={signOut} className="hidden h-10 rounded-card border border-line bg-surface px-3 text-sm text-muted transition hover:text-ink sm:inline-flex sm:items-center">Sign out</button></div>
+              <div className="min-w-0"><SnagdLogo href="/app/" /></div>
+              <div className="flex items-center gap-2"><span className="hidden h-9 w-9 place-items-center rounded-full border border-line bg-surface text-xs text-muted sm:grid">DB</span><ThemeToggle compact /><button type="button" onClick={signOut} className="hidden h-10 rounded-card border border-line bg-surface px-3 text-sm text-muted transition hover:text-ink sm:inline-flex sm:items-center">Sign out</button></div>
             </div>
           </header>
           <main className="flex-1 px-4 pb-32 pt-5 sm:px-6 md:pb-8">{children}</main>
@@ -72,12 +72,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {showHint && <div className="fixed bottom-24 left-1/2 z-[60] -translate-x-1/2 rounded-full border border-brand/35 bg-surface px-4 py-2 text-xs text-brand shadow-card motion-slide md:hidden">Tap More for Field Scan, Vehicle, Saved, Stats</div>}
       {moreOpen && <MoreSheet pathname={pathname} onClose={() => setMoreOpen(false)} />}
 
-      <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-line bg-surface/97 pb-[env(safe-area-inset-bottom)] shadow-card backdrop-blur md:hidden">
+      <nav className="fixed bottom-0 left-1/2 z-50 w-full max-w-[430px] -translate-x-1/2 border-t border-line bg-[#101522]/96 pb-[env(safe-area-inset-bottom)] shadow-card backdrop-blur md:hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-surface to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-surface to-transparent" />
         <div className="grid grid-cols-5 gap-1 px-2 py-2">
           {mainMobileItems.map((item) => <MobileNavLink key={item.href} item={item} active={isActive(pathname, item.href)} />)}
-          <button type="button" onClick={() => setMoreOpen(true)} className={`motion-press flex min-h-[58px] flex-col items-center justify-center gap-1 rounded-card px-2 py-2 text-[11px] ${moreActive ? "bg-brand text-bg" : "text-muted"}`}><MoreIcon /><span>More</span><span className="mt-0.5 flex gap-0.5"><i className="h-1 w-1 rounded-full bg-current opacity-40" /><i className="h-1 w-1 rounded-full bg-current" /><i className="h-1 w-1 rounded-full bg-current opacity-40" /></span></button>
+          <button type="button" onClick={() => setMoreOpen(true)} className={`motion-press flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-card px-2 py-2 text-[11px] ${moreActive ? "bg-brand text-bg" : "text-muted"}`}><MoreIcon /><span>More</span><span className="mt-0.5 flex gap-0.5"><i className="h-1 w-1 rounded-full bg-current opacity-40" /><i className="h-1 w-1 rounded-full bg-current" /><i className="h-1 w-1 rounded-full bg-current opacity-40" /></span></button>
         </div>
       </nav>
     </div>
@@ -89,7 +89,7 @@ function MoreSheet({ pathname, onClose }: { pathname: string; onClose: () => voi
 }
 
 function AppNavLink({ item, active }: { item: (typeof desktopItems)[number]; active: boolean }) { const Icon = item.icon; return <Link href={item.href} className={`motion-press flex h-11 items-center gap-3 rounded-card px-3 text-sm ${active ? "bg-brand text-bg" : "text-muted hover:bg-surface-2 hover:text-ink"}`}><Icon /><span>{item.label}</span></Link>; }
-function MobileNavLink({ item, active }: { item: (typeof mainMobileItems)[number]; active: boolean }) { const Icon = item.icon; return <Link href={item.href} className={`motion-press flex min-h-[58px] flex-col items-center justify-center gap-1 rounded-card px-2 py-2 text-[11px] ${active ? "bg-brand text-bg" : "text-muted"}`}><Icon /><span>{item.label}</span></Link>; }
+function MobileNavLink({ item, active }: { item: (typeof mainMobileItems)[number]; active: boolean }) { const Icon = item.icon; return <Link href={item.href} className={`motion-press flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-card px-2 py-2 text-[11px] ${active ? "bg-brand text-bg" : "text-muted"}`}><Icon /><span>{item.label}</span></Link>; }
 function MoreLink({ item, active, onClose }: { item: (typeof moreItems)[number]; active: boolean; onClose: () => void }) { const Icon = item.icon; return <Link href={item.href} onClick={onClose} className={`motion-press flex items-center gap-3 rounded-card border px-3 py-3 text-sm ${active ? "border-brand bg-brand text-bg" : "border-line bg-surface-2 text-ink"}`}><Icon /><span>{item.label}</span></Link>; }
 function isActive(pathname: string, href: string) { if (href === "/app/") return pathname === "/app" || pathname === "/app/"; return pathname.startsWith(href); }
 function iconPath(children: React.ReactNode) { return <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>{children}</svg>; }

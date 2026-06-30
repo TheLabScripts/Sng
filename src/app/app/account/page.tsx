@@ -22,15 +22,15 @@ export default function AccountPage() {
           <div className="mt-4 grid gap-3 text-sm text-muted">
             <label className="flex items-center justify-between gap-3">
               <span>Email alerts</span>
-              <input type="checkbox" defaultChecked className="h-5 w-5 accent-[var(--profit)]" />
+              <input type="checkbox" defaultChecked className="h-5 w-5 accent-[var(--brand)]" />
             </label>
             <label className="flex items-center justify-between gap-3">
               <span>In-app alerts</span>
-              <input type="checkbox" defaultChecked className="h-5 w-5 accent-[var(--profit)]" />
+              <input type="checkbox" defaultChecked className="h-5 w-5 accent-[var(--brand)]" />
             </label>
             <label className="flex items-center justify-between gap-3">
               <span>Everything Mode default</span>
-              <input type="checkbox" defaultChecked className="h-5 w-5 accent-[var(--profit)]" />
+              <input type="checkbox" defaultChecked className="h-5 w-5 accent-[var(--brand)]" />
             </label>
           </div>
         </AppCard>

@@ -56,7 +56,7 @@ export function WatchlistsClient() {
           <h2 className="text-2xl font-bold text-ink">Watchlists</h2>
           <p className="mt-1 text-sm text-muted">Create source-layer watches by niche, area, budget, profit target, and minimum score.</p>
         </div>
-        <button type="button" onClick={() => setShowForm((value) => !value)} className="h-11 rounded-card bg-profit px-4 text-sm font-bold text-bg">
+        <button type="button" onClick={() => setShowForm((value) => !value)} className="h-11 rounded-card bg-brand px-4 text-sm font-bold text-bg">
           {showForm ? "Close" : "New watchlist"}
         </button>
       </div>
@@ -86,7 +86,7 @@ export function WatchlistsClient() {
                 type="checkbox"
                 checked={draft.everythingMode}
                 onChange={(event) => setDraft({ ...draft, everythingMode: event.target.checked })}
-                className="h-5 w-5 accent-[var(--profit)]"
+                className="h-5 w-5 accent-[var(--brand)]"
               />
             </label>
 
@@ -149,7 +149,7 @@ export function WatchlistsClient() {
               </Field>
             </div>
 
-            <button className="h-12 rounded-card bg-profit px-5 text-sm font-bold text-bg" type="submit">Save watchlist</button>
+            <button className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-bg" type="submit">Save watchlist</button>
           </form>
         </AppCard>
       )}
@@ -162,7 +162,7 @@ export function WatchlistsClient() {
                 <h3 className="text-lg font-bold text-ink">{watchlist.name}</h3>
                 <p className="mt-1 text-sm text-muted">{watchlist.nichePreset} / {watchlist.location}</p>
               </div>
-              <span className={`rounded-card border px-2.5 py-1 text-xs font-bold ${watchlist.everythingMode ? "border-profit/45 bg-profit/15 text-profit" : "border-line text-muted"}`}>
+              <span className={`rounded-card border px-2.5 py-1 text-xs font-bold ${watchlist.everythingMode ? "border-brand/45 bg-brand/15 text-profit" : "border-line text-muted"}`}>
                 {watchlist.everythingMode ? "Everything" : "Niche"}
               </span>
             </div>

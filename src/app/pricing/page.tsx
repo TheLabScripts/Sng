@@ -25,7 +25,7 @@ export default function PricingPage() {
       <section className="bg-bg px-4 py-14 sm:px-6">
         <div className="mx-auto grid max-w-shell gap-4 lg:grid-cols-3">
           {pricingPlans.map((plan) => (
-            <article key={plan.id} className={`rounded-card border bg-surface p-5 shadow-card ${plan.highlighted ? "border-profit/55" : "border-line"}`}>
+            <article key={plan.id} className={`rounded-card border bg-surface p-5 shadow-card ${plan.highlighted ? "border-brand/55" : "border-line"}`}>
               <p className="text-sm text-muted">{plan.highlighted ? "Most room to grow" : "Plan"}</p>
               <h2 className="mt-2 text-2xl font-bold text-ink">{plan.name}</h2>
               <div className="mt-5 flex items-end gap-1">
@@ -36,12 +36,12 @@ export default function PricingPage() {
               <ul className="mt-5 grid gap-2 text-sm text-muted">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-profit" />
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
                     <span>{feature}</span>
                   </li>
                 ))}
               </ul>
-              <Link href="/signup/" className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-card bg-profit px-4 text-sm font-bold text-bg">
+              <Link href="/signup/" className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-card bg-brand px-4 text-sm font-bold text-bg">
                 Get Snagd
               </Link>
             </article>

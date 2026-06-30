@@ -18,8 +18,8 @@ export function CTAButton({
     "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-150 active:scale-[0.98]";
   const styles =
     variant === "primary"
-      ? "bg-profit text-bg hover:brightness-110 shadow-[0_8px_30px_-8px_rgba(61,220,132,0.55)]"
-      : "border border-line bg-surface text-ink hover:border-profit/50 hover:text-profit";
+      ? "bg-brand text-bg hover:brightness-110 shadow-[0_14px_38px_-18px_rgba(187,154,247,0.8)]"
+      : "border border-line bg-surface text-ink hover:border-brand/50 hover:text-brand";
 
   const external = href.startsWith("http");
   if (external) {

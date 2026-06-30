@@ -9,7 +9,7 @@ export function AppCard({
 }) {
   const Component = as;
   return (
-    <Component className={`rounded-card border border-line bg-surface p-4 shadow-card sm:p-5 ${className}`}>
+    <Component className={`rounded-[18px] border app-card-glass p-4 shadow-card sm:p-5 ${className}`}>
       {children}
     </Component>
   );

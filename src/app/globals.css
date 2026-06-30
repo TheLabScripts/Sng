@@ -6,13 +6,13 @@
 html[data-theme="tokyo-night"] {
   color-scheme: dark;
   --bg: #1a1b26;
-  --bg-soft: #161824;
+  --bg-soft: #16161e;
   --surface: #24283b;
   --surface-2: #1f2335;
-  --surface-3: #2f3549;
-  --line: #3b4261;
+  --surface-3: #414868;
+  --line: #414868;
   --ink: #c0caf5;
-  --muted: #8b94bf;
+  --muted: #a9b1d6;
   --muted-strong: #565f89;
   --profit: #ff9e64;
   --amber: #ff9e64;
@@ -20,8 +20,8 @@ html[data-theme="tokyo-night"] {
   --info: #7aa2f7;
   --brand: #bb9af7;
   --brand-soft: rgba(187, 154, 247, 0.16);
-  --shadow-card: 0 18px 45px -30px rgba(0, 0, 0, 0.72);
-  --shadow-soft: 0 10px 28px -24px rgba(0, 0, 0, 0.7);
+  --shadow-card: 0 18px 50px -32px rgba(0, 0, 0, 0.82);
+  --shadow-soft: 0 12px 34px -28px rgba(0, 0, 0, 0.78);
   --font-display: 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -29,20 +29,20 @@ html[data-theme="tokyo-night"] {
 
 html[data-theme="tokyo-day"] {
   color-scheme: light;
-  --bg: #f6f4ef;
-  --bg-soft: #ebeef5;
+  --bg: #f7f7fb;
+  --bg-soft: #eef1f8;
   --surface: #ffffff;
   --surface-2: #f2f4f8;
   --surface-3: #e7ebf2;
-  --line: #d8deea;
+  --line: #cfd6e6;
   --ink: #1f2335;
-  --muted: #626b83;
+  --muted: #4f5872;
   --muted-strong: #7b849b;
-  --profit: #c96f32;
-  --amber: #c96f32;
+  --profit: #b85f25;
+  --amber: #b85f25;
   --pass: #c94f67;
-  --info: #4f75c9;
-  --brand: #7d5cc6;
+  --info: #4770c7;
+  --brand: #7357c8;
   --brand-soft: rgba(125, 92, 198, 0.14);
   --shadow-card: 0 18px 40px -32px rgba(31, 35, 53, 0.35);
   --shadow-soft: 0 12px 26px -24px rgba(31, 35, 53, 0.28);
@@ -75,10 +75,10 @@ button { touch-action: manipulation; }
     linear-gradient(to bottom, color-mix(in srgb, var(--line) 20%, transparent) 1px, transparent 1px);
   background-size: 42px 42px;
 }
-.brand-panel { background: linear-gradient(145deg, color-mix(in srgb, var(--brand) 14%, var(--surface)) 0%, var(--surface) 48%, color-mix(in srgb, var(--info) 10%, var(--surface)) 100%); }
+.brand-panel { background: linear-gradient(145deg, color-mix(in srgb, var(--brand) 16%, var(--surface)) 0%, var(--surface) 46%, color-mix(in srgb, var(--info) 12%, var(--surface-2)) 100%); }
 .brand-text { color: var(--brand); }
 .brand-bg { background: var(--brand); color: #11131f; }
-.brand-ring { box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand) 36%, transparent), var(--shadow-card); }
+.brand-ring { box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand) 42%, transparent), 0 24px 70px -48px color-mix(in srgb, var(--brand) 55%, transparent), var(--shadow-card); }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -115,4 +115,45 @@ button { touch-action: manipulation; }
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
   }
+}
+.mock-phone-shell {
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .mock-phone-shell {
+    max-width: 430px;
+    margin-inline: auto;
+    background:
+      radial-gradient(circle at 50% -10%, color-mix(in srgb, var(--info) 16%, transparent), transparent 34%),
+      linear-gradient(180deg, #111827 0%, var(--bg) 24%, #0d111b 100%);
+    min-height: 100svh;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 28px 90px -42px rgba(0,0,0,.9);
+  }
+  body { background: #070912; }
+}
+
+.app-card-glass {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 90%, #0b1020) 0%, color-mix(in srgb, var(--surface-2) 92%, #080b14) 100%);
+  border-color: color-mix(in srgb, var(--line) 72%, transparent);
+}
+
+.profit-hero {
+  background:
+    linear-gradient(135deg, rgba(187,154,247,.34) 0%, rgba(122,162,247,.13) 46%, rgba(255,158,100,.08) 100%),
+    radial-gradient(circle at 78% 35%, rgba(255,158,100,.20), transparent 30%),
+    linear-gradient(180deg, #2d1f63 0%, #1f2335 100%);
+}
+
+.image-card-violet {
+  background:
+    radial-gradient(circle at 70% 18%, rgba(122,162,247,.45), transparent 22%),
+    radial-gradient(circle at 25% 70%, rgba(187,154,247,.38), transparent 28%),
+    linear-gradient(145deg, #151a2b, #0d111d 62%, #24283b);
+}
+
+.image-card-vehicle {
+  background:
+    radial-gradient(ellipse at 50% 68%, rgba(122,162,247,.18), transparent 38%),
+    linear-gradient(180deg, #171d2d 0%, #0d111d 100%);
 }

@@ -38,7 +38,7 @@ export default function BillingPage() {
 
       <div className="mt-5 grid gap-4 lg:grid-cols-3">
         {pricingPlans.map((plan) => (
-          <AppCard key={plan.id} className={plan.highlighted ? "border-profit/50" : ""}>
+          <AppCard key={plan.id} className={plan.highlighted ? "border-brand/50" : ""}>
             <div className="flex min-h-full flex-col">
               <div>
                 <p className="text-sm text-muted">{plan.highlighted ? "Most flexible" : "Plan"}</p>
@@ -52,12 +52,12 @@ export default function BillingPage() {
               <ul className="mt-5 grid gap-2 text-sm text-muted">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-profit" />
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
                     <span>{feature}</span>
                   </li>
                 ))}
               </ul>
-              <Link href="/signup/" className="mt-6 inline-flex h-11 items-center justify-center rounded-card bg-profit px-4 text-sm font-bold text-bg">
+              <Link href="/signup/" className="mt-6 inline-flex h-11 items-center justify-center rounded-card bg-brand px-4 text-sm font-bold text-bg">
                 Choose {plan.name}
               </Link>
             </div>

@@ -44,7 +44,7 @@ export function OnboardingClient() {
                   type="button"
                   onClick={() => setProfile({ ...profile, preset })}
                   className={`rounded-card border px-3 py-2 text-sm ${
-                    profile.preset === preset ? "border-profit bg-profit text-bg" : "border-line bg-surface-2 text-muted"
+                    profile.preset === preset ? "border-brand bg-brand text-bg" : "border-line bg-surface-2 text-muted"
                   }`}
                 >
                   {preset}
@@ -62,7 +62,7 @@ export function OnboardingClient() {
               type="checkbox"
               checked={profile.everythingMode}
               onChange={(event) => setProfile({ ...profile, everythingMode: event.target.checked })}
-              className="h-5 w-5 accent-[var(--profit)]"
+              className="h-5 w-5 accent-[var(--brand)]"
             />
           </label>
 
@@ -88,7 +88,7 @@ export function OnboardingClient() {
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <button className="h-12 rounded-card bg-profit px-5 text-sm font-bold text-bg" type="submit">
+            <button className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-bg" type="submit">
               Finish onboarding
             </button>
             <button

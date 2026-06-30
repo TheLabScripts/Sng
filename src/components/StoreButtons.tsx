@@ -23,7 +23,7 @@ function StoreBadge({
       href={target}
       {...(target.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       aria-disabled={!live && !site.waitlistUrl}
-      className={`group inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-2.5 transition-colors hover:border-profit/40 ${
+      className={`group inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-2.5 transition-colors hover:border-brand/40 ${
         !live && !site.waitlistUrl ? "pointer-events-none opacity-60" : ""
       }`}
     >
@@ -55,10 +55,10 @@ export function StoreButtons({ className = "" }: { className?: string }) {
         store="Google Play"
         glyph={
           <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden>
-            <path d="M4 3.5 14 12 4 20.5c-.4-.2-.6-.6-.6-1.1V4.6c0-.5.2-.9.6-1.1Z" fill="#3ddc84" />
-            <path d="m14 12 3-2.6 2.8 1.6c.8.5.8 1.5 0 2L17 14.6 14 12Z" fill="#ffb02e" />
-            <path d="M4 3.5c.3-.1.7-.1 1 .1L17 9.4 14 12 4 3.5Z" fill="#eaf2ec" opacity=".85" />
-            <path d="M4 20.5 14 12l3 2.6-12 6.8c-.3.2-.7.2-1 .1Z" fill="#ff5d5d" opacity=".85" />
+            <path d="M4 3.5 14 12 4 20.5c-.4-.2-.6-.6-.6-1.1V4.6c0-.5.2-.9.6-1.1Z" fill="#bb9af7" />
+            <path d="m14 12 3-2.6 2.8 1.6c.8.5.8 1.5 0 2L17 14.6 14 12Z" fill="#7aa2f7" />
+            <path d="M4 3.5c.3-.1.7-.1 1 .1L17 9.4 14 12 4 3.5Z" fill="#c0caf5" opacity=".85" />
+            <path d="M4 20.5 14 12l3 2.6-12 6.8c-.3.2-.7.2-1 .1Z" fill="#f7768e" opacity=".85" />
           </svg>
         }
       />
