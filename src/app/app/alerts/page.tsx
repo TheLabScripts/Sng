@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { AppCard } from "@/components/app/AppCard";
 import { mockAlerts } from "@/lib/mock-data";
 

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { addOnPacks, goodPaywalls, pricingPlans } from "@/lib/mock-data";
 
@@ -41,7 +41,7 @@ export default function PricingPage() {
                   </li>
                 ))}
               </ul>
-              <Link href="/signup/" className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-card bg-brand px-4 text-sm font-bold text-bg">
+              <Link href="/signup/" className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-card bg-brand px-4 text-sm font-bold text-white">
                 Get Snagd
               </Link>
             </article>

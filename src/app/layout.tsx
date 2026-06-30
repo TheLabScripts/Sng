@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1a1b26",
+  themeColor: "#f6f7fb",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -49,18 +49,18 @@ const themeScript = `
 (function () {
   try {
     var stored = localStorage.getItem("snagd-theme");
-    var theme = stored === "snagd-day" ? "snagd-day" : "tokyo-night";
+    var theme = stored === "snagd-black" ? "snagd-black" : "snagd-light";
     document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = theme === "snagd-day" ? "light" : "dark";
+    document.documentElement.style.colorScheme = theme === "snagd-light" ? "light" : "dark";
   } catch (error) {
-    document.documentElement.dataset.theme = "tokyo-night";
+    document.documentElement.dataset.theme = "snagd-light";
   }
 })();
 `;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="tokyo-night" suppressHydrationWarning>
+    <html lang="en" data-theme="snagd-light" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -78,4 +78,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+
+
 

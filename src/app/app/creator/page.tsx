@@ -1,4 +1,4 @@
-import { AppCard } from "@/components/app/AppCard";
+﻿import { AppCard } from "@/components/app/AppCard";
 import { mockCreatorStats } from "@/lib/mock-data";
 import { currency, numberCompact } from "@/lib/format";
 

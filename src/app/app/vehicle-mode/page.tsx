@@ -1,4 +1,4 @@
-import { VehicleModeClient } from "@/components/app/VehicleModeClient";
+﻿import { VehicleModeClient } from "@/components/app/VehicleModeClient";
 
 export default function VehicleModePage() {
   return <VehicleModeClient />;

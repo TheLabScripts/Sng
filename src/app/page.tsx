@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { mockAlerts, mockDeals, pricingPlans } from "@/lib/mock-data";
 
 export default function HomePage() {
@@ -16,7 +16,7 @@ export default function HomePage() {
               Snagd is the reseller command center for watchlists, alerts, deal scoring, usage, and vehicle checks. Know the profit before you buy.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/signup/" className="inline-flex h-12 items-center justify-center rounded-card bg-brand px-6 text-sm font-bold text-bg">
+              <Link href="/signup/" className="inline-flex h-12 items-center justify-center rounded-card bg-brand px-6 text-sm font-bold text-white">
                 Get Snagd
               </Link>
               <Link href="#how" className="inline-flex h-12 items-center justify-center rounded-card border border-line bg-surface/85 px-6 text-sm font-bold text-ink">
@@ -109,7 +109,7 @@ export default function HomePage() {
             Get alerted before the good flips are gone, then use Deal Analyzer to know what to offer.
           </p>
           <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link href="/signup/" className="inline-flex h-12 items-center justify-center rounded-card bg-brand px-6 text-sm font-bold text-bg">
+            <Link href="/signup/" className="inline-flex h-12 items-center justify-center rounded-card bg-brand px-6 text-sm font-bold text-white">
               Get Snagd
             </Link>
             <Link href="/app/" className="inline-flex h-12 items-center justify-center rounded-card border border-line bg-surface px-6 text-sm font-bold text-ink">

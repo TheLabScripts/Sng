@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { AppCard } from "@/components/app/AppCard";
 import { UsageMeter } from "@/components/app/UsageMeter";
 import { addOnPacks, goodPaywalls, mockUsage, pricingPlans } from "@/lib/mock-data";
@@ -57,7 +57,7 @@ export default function BillingPage() {
                   </li>
                 ))}
               </ul>
-              <Link href="/signup/" className="mt-6 inline-flex h-11 items-center justify-center rounded-card bg-brand px-4 text-sm font-bold text-bg">
+              <Link href="/signup/" className="mt-6 inline-flex h-11 items-center justify-center rounded-card bg-brand px-4 text-sm font-bold text-white">
                 Choose {plan.name}
               </Link>
             </div>

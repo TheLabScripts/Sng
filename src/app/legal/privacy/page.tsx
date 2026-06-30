@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { LegalBody } from "@/components/LegalBody";
 
@@ -21,3 +21,4 @@ export default function PrivacyPage() {
     </Container>
   );
 }
+

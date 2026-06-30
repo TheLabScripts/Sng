@@ -1,4 +1,4 @@
-import { AppCard } from "@/components/app/AppCard";
+﻿import { AppCard } from "@/components/app/AppCard";
 import { DealCard } from "@/components/app/DealCard";
 import { mockWatchlists, savedDealSeeds, savedFieldScans, savedVehicleChecks } from "@/lib/mock-data";
 

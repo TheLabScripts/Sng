@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { mockCreatorStats } from "@/lib/mock-data";
 import { currency, numberCompact } from "@/lib/format";
@@ -22,7 +22,7 @@ export default function CreatorsPage() {
               If your audience flips items, Snagd gives them a tool they can actually use - and you earn every month they stay subscribed.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/signup/" className="inline-flex h-12 items-center justify-center rounded-card bg-brand px-6 text-sm font-bold text-bg">
+              <Link href="/signup/" className="inline-flex h-12 items-center justify-center rounded-card bg-brand px-6 text-sm font-bold text-white">
                 Apply as creator
               </Link>
               <Link href="/app/account/" className="inline-flex h-12 items-center justify-center rounded-card border border-line bg-surface px-6 text-sm font-bold text-ink">

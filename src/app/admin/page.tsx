@@ -10,3 +10,4 @@ export default function AdminPlaceholderPage() {
   }
   return <main className="min-h-screen bg-bg p-6 text-ink"><div className="mx-auto max-w-5xl"><h1 className="text-3xl font-bold">Admin Plan</h1><div className="mt-6 grid gap-4 md:grid-cols-2"><AppCard><h2 className="font-bold text-ink">Planned panels</h2><div className="mt-3 grid gap-2 text-sm text-muted">{plannedAreas.map((item) => <p key={item}>{item}</p>)}</div></AppCard><AppCard><h2 className="font-bold text-ink">Security requirements</h2><div className="mt-3 grid gap-2 text-sm text-muted">{requirements.map((item) => <p key={item}>{item}</p>)}</div></AppCard></div></div></main>;
 }
+

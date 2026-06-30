@@ -44,4 +44,6 @@ export default function FieldScanPage() {
     </div>
   );
 }
-function Metric({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) { return <div><p className="text-xs text-muted">{label}</p><p className={`mt-1 font-mono font-bold ${accent ? "text-amber" : "text-ink"}`}>{value}</p></div>; }
+function Metric({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) { return <div><p className="text-xs text-muted">{label}</p><p className={`mt-1 font-mono font-bold ${accent ? "text-profit" : "text-ink"}`}>{value}</p></div>; }
+
+

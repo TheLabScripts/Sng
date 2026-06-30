@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { Section } from "@/components/Section";
 import { Eyebrow } from "@/components/Eyebrow";
@@ -22,7 +22,7 @@ export default function SupportPage() {
             How can we help?
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-muted">
-            Most answers are below. Still stuck? Reach the team directly — we actually reply.
+            Most answers are below. Still stuck? Reach the team directly â€” we actually reply.
           </p>
           <a
             href={`mailto:${site.supportEmail}`}
@@ -51,3 +51,4 @@ export default function SupportPage() {
     </>
   );
 }
+
