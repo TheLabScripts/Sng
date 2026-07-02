@@ -7,16 +7,26 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const isSignup = mode === "signup";
-  const [name, setName] = useState("Snagd tester");
-  const [email, setEmail] = useState("tester@snagd.app");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   function storeSession(nextPath: string) {
-    window.localStorage.setItem("snagd-session", JSON.stringify({ name, email, plan: "Starter" }));
+    const profile = {
+      name: name.trim() || "Local reseller",
+      ...(email.trim() ? { email: email.trim() } : {}),
+      plan: "Free",
+      isAdmin: false,
+    };
+    window.localStorage.setItem("snagd-session", JSON.stringify(profile));
     window.location.href = nextPath;
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!isSignup && window.localStorage.getItem("snagd-session")) {
+      window.location.href = "/app/";
+      return;
+    }
     storeSession(isSignup ? "/onboarding/" : "/app/");
   }
 
@@ -29,44 +39,36 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
 
       <div className="mx-auto mt-12 max-w-md">
         <div className="rounded-card border border-line bg-surface p-5 shadow-card sm:p-6">
-          <p className="text-sm text-muted">{isSignup ? "Start your reseller command center" : "Welcome back"}</p>
-          <h1 className="mt-2 text-3xl font-bold text-ink">{isSignup ? "Create your Snagd account" : "Log into Snagd"}</h1>
+          <p className="text-sm text-muted">{isSignup ? "Set up your reseller command center" : "Welcome back"}</p>
+          <h1 className="mt-2 text-3xl font-bold text-ink">{isSignup ? "Create a local profile" : "Open your Snagd workspace"}</h1>
           <p className="mt-3 text-sm leading-6 text-muted">
-            This preview stores a local test session on your device so you can explore the app quickly.
+            This build keeps your profile and deal activity on this device. No password or cloud account is required.
           </p>
 
           <form className="mt-6 grid gap-4" onSubmit={handleSubmit}>
             {isSignup && (
-              <label className="grid gap-2">
-                <span className="text-sm font-bold text-ink">Name</span>
-                <input className="field" value={name} onChange={(event) => setName(event.target.value)} />
-              </label>
+              <>
+                <label className="grid gap-2">
+                  <span className="text-sm font-bold text-ink">Display name</span>
+                  <input className="field" value={name} onChange={(event) => setName(event.target.value)} autoComplete="name" required />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-sm font-bold text-ink">Email <span className="font-normal text-muted">(optional)</span></span>
+                  <input className="field" type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" />
+                </label>
+              </>
             )}
-            <label className="grid gap-2">
-              <span className="text-sm font-bold text-ink">Email</span>
-              <input className="field" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
-            </label>
-            <label className="grid gap-2">
-              <span className="text-sm font-bold text-ink">Password</span>
-              <input className="field" type="password" value="password" readOnly />
-            </label>
 
             <button className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-white" type="submit">
-              {isSignup ? "Continue to onboarding" : "Log in"}
+              {isSignup ? "Continue to setup" : "Continue on this device"}
             </button>
-            <button
-              className="h-12 rounded-card border border-line bg-surface-2 px-5 text-sm font-bold text-ink"
-              type="button"
-              onClick={() => storeSession("/app/")}
-            >
-              Continue with test account
-            </button>
+            {isSignup && <button className="h-12 rounded-card border border-line bg-surface-2 px-5 text-sm font-bold text-ink" type="button" onClick={() => storeSession("/app/")}>Continue as guest</button>}
           </form>
 
           <p className="mt-5 text-center text-sm text-muted">
-            {isSignup ? "Already have an account?" : "Need an account?"}{" "}
+            {isSignup ? "Already set up this device?" : "New to Snagd?"}{" "}
             <Link href={isSignup ? "/login/" : "/signup/"} className="font-bold text-info">
-              {isSignup ? "Log in" : "Sign up"}
+              {isSignup ? "Open workspace" : "Create a profile"}
             </Link>
           </p>
         </div>

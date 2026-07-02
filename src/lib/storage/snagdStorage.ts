@@ -12,3 +12,11 @@ export function writeJson<T>(key: string, value: T) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(key, JSON.stringify(value));
 }
+
+export function clearSnagdData() {
+  if (typeof window === "undefined") return;
+
+  Object.keys(window.localStorage)
+    .filter((key) => key.startsWith("snagd-"))
+    .forEach((key) => window.localStorage.removeItem(key));
+}

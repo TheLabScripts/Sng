@@ -1,1 +1,39 @@
-﻿export function playScanBeep() { if (typeof window === "undefined") return; const AudioContextCtor = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext; if (!AudioContextCtor) return; const context = new AudioContextCtor(); const oscillator = context.createOscillator(); const gain = context.createGain(); oscillator.type = "sine"; oscillator.frequency.value = 880; gain.gain.setValueAtTime(0.0001, context.currentTime); gain.gain.exponentialRampToValueAtTime(0.08, context.currentTime + 0.01); gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.11); oscillator.connect(gain); gain.connect(context.destination); oscillator.start(); oscillator.stop(context.currentTime + 0.12); } // Native port: use Expo AV or React Native audio after explicit user scan action.
+type WebkitWindow = Window & { webkitAudioContext?: typeof AudioContext };
+
+let scanAudioContext: AudioContext | null = null;
+
+function getAudioContext() {
+  if (typeof window === "undefined") return null;
+  const AudioContextCtor = window.AudioContext || (window as WebkitWindow).webkitAudioContext;
+  if (!AudioContextCtor) return null;
+  scanAudioContext ??= new AudioContextCtor();
+  return scanAudioContext;
+}
+
+export async function primeScanAudio() {
+  const context = getAudioContext();
+  if (context?.state === "suspended") await context.resume();
+}
+
+export function playScanBeep() {
+  const context = getAudioContext();
+  if (!context || context.state !== "running") return;
+
+  const now = context.currentTime;
+  const gain = context.createGain();
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(0.13, now + 0.008);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+  gain.connect(context.destination);
+
+  [880, 1174].forEach((frequency, index) => {
+    const oscillator = context.createOscillator();
+    oscillator.type = "sine";
+    oscillator.frequency.value = frequency;
+    oscillator.connect(gain);
+    oscillator.start(now + index * 0.055);
+    oscillator.stop(now + 0.11 + index * 0.055);
+  });
+
+  window.navigator.vibrate?.(45);
+}

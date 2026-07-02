@@ -9,13 +9,16 @@ export default function PrivacyPage() {
     <Container className="py-16 sm:py-20">
       <LegalBody
         title="Privacy Policy"
-        updated="Draft policy. Legal review required before launch."
+        updated="July 1, 2026"
         sections={[
-          ["What we collect", "Account details you provide (email, plan), the listings you choose to analyze, and basic usage data to run and improve Snagd."],
-          ["How we use it", "To deliver deal scoring, send the alerts you set up, process billing, and improve the product. We do not sell your personal data."],
-          ["Listings & sources", "Snagd analyzes listings you bring in or that come through compliant source integrations. We do not scrape or log into third-party marketplaces."],
-          ["Your choices", "You can edit your account, manage alerts, export, or delete your data. Contact us anytime to action a request."],
-          ["Contact", "Questions about privacy? Email us and we'll help."],
+          ["Local-first workspace", "Snagd stores your optional profile, preferences, watchlists, saved deals, and activity locally on your device. This workspace data is not uploaded to a Snagd account."],
+          ["Photos and camera", "Camera and photo-library access are optional and only requested when you open a scan workflow. VIN barcode frames and field-scan previews are processed on your device and are not uploaded by the current build."],
+          ["VIN lookups", "A VIN you submit is sent through Snagd's Cloudflare endpoint to the U.S. National Highway Traffic Safety Administration to return manufacturer details and recall campaigns. The current build does not link VIN lookups to an account, but infrastructure providers may process network and request logs under their own policies."],
+          ["Data we may receive", "If you contact support, we receive the information you send, such as your email address and message. Future cloud features will be documented here before they are enabled."],
+          ["Third-party sources", "Snagd may analyze user-supplied listings and information from compliant data providers. Snagd does not automate marketplace logins or sell your personal information."],
+          ["Retention and deletion", "Local data remains on your device until you remove it, clear the app, or uninstall Snagd. You can delete all Snagd data from Account > Delete local data."],
+          ["Children", "Snagd is a business and productivity tool and is not directed to children under 13."],
+          ["Contact", "For privacy questions or requests, email support@snagd.app."],
         ]}
       />
     </Container>

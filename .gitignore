@@ -1,6 +1,10 @@
 node_modules
 .next
 out
+ios/App/App/public
+.wrangler
+.dev.vars
+*.tsbuildinfo
 .env.local
 .env*.local
 .DS_Store

@@ -65,4 +65,44 @@ export type FieldScanResult = { id: string; itemDetected: string; confidence: Co
 export type LifetimeStats = { lifetimeEarnings: number; lifetimeProfit: number; monthlyProfit: number; weeklyProfitOpportunities: number; averageProfitPerFlip: number; bestCategory: string; bestDeal: string; dealsBought: number; dealsSold: number; dealsPassed: number; dealsLost: number; estimatedMissedProfit: number; savedDealsCount: number; activeWatchlists: number; totalDealsTracked: number; winRate: number; totalEstimatedOpportunitiesFound: number; dealStreak: string; profitStreak: string; weeklyActionStreak: string; };
 export type TrendingCategory = { name: string; newDeals: number; averageProfit: number; demand: DemandLevel; trend: "up" | "steady" | "down"; };
 export type PriceAlert = { id: string; copy: string; item: string; impact: string; };
-export type VehicleVinResult = { vin: string; year: string; make: string; model: string; trim: string; bodyClass: string; engine: string; recalls: string[]; marketValueRange: string; privatePartyComps: string; titleHistoryRisk: RiskLevel; mileageRisk: RiskLevel; repairRisks: string[]; suggestedMaxOffer: number; estimatedFlipProfit: string; walkAwayWarnings: string[]; askingPrice?: number; riskLevel?: RiskLevel; marketDemand?: DemandLevel; comparableVehicleCount?: number; daysToSellEstimate?: string; aiSummary?: string; recommendation?: Recommendation; savedChecks?: number; };
+export type VehicleRecall = {
+  campaignNumber: string;
+  component: string;
+  summary: string;
+  consequence?: string;
+  remedy?: string;
+};
+
+export type VehicleVinResult = {
+  vin: string;
+  year: string;
+  make: string;
+  model: string;
+  trim: string;
+  bodyClass: string;
+  engine: string;
+  driveType?: string;
+  fuelType?: string;
+  transmission?: string;
+  plantLocation?: string;
+  manufacturer?: string;
+  decodeMessage?: string;
+  recallDetails?: VehicleRecall[];
+  recalls: string[];
+  marketValueRange: string;
+  privatePartyComps: string;
+  titleHistoryRisk: RiskLevel;
+  mileageRisk: RiskLevel;
+  repairRisks: string[];
+  suggestedMaxOffer: number;
+  estimatedFlipProfit: string;
+  walkAwayWarnings: string[];
+  askingPrice?: number;
+  riskLevel?: RiskLevel;
+  marketDemand?: DemandLevel;
+  comparableVehicleCount?: number;
+  daysToSellEstimate?: string;
+  aiSummary?: string;
+  recommendation?: Recommendation;
+  savedChecks?: number;
+};

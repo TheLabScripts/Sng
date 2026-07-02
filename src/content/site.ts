@@ -1,4 +1,4 @@
-export const site = {
+﻿export const site = {
   name: "Snagd",
   tagline: "Local flips worth chasing.",
   secondaryTagline: "Know the profit before you buy.",

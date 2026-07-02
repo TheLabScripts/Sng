@@ -5,6 +5,10 @@ const nextConfig = {
   images: { unoptimized: true },
   trailingSlash: true,
   reactStrictMode: true,
+  webpack(config, { dev }) {
+    if (!dev) config.cache = false;
+    return config;
+  },
 };
 
 export default nextConfig;

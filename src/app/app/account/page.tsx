@@ -1,7 +1,8 @@
 ﻿import Link from "next/link";
 import { AccountSettingsClient } from "@/components/app/AccountSettingsClient";
+import { AccountProfileClient } from "@/components/app/AccountProfileClient";
 import { AppCard } from "@/components/app/AppCard";
-import { mockCreatorStats, mockUsage } from "@/lib/mock-data";
+import { mockCreatorStats } from "@/lib/mock-data";
 import { currency, numberCompact } from "@/lib/format";
 
 export default function AccountPage() {
@@ -10,12 +11,7 @@ export default function AccountPage() {
       <div className="grid content-start gap-4">
         <AppCard>
           <h2 className="text-2xl font-bold text-ink">Account</h2>
-          <div className="mt-5 grid gap-4 text-sm">
-            <AccountRow label="Name" value="Snagd tester" />
-            <AccountRow label="Email" value="demo@snagd.app" />
-            <AccountRow label="Plan" value={mockUsage.plan} />
-            <AccountRow label="Theme" value="Snagd Light / Snagd Black saved locally" />
-          </div>
+          <AccountProfileClient />
         </AppCard>
 
         <AppCard>
@@ -44,6 +40,5 @@ export default function AccountPage() {
   );
 }
 
-function AccountRow({ label, value }: { label: string; value: string }) { return <div className="border-b border-line pb-3 last:border-b-0 last:pb-0"><p className="text-muted">{label}</p><p className="mt-1 font-bold text-ink">{value}</p></div>; }
 function CreatorMetric({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) { return <div><p className="text-xs text-muted">{label}</p><p className={`mt-1 font-mono text-lg font-bold tnum ${accent ? "text-profit" : "text-ink"}`}>{value}</p></div>; }
 
