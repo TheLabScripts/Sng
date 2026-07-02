@@ -1,7 +1,5 @@
-﻿import { DealFeedClient } from "@/components/app/DealFeedClient";
-import { mockDeals } from "@/lib/mock-data";
+import { DealFeedClient } from "@/components/app/DealFeedClient";
 
 export default function DealFeedPage() {
-  return <DealFeedClient deals={mockDeals} />;
+  return <DealFeedClient />;
 }
-

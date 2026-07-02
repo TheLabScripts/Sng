@@ -5,6 +5,7 @@ import { buildListingDedupKey, listingContentHash } from "../functions/_lib/craw
 import { mockMarketplaceAdapter } from "../functions/_lib/crawler/adapters/mockMarketplaceAdapter.ts";
 import { calculateDealScore, calculateEstimatedProfit, estimateCosts, estimateResaleValue, scoreListingForSearch } from "../functions/_lib/crawler/scoring.ts";
 import type { CrawlerEnv, MarketplaceSource, NormalizedListing, SavedSearch } from "../functions/_lib/crawler/types.ts";
+import { authenticateRequest, createAnonymousSession } from "../functions/_lib/auth.ts";
 
 const timestamp = "2026-07-02T12:00:00.000Z";
 const search: SavedSearch = { id: "search-test", userId: "user-test", name: "Tool flips", zipCode: "08102", radiusMiles: 25, category: "Tools", keywords: "Milwaukee, bundle", negativeKeywords: "broken, parts only", minPrice: 50, maxPrice: 300, minEstimatedProfit: 75, minDealScore: 65, isActive: true, scanIntervalMinutes: 30, lastScannedAt: null, createdAt: timestamp, updatedAt: timestamp };
@@ -47,4 +48,12 @@ test("mock adapter produces and normalizes realistic listings", async () => {
   assert.equal(normalized.source, "Mock Marketplace");
   assert.ok(normalized.title.length > 3);
   assert.ok(normalized.sourceUrl.startsWith("https://"));
+});
+
+test("anonymous session token authenticates the generated user", async () => {
+  const authEnv = { AUTH_JWT_SECRET: "test-secret-long-enough-for-hmac" } as CrawlerEnv;
+  const session = await createAnonymousSession(authEnv);
+  const user = await authenticateRequest(new Request("https://snagd.test/api/listings", { headers: { Authorization: `Bearer ${session.token}` } }), authEnv);
+  assert.equal(user.id, session.userId);
+  assert.equal(user.role, "user");
 });

@@ -5,7 +5,7 @@ const scanTools = [
   { title: "Analyze Listing", href: "/app/analyze/", copy: "Paste a title, price, condition, and location to score a deal.", meta: "Listing research" },
   { title: "Field Scan", href: "/app/field-scan/", copy: "Use a photo to identify an item and estimate resale.", meta: "Yard sales / thrift" },
   { title: "VIN Scan", href: "/app/vehicle-mode/", copy: "Scan or enter a VIN, estimate market value, risk, and offer.", meta: "Vehicle flips" },
-  { title: "Similar Sales Lookup", href: "/app/analyze/", copy: "Review seeded sold comps and decide if the margin is real.", meta: "Comps" },
+  { title: "Similar Sales Lookup", href: "/app/analyze/", copy: "Review connected sold comps and decide if the margin is real.", meta: "Comps" },
 ];
 
 export default function ScanHubPage() {

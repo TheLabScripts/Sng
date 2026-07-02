@@ -1,4 +1,4 @@
-import { authenticateRequest, requireAdmin } from "../_lib/auth.ts";
+import { authenticateRequest, createAnonymousSession, requireAdmin } from "../_lib/auth.ts";
 import { runAllDueSavedSearches, runDueSavedSearchesForUser, runSavedSearch, runSourceForSavedSearch } from "../_lib/crawler/crawlerService.ts";
 import { CrawlerRepository } from "../_lib/crawler/repository.ts";
 import { scoreListingForSearch } from "../_lib/crawler/scoring.ts";
@@ -46,10 +46,11 @@ export async function onRequest(context: Context) {
   const { request, env } = context;
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
   try {
-    const user = await authenticateRequest(request, env);
-    const repository = CrawlerRepository.from(env);
     const path = new URL(request.url).pathname.replace(/^\/api\/?/, "").replace(/\/+$/, "");
     const parts = path ? path.split("/") : [];
+    if (parts[0] === "session" && parts[1] === "anonymous" && request.method === "POST") return json(request, await createAnonymousSession(env), 201);
+    const user = await authenticateRequest(request, env);
+    const repository = CrawlerRepository.from(env);
 
     if (parts[0] === "saved-searches" && parts.length === 1 && request.method === "GET") return json(request, { savedSearches: await repository.listSavedSearches(user.id) });
     if (parts[0] === "saved-searches" && parts.length === 1 && request.method === "POST") return json(request, { savedSearch: await repository.createSavedSearch(user.id, await body(request)) }, 201);

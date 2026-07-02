@@ -18,8 +18,19 @@ function authHeaders() {
   return headers;
 }
 
-async function request<T>(path: string, init: RequestInit = {}) {
+async function bootstrapSession() {
+  const response = await fetch("/api/session/anonymous", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "same-origin" });
+  const payload = await response.json().catch(() => ({})) as { token?: string; userId?: string; error?: string };
+  if (!response.ok || !payload.token) throw new CrawlerApiError(payload.error || "Could not create a listing session.", response.status);
+  let session: Record<string, unknown> = {};
+  try { session = JSON.parse(window.localStorage.getItem("snagd-session") || "{}"); } catch { /* Replace malformed local state. */ }
+  window.localStorage.setItem("snagd-session", JSON.stringify({ ...session, apiToken: payload.token }));
+  if (payload.userId) window.localStorage.setItem("snagd-api-user-id", payload.userId);
+}
+
+async function request<T>(path: string, init: RequestInit = {}, retried = false): Promise<T> {
   const response = await fetch(`/api/${path}`, { ...init, headers: { ...authHeaders(), ...(init.headers || {}) }, credentials: "same-origin" });
+  if (response.status === 401 && !retried) { await bootstrapSession(); return request<T>(path, init, true); }
   const payload = await response.json().catch(() => ({})) as { error?: string };
   if (!response.ok) throw new CrawlerApiError(payload.error || `Crawler API returned ${response.status}.`, response.status);
   return payload as T;
@@ -67,3 +78,15 @@ export function crawlerListingToDeal(listing: CrawlerListing): Deal {
 }
 
 export function isCrawlerApiUnavailable(error: unknown) { return error instanceof TypeError || (error instanceof CrawlerApiError && [401, 404, 500, 503].includes(error.status)); }
+export function crawlerErrorMessage(error: unknown) {
+  if (error instanceof CrawlerApiError) {
+    if (error.status === 401) return "Live listings are disconnected because production authentication is not configured.";
+    if (error.message.includes("D1 binding")) return "Live listings are disconnected because the Cloudflare D1 database is not bound.";
+    return error.message;
+  }
+  return "The live listing service could not be reached.";
+}
+
+export function isRealCrawlerListing(listing: CrawlerListing) {
+  return !/mock|demo|seed/i.test(`${listing.source} ${listing.sourceUrl}`);
+}

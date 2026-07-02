@@ -7,6 +7,22 @@ function base64UrlBytes(value: string) {
   return Uint8Array.from(atob(padded), (char) => char.charCodeAt(0));
 }
 
+function base64Url(value: string) {
+  return btoa(value).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+}
+
+export async function createAnonymousSession(env: CrawlerEnv) {
+  if (!env.AUTH_JWT_SECRET) throw new Error("AUTH_JWT_SECRET is not configured.");
+  const now = Math.floor(Date.now() / 1000);
+  const userId = `user-${crypto.randomUUID()}`;
+  const header = base64Url(JSON.stringify({ alg: "HS256", typ: "JWT" }));
+  const payload = base64Url(JSON.stringify({ sub: userId, role: "user", iat: now, exp: now + 60 * 60 * 24 * 30 }));
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(env.AUTH_JWT_SECRET), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`${header}.${payload}`));
+  const encodedSignature = btoa(String.fromCharCode(...new Uint8Array(signature))).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+  return { token: `${header}.${payload}.${encodedSignature}`, userId };
+}
+
 async function verifyJwt(token: string, secret: string): Promise<AuthUser | null> {
   const parts = token.split(".");
   if (parts.length !== 3) return null;
