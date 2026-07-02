@@ -19,7 +19,7 @@ const tools = [
 
 export default function DashboardPage() {
   return (
-    <div className="mx-auto grid max-w-[430px] gap-5 md:max-w-shell">
+    <div className="dashboard-mobile mx-auto grid w-full min-w-0 max-w-[430px] gap-5 overflow-x-clip md:max-w-shell">
       <section className="profit-hero motion-card overflow-hidden rounded-[20px] border border-profit/35 p-6 shadow-card">
         <p className="text-sm font-bold text-profit">Today&apos;s Profit Opportunities</p>
         <p className="mt-2 font-mono text-5xl font-extrabold tracking-tight text-profit">{currency(todaysProfitOpportunities.total)}</p>
