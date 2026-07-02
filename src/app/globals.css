@@ -84,6 +84,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @keyframes scan-success { 0% { opacity: 0; transform: scale(.96); } 100% { opacity: 1; transform: scale(1); } }
 
 .mock-phone-shell { width: 100%; }
+.dashboard-mobile > *, .dashboard-mobile > * * { min-width: 0; }
 .app-card-glass { background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, var(--bg)) 0%, color-mix(in srgb, var(--surface-2) 94%, var(--bg)) 100%); border-color: color-mix(in srgb, var(--line) 88%, transparent); }
 .profit-hero { background: linear-gradient(135deg, color-mix(in srgb, var(--profit) 16%, var(--surface)) 0%, color-mix(in srgb, var(--brand) 12%, var(--surface)) 56%, color-mix(in srgb, var(--info) 8%, var(--surface)) 100%); }
 .field-tool-hero { position: relative; isolation: isolate; overflow: hidden; background: linear-gradient(120deg, color-mix(in srgb, var(--brand) 28%, var(--surface)) 0%, color-mix(in srgb, var(--info) 20%, var(--surface-2)) 34%, color-mix(in srgb, var(--profit) 18%, var(--surface)) 68%, color-mix(in srgb, var(--brand) 24%, var(--surface)) 100%); background-size: 240% 240%; animation: field-gradient 9s ease-in-out infinite; }
