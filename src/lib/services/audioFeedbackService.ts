@@ -12,12 +12,24 @@ function getAudioContext() {
 
 export async function primeScanAudio() {
   const context = getAudioContext();
-  if (context?.state === "suspended") await context.resume();
+  if (!context) return;
+  if (context.state === "suspended") await context.resume();
+
+  // A silent one-frame buffer keeps iOS Web Audio unlocked after the tap.
+  const buffer = context.createBuffer(1, 1, context.sampleRate);
+  const source = context.createBufferSource();
+  source.buffer = buffer;
+  source.connect(context.destination);
+  source.start();
 }
 
-export function playScanBeep() {
+export async function playScanBeep() {
   const context = getAudioContext();
-  if (!context || context.state !== "running") return;
+  if (!context) return;
+  if (context.state === "suspended") {
+    try { await context.resume(); } catch { return; }
+  }
+  if (context.state !== "running") return;
 
   const now = context.currentTime;
   const gain = context.createGain();
@@ -35,5 +47,5 @@ export function playScanBeep() {
     oscillator.stop(now + 0.11 + index * 0.055);
   });
 
-  window.navigator.vibrate?.(45);
+  window.navigator.vibrate?.([35, 25, 55]);
 }

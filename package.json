@@ -8,17 +8,22 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/crawler.test.ts",
+    "db:migrate:local": "wrangler d1 migrations apply DB --config wrangler.local.toml --local --persist-to=.wrangler/state",
+    "db:seed:local": "wrangler d1 execute DB --config wrangler.local.toml --local --persist-to=.wrangler/state --file database/seed.sql",
     "mobile:sync": "npx cap sync",
     "ios:add": "npx cap add ios",
     "ios:open": "npx cap open ios",
     "assets:ios": "npx @capacitor/assets generate --ios",
-    "pages:dev": "wrangler pages dev out",
+    "pages:dev": "wrangler pages dev out --d1 DB=00000000-0000-0000-0000-000000000000 --persist-to=.wrangler/state",
     "pages:deploy": "wrangler pages deploy out"
   },
   "dependencies": {
     "@capacitor/core": "^8.4.1",
     "@capacitor/ios": "^8.4.1",
     "@zxing/browser": "^0.2.0",
+    "cheerio": "^1.1.2",
     "next": "^14.2.35",
     "react": "18.3.1",
     "react-dom": "18.3.1"

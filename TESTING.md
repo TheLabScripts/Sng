@@ -38,6 +38,25 @@ Cloudflare Pages automatically discovers `functions/api/vin/[vin].ts` and serves
 
 The current scanner reads VIN barcodes. Plain windshield VIN text requires manual entry until OCR is added.
 
+## Crawler test
+
+```powershell
+Copy-Item .dev.vars.example .dev.vars
+npm.cmd run db:migrate:local
+npm.cmd run db:seed:local
+npm.cmd test
+npm.cmd run build
+npm.cmd run pages:dev
+```
+
+1. Open `/app/watchlists/` and create a saved search with a ZIP code.
+2. Tap `Run now`; the active mock adapter should create a run and normalized matches.
+3. Open `/app/deal-feed/`; crawler matches should appear above fallback demo data.
+4. Confirm save, ignore, and contacted states survive refresh through D1.
+5. Open `/app/alerts/`, mark an alert read, and mute the saved search.
+6. Open `/app/analyze/` and submit a manual listing to verify immediate profit, score, max-offer, and seller-message output.
+7. Set `MOCK_MARKETPLACE_ENABLED=false` before production once a compliant live/provider source is active.
+
 ## Regression checklist
 
 - Invalid or short VIN returns a clear validation error.

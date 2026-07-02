@@ -37,7 +37,7 @@ export function VehicleModeClient() {
     try {
       const vehicle = await vinService.decodeVin(normalizedVin);
       setResult(vehicle);
-      playScanBeep();
+      void playScanBeep();
       window.setTimeout(() => reportRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
     } catch (lookupError) {
       setResult(null);
@@ -266,7 +266,7 @@ function VinScannerOverlay({ onClose, onDetected }: { onClose: () => void; onDet
             <p className="mb-4 text-center text-sm text-white/70" aria-live="polite">{status}</p>
             <div className="relative mx-auto aspect-[3/4] max-h-[62svh] w-full overflow-hidden rounded-[24px] border border-white/25 bg-white/[0.04] shadow-card">
               <video ref={videoRef} autoPlay muted playsInline className="h-full w-full object-cover" />
-              <div className="absolute inset-x-5 top-1/2 h-36 -translate-y-1/2 rounded-[18px] border-2 border-brand bg-black/10 shadow-[0_0_0_999px_rgba(0,0,0,.28)]"><span className="scanner-frame absolute inset-x-3 top-1/2 h-0.5 rounded-full" /></div>
+                <div className="absolute inset-x-5 top-1/2 h-36 -translate-y-1/2 overflow-hidden rounded-[18px] border-2 border-brand bg-black/10 shadow-[0_0_0_999px_rgba(0,0,0,.28)]"><span className="scanner-frame absolute inset-x-3 top-3 h-0.5 rounded-full" /></div>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-2"><button type="button" onClick={() => void toggleTorch()} disabled={!torchAvailable} className="h-11 rounded-[14px] border border-white/20 bg-white/10 text-sm font-bold disabled:opacity-40">{torchOn ? "Light off" : "Phone light"}</button><button type="button" onClick={tryAgain} className="h-11 rounded-[14px] border border-white/20 bg-white/10 text-sm font-bold">Try Again</button></div>
             <button type="button" onClick={() => onDetected(sampleVin)} className="mt-2 h-11 w-full rounded-[14px] border border-brand/60 bg-brand/20 text-sm font-bold text-white">Simulate successful scan</button>
