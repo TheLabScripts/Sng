@@ -2,18 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import type { Deal, DealStatus, SimilarSale } from "@/types/snagd";
+import type { Deal, DealStatus } from "@/types/snagd";
 import { readJson, writeJson } from "@/lib/storage/snagdStorage";
 
 const savedKey = "snagd-saved-deal-ids";
 const statusKey = "snagd-deal-statuses";
-const dealStatuses: DealStatus[] = ["New", "Saved", "Messaged Seller", "Planning Pickup", "Bought", "Passed", "Lost / Sold to Someone Else", "Listed for Resale", "Sold"];
 
 export function DealCard({ deal, compact = false }: { deal: Deal; compact?: boolean }) {
   const [savedIds, setSavedIds] = useState<string[]>([]);
   const [statuses, setStatuses] = useState<Record<string, DealStatus>>({});
-  const [similarOpen, setSimilarOpen] = useState(false);
-  const [trackOpen, setTrackOpen] = useState(false);
   const [feedback, setFeedback] = useState("");
 
   useEffect(() => {
@@ -56,13 +53,6 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
     if (deal.messageUrl) window.open(deal.messageUrl, "_blank", "noopener,noreferrer");
     else if (deal.listingUrl) window.open(deal.listingUrl, "_blank", "noopener,noreferrer");
     else pulse("This source did not provide a direct message link");
-  }
-
-  function setStatus(nextStatus: DealStatus) {
-    const next = { ...statuses, [deal.id]: nextStatus };
-    setStatuses(next);
-    writeJson(statusKey, next);
-    pulse(`Marked ${nextStatus}`);
   }
 
   if (compact) {
@@ -145,85 +135,11 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
         <Action onClick={shareDeal}>Share</Action>
       </div>
       <div className="grid grid-cols-2 gap-2 px-3 pb-3">
-        <Action onClick={() => setSimilarOpen(true)}>Similar Sales</Action>
-        <Action onClick={() => setTrackOpen(true)}>Track: {status}</Action>
+        <Link href={`/app/deal/${deal.id}/#similar-sales`} className="motion-press rounded-[12px] border border-line bg-surface-2 px-3 py-2.5 text-center text-xs font-bold text-ink">Similar Sales</Link>
+        <Link href={`/app/deal/${deal.id}/#track-outcome`} className="motion-press rounded-[12px] border border-line bg-surface-2 px-3 py-2.5 text-center text-xs font-bold text-ink">Track: {status}</Link>
       </div>
       {feedback && <p className="mx-3 mb-3 rounded-card border border-brand/40 bg-brand/10 px-3 py-2 text-sm text-brand motion-slide">{feedback}</p>}
-      {similarOpen && <SimilarSalesModal dealTitle={deal.itemName} sales={deal.similarSales} onClose={() => setSimilarOpen(false)} />}
-      {trackOpen && <TrackingModal deal={deal} status={status} onStatus={setStatus} onClose={() => setTrackOpen(false)} />}
     </article>
-  );
-}
-
-function SimilarSalesModal({ dealTitle, sales, onClose }: { dealTitle: string; sales: SimilarSale[]; onClose: () => void }) {
-  return (
-    <div className="fixed inset-0 z-[80] grid place-items-end bg-black/50 p-3 sm:place-items-center" role="dialog" aria-modal="true">
-      <div className="motion-slide max-h-[86vh] w-full max-w-lg overflow-auto rounded-[22px] border border-line bg-surface p-4 shadow-card">
-        <div className="flex items-start justify-between gap-3">
-          <div><p className="text-sm text-muted">Similar Sales</p><h3 className="text-xl font-bold text-ink">{dealTitle}</h3></div>
-          <button onClick={onClose} className="rounded-card border border-line px-3 py-2 text-sm text-muted">Close</button>
-        </div>
-        <div className="mt-4 grid gap-3">{sales.map((sale) => <SimilarSaleRow key={sale.id} sale={sale} />)}</div>
-      </div>
-    </div>
-  );
-}
-
-function SimilarSaleRow({ sale }: { sale: SimilarSale }) {
-  return (
-    <div className="rounded-card border border-line bg-surface-2 p-3">
-      <div className="flex gap-3">
-        <div className={`h-14 w-14 rounded-card ${thumbnailClass(sale.thumbnailTone)}`} />
-        <div>
-          <p className="font-bold text-ink">{sale.itemTitle}</p>
-          <p className="mt-1 text-sm text-muted">${sale.price} / {sale.condition} / {sale.source} / {sale.date}</p>
-          <p className="mt-1 text-xs text-muted">{sale.matchConfidence} confidence. {sale.notes}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function TrackingModal({ deal, status, onStatus, onClose }: { deal: Deal; status: DealStatus; onStatus: (status: DealStatus) => void; onClose: () => void }) {
-  const [localStatus, setLocalStatus] = useState<DealStatus>(status);
-  const [purchasePrice, setPurchasePrice] = useState(deal.askingPrice);
-  const [soldPrice, setSoldPrice] = useState(deal.estimatedResaleLow);
-  const realProfit = soldPrice - purchasePrice - 18;
-  const roi = purchasePrice > 0 ? Math.round((realProfit / purchasePrice) * 100) : 100;
-
-  return (
-    <div className="fixed inset-0 z-[80] grid place-items-end bg-black/50 p-3 sm:place-items-center">
-      <div className="motion-slide w-full max-w-lg rounded-[22px] border border-line bg-surface p-4 shadow-card">
-        <div className="flex items-start justify-between gap-3">
-          <div><p className="text-sm text-muted">Deal Tracking</p><h3 className="text-xl font-bold text-ink">{deal.itemName}</h3></div>
-          <button onClick={onClose} className="rounded-card border border-line px-3 py-2 text-sm text-muted">Close</button>
-        </div>
-        <p className="mt-3 rounded-card border border-amber/30 bg-amber/10 p-3 text-sm text-amber">This listing looks unavailable. Did you buy it?</p>
-        <div className="mt-4 grid gap-3">
-          <select className="rounded-card border border-line bg-surface-2 p-3 text-ink" value={localStatus} onChange={(event) => setLocalStatus(event.target.value as DealStatus)}>
-            {dealStatuses.map((item) => <option key={item}>{item}</option>)}
-          </select>
-          {(localStatus === "Bought" || localStatus === "Sold" || localStatus === "Listed for Resale") && (
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Input label="Purchase price" value={purchasePrice} setValue={setPurchasePrice} />
-              <Input label="Pickup/repair estimate" value={18} setValue={() => undefined} />
-            </div>
-          )}
-          {localStatus === "Sold" && (
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Input label="Sold price" value={soldPrice} setValue={setSoldPrice} />
-              <div>
-                <p className="text-xs text-muted">Calculated result</p>
-                <p className="mt-1 font-mono text-lg font-bold text-profit">${realProfit} / {roi}% ROI</p>
-                <p className="text-xs text-muted">Accuracy improves with saved purchase and sale inputs.</p>
-              </div>
-            </div>
-          )}
-          <textarea className="min-h-[86px] rounded-card border border-line bg-surface-2 p-3 text-ink" placeholder="Notes, seller response, pickup plan, or sale details" />
-          <button onClick={() => { onStatus(localStatus); onClose(); }} className="h-11 rounded-card bg-brand px-4 text-sm font-bold text-white">Save status</button>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -233,10 +149,6 @@ function tagClass(tag: string) {
   if (tag.includes("%") || lower.includes("profit")) return "border-profit/25 bg-profit/10 text-profit";
   if (lower.includes("listed") || lower.includes("fast")) return "border-amber/25 bg-amber/10 text-amber";
   return "border-brand/25 bg-brand/10 text-brand";
-}
-
-function Input({ label, value, setValue }: { label: string; value: number; setValue: (value: number) => void }) {
-  return <label><span className="text-xs text-muted">{label}</span><input className="mt-1 w-full rounded-card border border-line bg-surface-2 p-3 text-ink" type="number" value={value} onChange={(event) => setValue(Number(event.target.value))} /></label>;
 }
 
 function Action({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {

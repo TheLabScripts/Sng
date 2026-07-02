@@ -11,8 +11,8 @@ const scanTools = [
 export default function ScanHubPage() {
   return (
     <div className="mx-auto max-w-[430px] md:max-w-shell">
-      <section className="rounded-[22px] border border-brand/35 bg-brand/10 p-5 shadow-card">
-        <p className="text-sm font-bold text-brand">Scan</p>
+      <section className="field-tool-hero rounded-[24px] border border-brand/40 p-5 shadow-card">
+        <p className="text-sm font-bold text-brand">FIELD TOOLKIT</p>
         <h1 className="mt-2 text-3xl font-extrabold text-ink">Choose a field tool</h1>
         <p className="mt-2 text-sm leading-6 text-muted">Research an item, scan a find, check a vehicle, or compare similar sales before you message the seller.</p>
       </section>
