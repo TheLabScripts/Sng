@@ -85,7 +85,7 @@ export type CrawlerListing = {
 export type CrawlerAlert = {
   id: string; listing_match_id: string; listing_id: string; saved_search_id: string; listing_title: string; source_url: string; image_urls: string;
   deal_score: number; estimated_profit: number; title: string; body: string;
-  status: "unread" | "read" | "muted" | "sent" | "failed"; created_at: string;
+  status: "unread" | "read" | "muted" | "sent" | "failed"; created_at: string; source?: string;
 };
 
 export type Alert = { id: string; type: string; item: string; score: number; profit: string; distance: string; timePosted: string; why: string; severity: "profit" | "amber" | "risk" | "info"; };

@@ -1,8 +1,9 @@
 "use client";
 
 import { useDeferredValue, useEffect, useState } from "react";
+import Link from "next/link";
 import { DealCard } from "@/components/app/DealCard";
-import { crawlerApiClient, crawlerListingToDeal } from "@/lib/services/crawlerApiClient";
+import { crawlerApiClient, crawlerErrorMessage, crawlerListingToDeal, isRealCrawlerListing } from "@/lib/services/crawlerApiClient";
 import { defaultListingFilters, type ListingFilters, type PostedWithin } from "@/lib/services/listingFilterService";
 import { listingSearchService } from "@/lib/services/listingSearchService";
 import { defaultLocationPreference, locationPreferenceService } from "@/lib/services/locationPreferenceService";
@@ -11,12 +12,13 @@ import type { Deal } from "@/types/snagd";
 const categories = ["Smart Picks", "Everything", "Vehicles", "Furniture", "Tools", "Electronics", "Free", "Sneakers", "Appliances", "Watchlists"];
 const postedOptions: PostedWithin[] = ["Any time", "Last hour", "Today", "3 days", "Week"];
 
-export function DealFeedClient({ deals }: { deals: Deal[] }) {
+export function DealFeedClient() {
   const [filters, setFilters] = useState<ListingFilters>(defaultListingFilters);
   const [zip, setZip] = useState(defaultLocationPreference.zip);
   const [savedIds, setSavedIds] = useState<string[]>([]);
   const [crawlerDeals, setCrawlerDeals] = useState<Deal[]>([]);
-  const [feedState, setFeedState] = useState<"connecting" | "live" | "demo" | "fallback">("connecting");
+  const [feedState, setFeedState] = useState<"connecting" | "live" | "empty" | "error">("connecting");
+  const [feedError, setFeedError] = useState("");
   const [notice, setNotice] = useState("");
   const deferredFilters = useDeferredValue(filters);
 
@@ -39,11 +41,12 @@ export function DealFeedClient({ deals }: { deals: Deal[] }) {
       try {
         const payload = await crawlerApiClient.listListings(refreshDue);
         if (!active) return;
-        const next = payload.listings.map(crawlerListingToDeal);
+        const next = payload.listings.filter(isRealCrawlerListing).map(crawlerListingToDeal);
         setCrawlerDeals(next);
-        setFeedState(next.some((deal) => !deal.source.toLowerCase().includes("mock")) ? "live" : "demo");
-      } catch {
-        if (active) setFeedState("fallback");
+        setFeedState(next.length ? "live" : "empty");
+        setFeedError("");
+      } catch (error) {
+        if (active) { setFeedState("error"); setFeedError(crawlerErrorMessage(error)); }
       }
     }
     void load(true);
@@ -51,7 +54,7 @@ export function DealFeedClient({ deals }: { deals: Deal[] }) {
     return () => { active = false; window.clearInterval(timer); };
   }, []);
 
-  const allDeals = crawlerDeals.length ? crawlerDeals : deals;
+  const allDeals = crawlerDeals;
   const filtered = listingSearchService.search(allDeals, deferredFilters, savedIds);
   const heroDeal = filtered[0];
   const remaining = filtered.slice(1);
@@ -67,11 +70,7 @@ export function DealFeedClient({ deals }: { deals: Deal[] }) {
       await crawlerApiClient.createSavedSearch({ name: filters.keyword ? `${filters.keyword} near ${zip}` : `Deals near ${zip}`, zipCode: zip, radiusMiles: filters.radius, category: filters.category, keywords: [filters.keyword, filters.includeKeywords].filter(Boolean).join(", "), negativeKeywords: filters.excludeKeywords, minPrice: filters.priceMin, maxPrice: filters.priceMax, minEstimatedProfit: filters.minimumProfit, minDealScore: filters.minimumScore, isActive: true, scanIntervalMinutes: 30 });
       setNotice(kind === "search" ? "Saved search is active" : "Watchlist created and ready to scan");
       return;
-    } catch { /* Keep a local draft if the crawler API is not configured yet. */ }
-    const key = kind === "search" ? "snagd-saved-searches" : "snagd-filter-watchlists";
-    const current = JSON.parse(window.localStorage.getItem(key) || "[]") as unknown[];
-    window.localStorage.setItem(key, JSON.stringify([...current, { id: Date.now(), zip, filters, createdAt: new Date().toISOString() }]));
-    setNotice("Saved locally; connect D1 to activate crawling");
+    } catch (error) { setNotice(crawlerErrorMessage(error)); }
   }
   function clearFilters() { setFilters({ ...defaultListingFilters, radius: filters.radius, category: "Everything" }); setNotice("Filters cleared"); }
 
@@ -86,7 +85,7 @@ export function DealFeedClient({ deals }: { deals: Deal[] }) {
         </div>
       </section>
 
-      <div className="mb-4 flex items-end justify-between gap-3"><div className="min-w-0"><h1 className="text-2xl font-bold text-ink">Deal feed</h1><p className="mt-1 text-sm text-muted">{feedState === "live" ? "Live crawler matches refresh automatically." : feedState === "demo" ? "Crawler connected using the mock development source." : feedState === "fallback" ? "Demo fallback shown until the crawler database is connected." : "Connecting to crawler sources..."}</p></div><span className={`shrink-0 rounded-full border px-3 py-1 text-xs font-bold ${feedState === "live" ? "border-profit/35 bg-profit/10 text-profit" : "border-brand/35 bg-brand/10 text-brand"}`}>{feedState === "live" ? "LIVE" : feedState === "connecting" ? "SYNCING" : "DEMO"} / {filtered.length}</span></div>
+      <div className="mb-4 flex items-end justify-between gap-3"><div className="min-w-0"><h1 className="text-2xl font-bold text-ink">Deal feed</h1><p className="mt-1 text-sm text-muted">{feedState === "live" ? "Live crawler matches refresh automatically." : feedState === "empty" ? "Connected, but no real listings match your active searches yet." : feedState === "error" ? feedError : "Connecting to live listing sources..."}</p></div><span className={`shrink-0 rounded-full border px-3 py-1 text-xs font-bold ${feedState === "live" ? "border-profit/35 bg-profit/10 text-profit" : feedState === "error" ? "border-pass/35 bg-pass/10 text-pass" : "border-brand/35 bg-brand/10 text-brand"}`}>{feedState === "live" ? "LIVE" : feedState === "error" ? "OFFLINE" : feedState === "empty" ? "EMPTY" : "SYNCING"} / {filtered.length}</span></div>
       <div className="-mx-4 mb-3 overflow-x-auto px-4 no-scrollbar"><div className="flex gap-2">{categories.map((category) => <button key={category} type="button" onClick={() => update("category", category)} className={`motion-press whitespace-nowrap rounded-full border px-3 py-2 text-sm font-bold ${filters.category === category ? "border-brand bg-brand text-white" : "border-line bg-surface text-muted"}`}>{category}</button>)}</div></div>
 
       <details className="mb-4 rounded-[20px] border border-line bg-surface shadow-soft">
@@ -107,7 +106,7 @@ export function DealFeedClient({ deals }: { deals: Deal[] }) {
       {activeFilters.length > 0 && <div className="mb-4 flex flex-wrap gap-2">{activeFilters.map((label) => <span key={label} className="rounded-full border border-brand/25 bg-brand/10 px-2.5 py-1 text-xs font-bold text-brand">{label}</span>)}</div>}
       {heroDeal && <div className="mb-4"><DealCard deal={heroDeal} /></div>}
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">{remaining.map((deal) => <DealCard key={deal.id} deal={deal} compact />)}</div>
-      {!filtered.length && <div className="rounded-[18px] border border-line bg-surface p-5 text-sm text-muted">No listings match this combination. Clear a filter or expand the radius.</div>}
+      {!filtered.length && <div className="rounded-[18px] border border-line bg-surface p-5 text-sm text-muted"><p className="font-bold text-ink">No real listings available</p><p className="mt-2">{feedState === "error" ? feedError : "Create an active saved search, connect an approved marketplace source, then run the search. Placeholder listings are disabled."}</p><Link href="/app/watchlists/" className="mt-4 inline-flex rounded-card bg-brand px-4 py-3 font-bold text-white">Open saved searches</Link></div>}
       <style jsx global>{`.deal-feed-field { width: 100%; min-width: 0; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); padding: .7rem .75rem; outline: none; } .deal-feed-field:focus { border-color: var(--brand); }`}</style>
     </div>
   );

@@ -158,7 +158,7 @@ export class CrawlerRepository {
   }
 
   async listAlerts(userId: string) {
-    const result = await this.db.prepare(`SELECT a.*,l.id AS listing_id,l.title AS listing_title,l.source_url,l.image_urls,lm.saved_search_id,lm.deal_score,lm.estimated_profit FROM alerts a JOIN listing_matches lm ON lm.id=a.listing_match_id JOIN listings l ON l.id=lm.listing_id WHERE a.user_id=? ORDER BY CASE a.status WHEN 'unread' THEN 0 ELSE 1 END,a.created_at DESC LIMIT 200`).bind(userId).all<Row>();
+    const result = await this.db.prepare(`SELECT a.*,l.id AS listing_id,l.title AS listing_title,l.source,l.source_url,l.image_urls,lm.saved_search_id,lm.deal_score,lm.estimated_profit FROM alerts a JOIN listing_matches lm ON lm.id=a.listing_match_id JOIN listings l ON l.id=lm.listing_id WHERE a.user_id=? ORDER BY CASE a.status WHEN 'unread' THEN 0 ELSE 1 END,a.created_at DESC LIMIT 200`).bind(userId).all<Row>();
     return result.results || [];
   }
 

@@ -2,56 +2,40 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { AppCard } from "@/components/app/AppCard";
-import { crawlerApiClient } from "@/lib/services/crawlerApiClient";
-import { mockWatchlists } from "@/lib/mock-data";
+import { crawlerApiClient, crawlerErrorMessage } from "@/lib/services/crawlerApiClient";
+import { locationPreferenceService } from "@/lib/services/locationPreferenceService";
 import type { CrawlerSavedSearch } from "@/types/snagd";
 
-const storageKey = "snagd-crawler-saved-searches";
 const categories = ["Any", "Vehicles", "Motorcycles", "Tools", "Electronics", "Furniture", "Appliances", "Parts", "Sneakers", "Other"];
 type Draft = Omit<CrawlerSavedSearch, "id" | "userId" | "lastScannedAt" | "createdAt" | "updatedAt" | "matchCount">;
 
-const emptyDraft: Draft = { name: "Weekend fast flips", zipCode: "08102", radiusMiles: 25, category: "Any", keywords: "clean, working, bundle, moving", negativeKeywords: "broken, parts only, missing", minPrice: 0, maxPrice: 300, minEstimatedProfit: 75, minDealScore: 68, isActive: true, scanIntervalMinutes: 30 };
-
-function localSeed(): CrawlerSavedSearch[] {
-  const timestamp = new Date().toISOString();
-  return mockWatchlists.map((watchlist) => ({ id: watchlist.id, userId: "local", name: watchlist.name, zipCode: watchlist.location, radiusMiles: watchlist.radius, category: watchlist.category, keywords: watchlist.includeKeywords, negativeKeywords: watchlist.excludeKeywords, minPrice: 0, maxPrice: watchlist.maxBuyPrice, minEstimatedProfit: watchlist.minimumEstimatedProfit, minDealScore: watchlist.minimumSnagdScore, isActive: true, scanIntervalMinutes: watchlist.alertSpeedPreference === "Instant" ? 5 : watchlist.alertSpeedPreference === "Fast" ? 15 : 30, lastScannedAt: null, createdAt: timestamp, updatedAt: timestamp, matchCount: watchlist.producingDeals || 0 }));
-}
+const emptyDraft: Draft = { name: "", zipCode: "", radiusMiles: 25, category: "Any", keywords: "", negativeKeywords: "", minPrice: 0, maxPrice: 0, minEstimatedProfit: 75, minDealScore: 68, isActive: true, scanIntervalMinutes: 30 };
 
 export function WatchlistsClient() {
   const [searches, setSearches] = useState<CrawlerSavedSearch[]>([]);
   const [draft, setDraft] = useState<Draft>(emptyDraft);
   const [editingId, setEditingId] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const [mode, setMode] = useState<"connecting" | "live" | "local">("connecting");
+  const [mode, setMode] = useState<"connecting" | "live" | "error">("connecting");
   const [notice, setNotice] = useState("");
   const [runningId, setRunningId] = useState("");
 
   useEffect(() => {
     let active = true;
-    crawlerApiClient.listSavedSearches().then((payload) => { if (active) { setSearches(payload.savedSearches); setMode("live"); } }).catch(() => {
-      if (!active) return;
-      try { const stored = JSON.parse(window.localStorage.getItem(storageKey) || "[]") as CrawlerSavedSearch[]; setSearches(stored.length ? stored : localSeed()); } catch { setSearches(localSeed()); }
-      setMode("local");
-    });
+    crawlerApiClient.listSavedSearches().then((payload) => { if (active) { setSearches(payload.savedSearches); setMode("live"); } }).catch((error) => { if (active) { setMode("error"); setNotice(crawlerErrorMessage(error)); } });
     return () => { active = false; };
   }, []);
 
-  function saveLocal(next: CrawlerSavedSearch[]) { setSearches(next); window.localStorage.setItem(storageKey, JSON.stringify(next)); }
-  function openNew() { setEditingId(""); setDraft(emptyDraft); setShowForm(true); }
+  function openNew() { const location = locationPreferenceService.load(); setEditingId(""); setDraft({ ...emptyDraft, zipCode: location.zip, radiusMiles: location.radius }); setShowForm(true); }
   function openEdit(search: CrawlerSavedSearch) { const { id: _id, userId: _userId, lastScannedAt: _last, createdAt: _created, updatedAt: _updated, matchCount: _count, ...nextDraft } = search; setDraft(nextDraft); setEditingId(search.id); setShowForm(true); }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      if (mode === "live") {
-        const payload = editingId ? await crawlerApiClient.updateSavedSearch(editingId, draft) : await crawlerApiClient.createSavedSearch(draft);
-        setSearches((current) => editingId ? current.map((item) => item.id === editingId ? { ...item, ...payload.savedSearch } : item) : [payload.savedSearch, ...current]);
-      } else {
-        const timestamp = new Date().toISOString();
-        const next: CrawlerSavedSearch = { ...draft, id: editingId || `search-${Date.now()}`, userId: "local", lastScannedAt: null, createdAt: timestamp, updatedAt: timestamp, matchCount: 0 };
-        saveLocal(editingId ? searches.map((item) => item.id === editingId ? next : item) : [next, ...searches]);
-      }
-      setNotice(mode === "live" ? "Saved search is active in the crawler." : "Saved locally. Configure D1 to activate crawling.");
+      if (mode !== "live") throw new Error("Live crawler connection is required before a search can be saved.");
+      const payload = editingId ? await crawlerApiClient.updateSavedSearch(editingId, draft) : await crawlerApiClient.createSavedSearch(draft);
+      setSearches((current) => editingId ? current.map((item) => item.id === editingId ? { ...item, ...payload.savedSearch } : item) : [payload.savedSearch, ...current]);
+      setNotice("Saved search is active in the crawler.");
       setShowForm(false); setEditingId(""); setDraft(emptyDraft);
     } catch (error) { setNotice(error instanceof Error ? error.message : "Could not save search."); }
   }
@@ -59,14 +43,15 @@ export function WatchlistsClient() {
   async function toggleSearch(search: CrawlerSavedSearch) {
     const isActive = !search.isActive;
     try {
-      if (mode === "live") await crawlerApiClient.updateSavedSearch(search.id, { isActive });
+      if (mode !== "live") throw new Error("Live crawler connection is required.");
+      await crawlerApiClient.updateSavedSearch(search.id, { isActive });
       const next = searches.map((item) => item.id === search.id ? { ...item, isActive } : item);
-      mode === "live" ? setSearches(next) : saveLocal(next);
+      setSearches(next);
     } catch (error) { setNotice(error instanceof Error ? error.message : "Could not update search."); }
   }
 
   async function runNow(search: CrawlerSavedSearch) {
-    if (mode !== "live") { setNotice("Connect D1 and enable development auth before running crawlers."); return; }
+    if (mode !== "live") { setNotice("Live crawler connection is required before a scan can run."); return; }
     setRunningId(search.id); setNotice("");
     try {
       await crawlerApiClient.runSavedSearch(search.id);
@@ -78,8 +63,8 @@ export function WatchlistsClient() {
   }
 
   return <div className="dashboard-mobile mx-auto w-full min-w-0 max-w-shell overflow-x-clip">
-    <div className="flex items-end justify-between gap-3"><div className="min-w-0"><p className="text-xs font-bold uppercase tracking-[.14em] text-brand">Crawler control</p><h1 className="mt-1 text-2xl font-bold text-ink">Saved Searches</h1><p className="mt-1 text-sm text-muted">Automatically scan configured sources by ZIP, radius, price, keywords, profit, and score.</p></div><span className={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-bold ${mode === "live" ? "border-profit/35 bg-profit/10 text-profit" : "border-brand/35 bg-brand/10 text-brand"}`}>{mode === "live" ? "LIVE" : mode === "connecting" ? "SYNCING" : "LOCAL"}</span></div>
-    <button type="button" onClick={showForm ? () => setShowForm(false) : openNew} className="mt-4 h-11 w-full rounded-card bg-brand px-4 text-sm font-bold text-white">{showForm ? "Close editor" : "Create saved search"}</button>
+    <div className="flex items-end justify-between gap-3"><div className="min-w-0"><p className="text-xs font-bold uppercase tracking-[.14em] text-brand">Crawler control</p><h1 className="mt-1 text-2xl font-bold text-ink">Saved Searches</h1><p className="mt-1 text-sm text-muted">Automatically scan configured live sources by ZIP, radius, price, keywords, profit, and score.</p></div><span className={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-bold ${mode === "live" ? "border-profit/35 bg-profit/10 text-profit" : mode === "error" ? "border-pass/35 bg-pass/10 text-pass" : "border-brand/35 bg-brand/10 text-brand"}`}>{mode === "live" ? "LIVE" : mode === "connecting" ? "SYNCING" : "OFFLINE"}</span></div>
+    <button type="button" disabled={mode !== "live"} onClick={showForm ? () => setShowForm(false) : openNew} className="mt-4 h-11 w-full rounded-card bg-brand px-4 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-45">{showForm ? "Close editor" : "Create saved search"}</button>
 
     {showForm && <AppCard className="mt-4"><form className="grid gap-4" onSubmit={handleSubmit}><h2 className="text-lg font-bold text-ink">{editingId ? "Edit saved search" : "New saved search"}</h2>
       <Field label="Search name"><input className="field" required value={draft.name} onChange={(event) => setDraft({ ...draft, name: event.target.value })} /></Field>
@@ -99,7 +84,7 @@ export function WatchlistsClient() {
       <div className="mt-4 grid grid-cols-3 gap-2"><button type="button" onClick={() => void runNow(search)} disabled={runningId === search.id || !search.isActive} className="rounded-card bg-brand px-2 py-3 text-xs font-bold text-white disabled:opacity-45">{runningId === search.id ? "Running..." : "Run now"}</button><button type="button" onClick={() => openEdit(search)} className="rounded-card border border-line bg-surface-2 px-2 py-3 text-xs font-bold text-ink">Edit</button><button type="button" onClick={() => void toggleSearch(search)} className="rounded-card border border-line bg-surface-2 px-2 py-3 text-xs font-bold text-muted">{search.isActive ? "Disable" : "Enable"}</button></div>
     </AppCard>)}</div>
     {!searches.length && mode !== "connecting" && <AppCard className="mt-5"><p className="text-sm text-muted">No saved searches yet. Create one to begin scanning.</p></AppCard>}
-    <style jsx>{`.field { width:100%; min-width:0; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); color:var(--ink); padding:.75rem .85rem; outline:none; } .field:focus { border-color:var(--brand); }`}</style>
+    <style jsx global>{`.field { width:100%; min-width:0; border-radius:10px; border:1px solid var(--line); background:var(--surface-2); color:var(--ink); padding:.75rem .85rem; outline:none; } .field:focus { border-color:var(--brand); }`}</style>
   </div>;
 }
 
