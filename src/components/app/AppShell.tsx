@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SnagdLogo } from "@/components/ui/SnagdLogo";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { isNativeApp } from "@/lib/native";
 
 const primaryTabs = [
   { label: "Home", href: "/app/", icon: HomeIcon },
@@ -29,25 +30,29 @@ const moreItems = [
 const desktopItems = [...primaryTabs, ...moreItems] as const;
 
 type Session = { name?: string; email?: string; plan?: string; isAdmin?: boolean };
+const guestSession: Session = { name: "Guest", plan: "Free", isAdmin: false };
+const nativeHiddenItems = new Set(["Billing", "Creator"]);
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [moreOpen, setMoreOpen] = useState(false);
-  const [session, setSession] = useState<Session>({});
+  const [session, setSession] = useState<Session>(guestSession);
+  const [native, setNative] = useState(false);
 
   useEffect(() => {
+    setNative(isNativeApp());
     const existing = window.localStorage.getItem("snagd-session");
     if (!existing) {
-      const demo = { name: "Snagd tester", email: "demo@snagd.app", plan: "Starter", isAdmin: false };
-      window.localStorage.setItem("snagd-session", JSON.stringify(demo));
-      setSession(demo);
+      setSession(guestSession);
       return;
     }
-    try { setSession(JSON.parse(existing)); } catch { setSession({}); }
+    try { setSession(JSON.parse(existing)); } catch { setSession(guestSession); }
   }, []);
 
   const moreActive = moreItems.some((item) => isActive(pathname, item.href));
-  const visibleMoreItems = session.isAdmin ? [...moreItems, { label: "Admin", href: "/admin/", icon: ShieldIcon }] : moreItems;
+  const availableMoreItems = native ? moreItems.filter((item) => !nativeHiddenItems.has(item.label)) : [...moreItems];
+  const availableDesktopItems = native ? desktopItems.filter((item) => !nativeHiddenItems.has(item.label)) : desktopItems;
+  const visibleMoreItems = session.isAdmin ? [...availableMoreItems, { label: "Admin", href: "/admin/", icon: ShieldIcon }] : availableMoreItems;
 
   function signOut() {
     window.localStorage.removeItem("snagd-session");
@@ -60,17 +65,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <aside className="hidden w-72 shrink-0 border-r border-line bg-surface/80 px-4 py-5 md:block">
           <SnagdLogo href="/app/" />
           <nav className="mt-8 grid gap-1">
-            {desktopItems.map((item) => <AppNavLink key={`${item.label}-${item.href}`} item={item} active={isActive(pathname, item.href)} />)}
+            {availableDesktopItems.map((item) => <AppNavLink key={`${item.label}-${item.href}`} item={item} active={isActive(pathname, item.href)} />)}
             {session.isAdmin && <AppNavLink item={{ label: "Admin", href: "/admin/", icon: ShieldIcon }} active={pathname.startsWith("/admin")} />}
           </nav>
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-40 bg-bg/76 px-4 pb-2 pt-4 backdrop-blur sm:px-6">
+          <header className="app-safe-header sticky top-0 z-40 bg-bg/76 px-4 pb-2 pt-4 backdrop-blur sm:px-6">
             <div className="flex items-center justify-between gap-3">
               <div className="min-w-0">
                 <SnagdLogo href="/app/" />
-                <p className="mt-1 text-xs font-medium text-muted">Near 90210 / live local tools</p>
+                <p className="mt-1 text-xs font-medium text-muted">{session.name === "Guest" ? "Local workspace" : `${session.name}'s workspace`} / private to this device</p>
               </div>
               <div className="flex items-center gap-2">
                 <Link href="/app/deal-feed/" className="grid h-10 w-10 place-items-center rounded-card border border-line bg-surface text-muted" aria-label="Search deals"><SearchIcon /></Link>
@@ -86,7 +91,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {moreOpen && <MoreSheet pathname={pathname} items={visibleMoreItems} onClose={() => setMoreOpen(false)} />}
 
-      <nav className="fixed bottom-0 left-1/2 z-50 w-full max-w-[430px] -translate-x-1/2 border-t border-line bg-surface/96 pb-[env(safe-area-inset-bottom)] shadow-card backdrop-blur md:hidden">
+      <nav className="app-bottom-nav fixed bottom-0 left-1/2 z-50 w-full max-w-[430px] -translate-x-1/2 border-t border-line bg-surface/96 pb-[env(safe-area-inset-bottom)] shadow-card backdrop-blur md:hidden">
         <div className="grid grid-cols-5 gap-1 px-2 py-2">
           {primaryTabs.map((item) => <MobileNavLink key={item.href} item={item} active={isActive(pathname, item.href)} />)}
           <button type="button" onClick={() => setMoreOpen(true)} className={`motion-press flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-card px-2 py-2 text-[11px] ${moreActive ? "bg-brand text-white" : "text-muted"}`}><MoreIcon /><span>More</span></button>

@@ -10,8 +10,8 @@
   return (
     <div className="mx-auto max-w-2xl">
       <h1 className="font-display text-4xl font-black tracking-tight text-ink">{title}</h1>
-      <p className="mt-3 rounded-lg border border-amber/30 bg-amber/5 px-4 py-3 font-mono text-xs text-amber">
-        {updated}
+      <p className="mt-3 font-mono text-xs text-muted">
+        Last updated: {updated}
       </p>
       <div className="mt-10 space-y-8">
         {sections.map(([h, b]) => (

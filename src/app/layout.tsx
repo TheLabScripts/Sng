@@ -1,5 +1,6 @@
 ﻿import type { Metadata, Viewport } from "next";
 import { SiteChrome } from "@/components/SiteChrome";
+import { NativeRuntime } from "@/components/native/NativeRuntime";
 import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import "./globals.css";
 
@@ -36,6 +37,13 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  icons: {
+    icon: [
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 export const viewport: Viewport = {
@@ -62,16 +70,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="snagd-light" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
-          rel="stylesheet"
-        />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
         <ThemeProvider>
+          <NativeRuntime />
           <SiteChrome>{children}</SiteChrome>
         </ThemeProvider>
       </body>

@@ -27,8 +27,13 @@ export function AnalyzeDealClient() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const nextResult = await aiScoringService.scoreDeal(input);
-    setResult(nextResult);
+    setLoading(true);
+    try {
+      const nextResult = await aiScoringService.scoreDeal(input);
+      setResult(nextResult);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function updateField<K extends keyof DealAnalysisInput>(key: K, value: DealAnalysisInput[K]) {
@@ -123,8 +128,8 @@ export function AnalyzeDealClient() {
             />
           </Field>
 
-          <button type="submit" className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-white transition hover:brightness-105">
-            Score deal
+          <button type="submit" disabled={loading} className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-white transition hover:brightness-105 disabled:cursor-wait disabled:opacity-60">
+            {loading ? "Scoring deal..." : "Score deal"}
           </button>
         </form>
       </AppCard>

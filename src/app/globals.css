@@ -23,9 +23,9 @@ html[data-theme="snagd-light"] {
   --brand-soft: rgba(37, 99, 235, 0.12);
   --shadow-card: 0 18px 42px -30px rgba(17, 24, 39, 0.22);
   --shadow-soft: 0 12px 28px -24px rgba(17, 24, 39, 0.2);
-  --font-display: 'Inter', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-display: 'Avenir Next', 'Segoe UI Variable Display', 'Trebuchet MS', sans-serif;
+  --font-body: 'Avenir Next', 'Segoe UI Variable Text', 'Trebuchet MS', sans-serif;
+  --font-mono: 'SFMono-Regular', Menlo, Consolas, ui-monospace, monospace;
 }
 
 html[data-theme="snagd-black"] {
@@ -56,6 +56,7 @@ body { min-height: 100vh; background: var(--bg); color: var(--ink); font-family:
 a { color: inherit; }
 button, input, textarea, select { font: inherit; }
 button { touch-action: manipulation; }
+button, a { -webkit-tap-highlight-color: transparent; }
 ::selection { background: color-mix(in srgb, var(--brand) 34%, transparent); }
 :focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
 
@@ -135,6 +136,30 @@ html[data-theme="snagd-black"] .brand-panel {
   .mock-phone-shell { max-width: 430px; margin-inline: auto; background: radial-gradient(circle at 50% -10%, color-mix(in srgb, var(--brand) 8%, transparent), transparent 34%), linear-gradient(180deg, color-mix(in srgb, var(--surface) 48%, var(--bg)) 0%, var(--bg) 28%, color-mix(in srgb, var(--bg-soft) 42%, var(--bg)) 100%); min-height: 100svh; box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 28px 90px -42px rgba(0,0,0,.45); }
   html[data-theme="snagd-light"] body { background: #dfe5ef; }
   html[data-theme="snagd-black"] body { background: #000; }
+}
+
+html.native-app,
+html.native-app body {
+  min-height: 100%;
+  overscroll-behavior: none;
+}
+
+html.native-app .app-safe-header {
+  padding-top: max(1rem, env(safe-area-inset-top));
+}
+
+html.native-app .app-bottom-nav {
+  max-width: none;
+}
+
+html.native-app input,
+html.native-app textarea,
+html.native-app select {
+  font-size: 16px;
+}
+
+@media (max-width: 767px) {
+  html.native-app .mock-phone-shell { max-width: none; box-shadow: none; }
 }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.001ms !important; } }

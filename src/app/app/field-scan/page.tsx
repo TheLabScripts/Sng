@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { AppCard } from "@/components/app/AppCard";
 import { RecommendationBadge } from "@/components/app/Badges";
@@ -10,9 +11,49 @@ const steps = ["Reading image", "Identifying item", "Comparing similar sales", "
 
 export default function FieldScanPage() {
   const [loading, setLoading] = useState(false);
-  const [resultVisible, setResultVisible] = useState(true);
+  const [resultVisible, setResultVisible] = useState(false);
   const [title, setTitle] = useState(fieldScanResult.itemDetected);
-  function runScan() { setLoading(true); setResultVisible(false); window.setTimeout(() => { setLoading(false); setResultVisible(true); }, 1500); }
+  const [photoUrl, setPhotoUrl] = useState("");
+  const [photoName, setPhotoName] = useState("");
+  const [actionStatus, setActionStatus] = useState("");
+
+  function choosePhoto(file?: File) {
+    if (!file) return;
+    if (photoUrl) URL.revokeObjectURL(photoUrl);
+    setPhotoUrl(URL.createObjectURL(file));
+    setPhotoName(file.name || "Camera photo");
+    setResultVisible(false);
+    setActionStatus("");
+  }
+
+  function runScan() {
+    if (!photoUrl) return;
+    setLoading(true);
+    setResultVisible(false);
+    window.setTimeout(() => { setLoading(false); setResultVisible(true); }, 1500);
+  }
+
+  function saveScan() {
+    window.localStorage.setItem("snagd-last-field-scan", JSON.stringify({ title, photoName, savedAt: new Date().toISOString(), result: fieldScanResult }));
+    setActionStatus("Scan saved on this device");
+  }
+
+  async function shareScan() {
+    const text = `${title}: estimated resale ${fieldScanResult.estimatedResalePrice}, max buy ${currency(fieldScanResult.suggestedMaxBuyPrice)}.`;
+    const canShare = typeof navigator.share === "function";
+    try {
+      if (canShare) await navigator.share({ title: "Snagd field scan", text });
+      else await navigator.clipboard?.writeText(text);
+      setActionStatus(canShare ? "Share sheet opened" : "Summary copied");
+    } catch {
+      setActionStatus("Sharing canceled");
+    }
+  }
+
+  function trackDeal() {
+    window.localStorage.setItem("snagd-tracked-field-scan", JSON.stringify({ title, status: "Interested", updatedAt: new Date().toISOString() }));
+    setActionStatus("Added to deal tracking");
+  }
   return (
     <div className="mx-auto grid max-w-[430px] gap-4 md:max-w-shell lg:grid-cols-[0.85fr_1.15fr]">
       <div className="grid content-start gap-4">
@@ -20,8 +61,15 @@ export default function FieldScanPage() {
           <p className="text-sm font-bold text-brand">Field Scan</p>
           <h1 className="mt-1 text-2xl font-bold text-ink">Photo-check an item before you buy</h1>
           <div className="mt-5 rounded-[18px] border border-dashed border-brand/45 bg-brand/10 p-6 text-center">
-            <div className="mx-auto grid h-36 place-items-center rounded-[16px] border border-line bg-surface"><p className="text-sm font-bold text-muted">Camera / photo upload</p></div>
-            <button onClick={runScan} className="motion-press mt-4 h-12 w-full rounded-[14px] bg-brand px-5 text-sm font-bold text-white">Run field scan</button>
+            <div className="relative mx-auto grid h-44 place-items-center overflow-hidden rounded-[16px] border border-line bg-surface">
+              {photoUrl ? <Image src={photoUrl} alt="Selected item" fill unoptimized className="object-cover" /> : <p className="px-4 text-sm font-bold text-muted">Take a photo or choose one from your library</p>}
+            </div>
+            <label className="motion-press mt-4 inline-flex h-12 w-full cursor-pointer items-center justify-center rounded-[14px] border border-brand/35 bg-surface px-5 text-sm font-bold text-brand">
+              {photoUrl ? "Choose another photo" : "Open camera or photos"}
+              <input type="file" accept="image/*" capture="environment" className="sr-only" onChange={(event) => choosePhoto(event.target.files?.[0])} />
+            </label>
+            {photoName && <p className="mt-2 truncate text-xs text-muted">{photoName}</p>}
+            <button onClick={runScan} disabled={!photoUrl || loading} className="motion-press mt-3 h-12 w-full rounded-[14px] bg-brand px-5 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-45">{loading ? "Analyzing photo..." : "Run field scan"}</button>
           </div>
         </AppCard>
         <AppCard>
@@ -37,7 +85,8 @@ export default function FieldScanPage() {
           <div className="mt-5 grid grid-cols-2 gap-3"><Metric label="Estimated retail" value={currency(fieldScanResult.estimatedRetailPrice)} /><Metric label="Used resale range" value={fieldScanResult.estimatedResalePrice} /><Metric label="Based on" value={`${fieldScanResult.basedOnSales} sales`} /><Metric label="Expected sell time" value={fieldScanResult.sellThroughSpeed} /><Metric label="Demand" value={fieldScanResult.demand} /><Metric label="Max buy price" value={currency(fieldScanResult.suggestedMaxBuyPrice)} accent /><Metric label="Estimated profit" value={fieldScanResult.estimatedProfit} accent /></div>
           <div className="mt-4 rounded-[16px] border border-amber/35 bg-amber/10 p-4"><p className="text-sm font-bold text-amber">Buy / Maybe / Pass</p><p className="mt-1 text-sm text-muted">Recommendation: {fieldScanResult.recommendation}. Keep your buy price at or below {currency(fieldScanResult.suggestedMaxBuyPrice)}.</p></div>
           <div className="mt-4 grid gap-2">{fieldScanResult.riskNotes.map((note) => <p key={note} className="rounded-card border border-line bg-surface-2 p-3 text-sm text-muted">{note}</p>)}</div>
-          <div className="mt-4 grid grid-cols-3 gap-2"><button className="rounded-card border border-line px-3 py-2 text-sm text-ink">Save scan</button><button className="rounded-card border border-line px-3 py-2 text-sm text-ink">Share scan</button><button className="rounded-card bg-brand px-3 py-2 text-sm font-bold text-white">Track deal</button></div>
+          <div className="mt-4 grid grid-cols-3 gap-2"><button onClick={saveScan} className="rounded-card border border-line px-3 py-2 text-sm text-ink">Save scan</button><button onClick={shareScan} className="rounded-card border border-line px-3 py-2 text-sm text-ink">Share scan</button><button onClick={trackDeal} className="rounded-card bg-brand px-3 py-2 text-sm font-bold text-white">Track deal</button></div>
+          {actionStatus && <p className="mt-3 rounded-card border border-profit/30 bg-profit/10 p-2 text-center text-xs font-bold text-profit" role="status">{actionStatus}</p>}
         </AppCard> : <AppCard><div className="h-72 rounded-card shimmer" /></AppCard>}
         <AppCard><h2 className="text-lg font-bold text-ink">Recent Similar Sales</h2><div className="mt-4 grid gap-3">{fieldScanResult.recentSimilarSales.map((sale) => <div key={sale.id} className="rounded-card border border-line bg-surface-2 p-3"><p className="font-bold text-ink">{sale.itemTitle}</p><p className="text-sm text-muted">${sale.price} / {sale.condition} / {sale.source} / {sale.date}</p><p className="text-xs text-muted">{sale.matchConfidence} match. {sale.notes}</p></div>)}</div></AppCard>
       </div>

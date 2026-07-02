@@ -7,7 +7,7 @@ export const faqs = [
   },
   {
     q: "Does Snagd scrape marketplaces or automate logins?",
-    a: "No. This preview uses user-supplied listings, seeded marketplace data, and planned integration boundaries.",
+    a: "No. Snagd uses listings you provide, clearly identified sample opportunities, and compliant provider integrations.",
   },
   {
     q: "What is a Deal Check?",
@@ -18,12 +18,12 @@ export const faqs = [
     a: "Everything Mode watches for anything profitable in your area based on budget, pickup distance, profit target, and minimum Snagd Score.",
   },
   {
-    q: "Is auth real yet?",
-    a: "No. Login, signup, onboarding, watchlists, and session state use localStorage so the app can be tested while backend services are being connected.",
+    q: "Where is my information stored?",
+    a: "The current mobile build keeps your profile, preferences, watchlists, saved deals, and activity on your device.",
   },
   {
-    q: "Will Vehicle Mode use real APIs later?",
-    a: "The service layer is structured for VIN decode, recalls, market data, vehicle history, comps, maps, notifications, and billing providers.",
+    q: "How do I delete my information?",
+    a: "Open Account and choose Delete local data. Uninstalling Snagd also removes the app's local workspace from your device.",
   },
 ];
 
