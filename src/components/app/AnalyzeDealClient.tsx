@@ -5,6 +5,7 @@ import { AppCard } from "@/components/app/AppCard";
 import { RecommendationBadge, RiskBadge } from "@/components/app/Badges";
 import { currency } from "@/lib/format";
 import { aiScoringService } from "@/lib/services/aiScoringService";
+import { crawlerApiClient } from "@/lib/services/crawlerApiClient";
 import type { DealAnalysisInput, DealAnalysisResult } from "@/types/snagd";
 
 const initialInput: DealAnalysisInput = {
@@ -29,8 +30,16 @@ export function AnalyzeDealClient() {
     event.preventDefault();
     setLoading(true);
     try {
-      const nextResult = await aiScoringService.scoreDeal(input);
-      setResult(nextResult);
+      try {
+        const payload = await crawlerApiClient.analyzeListing({ title: input.title, price: input.askingPrice, url: input.listingUrl, location: input.location, zipCode: input.location, category: input.category, description: input.description, distanceMiles: input.estimatedPickupDistance, minEstimatedProfit: 50, minDealScore: 60 });
+        const analysis = payload.analysis as { estimatedResalePrice?: number; estimatedCosts?: number; estimatedProfit?: number; dealScore?: number; reason?: string; riskFlags?: string[]; suggestedMaxBuyPrice?: number; suggestedSellerMessage?: string };
+        const riskFlags = analysis.riskFlags || [];
+        const score = analysis.dealScore || 0;
+        const resale = analysis.estimatedResalePrice || 0;
+        setResult({ recommendation: score >= 75 && (analysis.estimatedProfit || 0) > 0 ? "BUY" : score >= 50 ? "MAYBE" : "PASS", snagdScore: score, askingPrice: input.askingPrice, estimatedResaleValue: resale, estimatedProfit: analysis.estimatedProfit || 0, suggestedMaxOffer: analysis.suggestedMaxBuyPrice || 0, confidenceLevel: "Medium", riskLevel: riskFlags.length >= 2 ? "High" : riskFlags.length ? "Medium" : "Low", pickupCostEstimate: Math.round((analysis.estimatedCosts || 0) * 0.35), repairCostEstimate: Math.round((analysis.estimatedCosts || 0) * 0.65), timeToSellEstimate: "Verify with local demand", suggestedSellerMessage: analysis.suggestedSellerMessage || "Ask whether the listing is still available and verify condition.", redFlags: riskFlags.length ? riskFlags : ["No major automated risk flags. Verify condition in person."], explanation: analysis.reason || "Scored by the crawler profit engine.", similarSalesCount: 0, underMarketPercent: resale > 0 ? Math.max(0, Math.round(((resale - input.askingPrice) / resale) * 100)) : 0, demand: "Medium", competition: "Medium", similarSales: [] });
+      } catch {
+        setResult(await aiScoringService.scoreDeal(input));
+      }
     } finally {
       setLoading(false);
     }

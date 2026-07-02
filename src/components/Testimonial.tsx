@@ -1,4 +1,4 @@
-﻿import { Container } from "./Container";
+import { Container } from "./Container";
 
 const quotes = [
   {
@@ -9,7 +9,7 @@ const quotes = [
   },
   {
     quote:
-      "The max-offer number alone paid for it. I used to overpay on tools â€” now I walk in knowing my ceiling.",
+      "The max-offer number alone paid for it. I used to overpay on tools - now I walk in knowing my ceiling.",
     name: "Dani R.",
     role: "Tool & electronics reseller / Texas",
   },
@@ -40,10 +40,8 @@ export function Testimonial() {
         ))}
       </div>
       <p className="mt-4 text-center font-mono text-[11px] uppercase tracking-widest text-muted">
-        Illustrative â€” shown to demonstrate the product
+        Illustrative - shown to demonstrate the product
       </p>
     </Container>
   );
 }
-
-

@@ -59,6 +59,33 @@ export type Deal = {
   reasonTags: string[];
   similarSales: SimilarSale[];
   status?: DealStatus;
+  dataOrigin?: "demo" | "crawler" | "provider";
+  imageUrls?: string[];
+  crawlerListingId?: string;
+  riskFlags?: string[];
+  estimatedCosts?: number;
+  suggestedMaxBuyPrice?: number;
+  suggestedSellerMessage?: string;
+};
+
+export type CrawlerSavedSearch = {
+  id: string; userId: string; name: string; zipCode: string; radiusMiles: number; category: string; keywords: string;
+  negativeKeywords: string; minPrice: number; maxPrice: number; minEstimatedProfit: number; minDealScore: number;
+  isActive: boolean; scanIntervalMinutes: number; lastScannedAt: string | null; createdAt: string; updatedAt: string; matchCount?: number;
+};
+
+export type CrawlerListing = {
+  id: string; source: string; externalId?: string | null; sourceUrl: string; title: string; description: string;
+  price: number | null; currency: string; locationText: string; zipCode?: string | null; distanceMiles?: number | null;
+  category: string; imageUrls: string[]; sellerName?: string | null; postedAt?: string | null; scrapedAt: string;
+  savedSearchId: string; estimatedResalePrice: number; estimatedCosts: number; estimatedProfit: number; dealScore: number;
+  reason: string; riskFlags: string[]; status: "new" | "saved" | "ignored" | "contacted" | "bought" | "sold";
+};
+
+export type CrawlerAlert = {
+  id: string; listing_match_id: string; listing_id: string; saved_search_id: string; listing_title: string; source_url: string; image_urls: string;
+  deal_score: number; estimated_profit: number; title: string; body: string;
+  status: "unread" | "read" | "muted" | "sent" | "failed"; created_at: string;
 };
 
 export type Alert = { id: string; type: string; item: string; score: number; profit: string; distance: string; timePosted: string; why: string; severity: "profit" | "amber" | "risk" | "info"; };

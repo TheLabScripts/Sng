@@ -1,9 +1,11 @@
 ﻿"use client";
 
 import Link from "next/link";
+/* eslint-disable @next/next/no-img-element -- crawler image hosts are dynamic in the static export. */
 import { useEffect, useState } from "react";
 import type { Deal, DealStatus } from "@/types/snagd";
 import { readJson, writeJson } from "@/lib/storage/snagdStorage";
+import { crawlerApiClient } from "@/lib/services/crawlerApiClient";
 
 const savedKey = "snagd-saved-deal-ids";
 const statusKey = "snagd-deal-statuses";
@@ -20,6 +22,7 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
 
   const saved = savedIds.includes(deal.id);
   const status = statuses[deal.id] ?? deal.status ?? "New";
+  const detailHref = deal.dataOrigin === "crawler" ? `/app/listing/?id=${encodeURIComponent(deal.crawlerListingId || deal.id)}` : `/app/deal/${deal.id}/`;
 
   function pulse(message: string) {
     setFeedback(message);
@@ -30,6 +33,8 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
     const next = saved ? savedIds.filter((id) => id !== deal.id) : [...savedIds, deal.id];
     setSavedIds(next);
     writeJson(savedKey, next);
+    window.dispatchEvent(new CustomEvent("snagd:saved-deals-changed"));
+    if (deal.dataOrigin === "crawler") void crawlerApiClient.updateListingStatus(deal.crawlerListingId || deal.id, saved ? "new" : "saved").catch(() => undefined);
     pulse(saved ? "Removed from saved" : "Saved deal");
   }
 
@@ -50,6 +55,7 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
   }
 
   function messageSeller() {
+    if (deal.dataOrigin === "crawler") void crawlerApiClient.updateListingStatus(deal.crawlerListingId || deal.id, "contacted").catch(() => undefined);
     if (deal.messageUrl) window.open(deal.messageUrl, "_blank", "noopener,noreferrer");
     else if (deal.listingUrl) window.open(deal.listingUrl, "_blank", "noopener,noreferrer");
     else pulse("This source did not provide a direct message link");
@@ -58,9 +64,10 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
   if (compact) {
     return (
       <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
-        <Link href={`/app/deal/${deal.id}/`} className={`relative block aspect-[1.12] overflow-hidden border-b border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+        <Link href={detailHref} className={`relative block aspect-[1.12] overflow-hidden border-b border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+          {deal.imageUrls?.[0] && <img src={deal.imageUrls[0]} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />}
           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-white">{deal.recommendation === "BUY" ? "STEAL" : deal.recommendation}</span>
-          <button type="button" onClick={(event) => { event.preventDefault(); toggleSaved(); }} className={`absolute right-2 top-2 grid h-8 w-8 place-items-center rounded-full border ${saved ? "border-brand bg-brand text-white" : "border-white/35 bg-black/35 text-white"}`} aria-label={saved ? "Unsave deal" : "Save deal"}>
+          <button type="button" onClick={(event) => { event.preventDefault(); toggleSaved(); }} className={`absolute right-2 top-2 grid h-8 w-8 place-items-center rounded-full border shadow-soft ${saved ? "save-pop border-pass/55 bg-surface/95 text-pass" : "border-white/35 bg-black/35 text-white"}`} aria-label={saved ? "Unsave deal" : "Save deal"}>
             <HeartIcon filled={saved} />
           </button>
         </Link>
@@ -70,7 +77,7 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
             <p className="font-mono text-sm font-bold text-profit">{deal.estimatedProfit}</p>
           </div>
           <p className="mt-1 text-[11px] text-muted">Est. value {deal.estimatedResale}</p>
-          <Link href={`/app/deal/${deal.id}/`} className="mt-2 line-clamp-2 block min-h-[36px] text-sm font-bold leading-tight text-ink">{deal.itemName}</Link>
+          <Link href={detailHref} className="mt-2 line-clamp-2 block min-h-[36px] text-sm font-bold leading-tight text-ink">{deal.itemName}</Link>
           <p className="mt-1 truncate text-[11px] text-muted">{deal.condition} / {deal.distance} away</p>
           <div className="mt-3 flex items-center justify-between gap-2">
             <span className="rounded-full bg-brand/12 px-2 py-1 text-[11px] font-bold text-brand">Score {deal.score}</span>
@@ -85,7 +92,8 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
   return (
     <article className="motion-card overflow-hidden rounded-[18px] border border-line bg-surface shadow-card">
       <div className="flex gap-3 p-3">
-        <Link href={`/app/deal/${deal.id}/`} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+        <Link href={detailHref} className={`relative h-28 w-28 shrink-0 overflow-hidden rounded-[14px] border border-line ${thumbnailClass(deal.thumbnailTone)}`} aria-label={`${deal.itemName} detail`}>
+          {deal.imageUrls?.[0] && <img src={deal.imageUrls[0]} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />}
           <span className="absolute left-2 top-2 rounded-md bg-brand px-2 py-0.5 text-[10px] font-bold text-white">NEW</span>
           <span className="absolute bottom-2 right-2 rounded-full bg-black/55 px-2 py-1 text-[10px] text-white">{deal.distance}</span>
         </Link>
@@ -93,10 +101,10 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
               <p className="truncate text-xs text-muted">{deal.source} / {deal.timePosted}</p>
-              <Link href={`/app/deal/${deal.id}/`} className="mt-1 block text-base font-bold leading-tight text-ink">{deal.itemName}</Link>
+              <Link href={detailHref} className="mt-1 block text-base font-bold leading-tight text-ink">{deal.itemName}</Link>
               <p className="mt-1 text-xs text-muted">{deal.sellerRating ?? "Seller rating unavailable"}</p>
             </div>
-            <button type="button" onClick={toggleSaved} className={`motion-press grid h-9 w-9 place-items-center rounded-full border ${saved ? "border-brand bg-brand text-white save-pop" : "border-line bg-surface-2 text-muted"}`} aria-label={saved ? "Unsave deal" : "Save deal"}>
+            <button type="button" onClick={toggleSaved} className={`motion-press grid h-9 w-9 shrink-0 place-items-center rounded-full border ${saved ? "save-pop border-pass/55 bg-surface text-pass" : "border-line bg-surface-2 text-muted"}`} aria-label={saved ? "Unsave deal" : "Save deal"}>
               <HeartIcon filled={saved} />
             </button>
           </div>
@@ -135,9 +143,10 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
         <Action onClick={shareDeal}>Share</Action>
       </div>
       <div className="grid grid-cols-2 gap-2 px-3 pb-3">
-        <Link href={`/app/deal/${deal.id}/#similar-sales`} className="motion-press rounded-[12px] border border-line bg-surface-2 px-3 py-2.5 text-center text-xs font-bold text-ink">Similar Sales</Link>
-        <Link href={`/app/deal/${deal.id}/#track-outcome`} className="motion-press rounded-[12px] border border-line bg-surface-2 px-3 py-2.5 text-center text-xs font-bold text-ink">Track: {status}</Link>
+        <Link href={`${detailHref}#similar-sales`} className="motion-press rounded-[12px] border border-line bg-surface-2 px-3 py-2.5 text-center text-xs font-bold text-ink">Similar Sales</Link>
+        <Link href={`${detailHref}#track-outcome`} className="motion-press rounded-[12px] border border-line bg-surface-2 px-3 py-2.5 text-center text-xs font-bold text-ink">Track: {status}</Link>
       </div>
+      {deal.dataOrigin === "crawler" && <button type="button" onClick={() => { void crawlerApiClient.updateListingStatus(deal.crawlerListingId || deal.id, "ignored").then(() => pulse("Listing ignored")).catch(() => pulse("Could not update listing")); }} className="mx-3 mb-3 w-[calc(100%_-_1.5rem)] rounded-[12px] border border-line bg-surface-2 px-3 py-2.5 text-xs font-bold text-muted">Ignore listing</button>}
       {feedback && <p className="mx-3 mb-3 rounded-card border border-brand/40 bg-brand/10 px-3 py-2 text-sm text-brand motion-slide">{feedback}</p>}
     </article>
   );

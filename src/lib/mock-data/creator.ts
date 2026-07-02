@@ -2,7 +2,7 @@
 
 export const mockCreatorStats: CreatorStats = {
   creatorCode: "SNAGD-MAYA30",
-  referralLink: "https://snagd.app/join?ref=SNAGD-MAYA30",
+  referralLink: "https://snagd.app/signup/?ref=SNAGD-MAYA30",
   referralClicks: 1842,
   trialSignups: 214,
   paidSubscribers: 68,

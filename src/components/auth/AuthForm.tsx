@@ -1,33 +1,48 @@
 ﻿"use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { SnagdLogo } from "@/components/ui/SnagdLogo";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { crawlerApiClient } from "@/lib/services/crawlerApiClient";
 
 export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const isSignup = mode === "signup";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [creatorCode, setCreatorCode] = useState("");
+  const [referralLocked, setReferralLocked] = useState(false);
 
-  function storeSession(nextPath: string) {
+  useEffect(() => {
+    if (!isSignup) return;
+    const referral = new URLSearchParams(window.location.search).get("ref")?.trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "").slice(0, 64) || "";
+    if (referral) { setCreatorCode(referral); setReferralLocked(true); window.localStorage.setItem("snagd-referral-code", referral); }
+    else setCreatorCode(window.localStorage.getItem("snagd-referral-code") || "");
+  }, [isSignup]);
+
+  async function storeSession(nextPath: string) {
     const profile = {
       name: name.trim() || "Local reseller",
       ...(email.trim() ? { email: email.trim() } : {}),
       plan: "Free",
       isAdmin: false,
+      ...(creatorCode.trim() ? { creatorCode: creatorCode.trim().toUpperCase() } : {}),
     };
     window.localStorage.setItem("snagd-session", JSON.stringify(profile));
+    if (creatorCode.trim()) {
+      window.localStorage.setItem("snagd-referral-code", creatorCode.trim().toUpperCase());
+      try { await crawlerApiClient.claimReferral(creatorCode.trim(), referralLocked ? "referral-link" : "signup-form"); } catch { /* Referral remains stored locally until backend auth is connected. */ }
+    }
     window.location.href = nextPath;
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!isSignup && window.localStorage.getItem("snagd-session")) {
       window.location.href = "/app/";
       return;
     }
-    storeSession(isSignup ? "/onboarding/" : "/app/");
+    await storeSession(isSignup ? "/onboarding/" : "/app/");
   }
 
   return (
@@ -53,6 +68,11 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
                   <input className="field" value={name} onChange={(event) => setName(event.target.value)} autoComplete="name" required />
                 </label>
                 <label className="grid gap-2">
+                  <span className="text-sm font-bold text-ink">Creator code <span className="font-normal text-muted">(optional)</span></span>
+                  <input className="field uppercase" value={creatorCode} onChange={(event) => setCreatorCode(event.target.value.toUpperCase().replace(/[^A-Z0-9_-]/g, ""))} autoComplete="off" readOnly={referralLocked} placeholder="SNAGD-MAYA30" />
+                  <span className="text-xs text-muted">{referralLocked ? "Applied automatically from your creator's referral link." : "Enter the code from the creator who referred you."}</span>
+                </label>
+                <label className="grid gap-2">
                   <span className="text-sm font-bold text-ink">Email <span className="font-normal text-muted">(optional)</span></span>
                   <input className="field" type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" />
                 </label>
@@ -62,7 +82,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             <button className="h-12 rounded-card bg-brand px-5 text-sm font-bold text-white" type="submit">
               {isSignup ? "Continue to setup" : "Continue on this device"}
             </button>
-            {isSignup && <button className="h-12 rounded-card border border-line bg-surface-2 px-5 text-sm font-bold text-ink" type="button" onClick={() => storeSession("/app/")}>Continue as guest</button>}
+            {isSignup && <button className="h-12 rounded-card border border-line bg-surface-2 px-5 text-sm font-bold text-ink" type="button" onClick={() => void storeSession("/app/")}>Continue as guest</button>}
           </form>
 
           <p className="mt-5 text-center text-sm text-muted">

@@ -92,8 +92,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .image-card-blue { background: radial-gradient(circle at 70% 18%, color-mix(in srgb, var(--info) 36%, transparent), transparent 22%), radial-gradient(circle at 25% 70%, color-mix(in srgb, var(--brand) 34%, transparent), transparent 28%), linear-gradient(145deg, color-mix(in srgb, var(--surface-2) 74%, #151a2b), color-mix(in srgb, var(--surface) 74%, #0d111d) 62%, var(--surface-3)); }
 .image-card-vehicle { background: radial-gradient(ellipse at 50% 68%, color-mix(in srgb, var(--info) 18%, transparent), transparent 38%), linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 78%, #171d2d) 0%, color-mix(in srgb, var(--surface) 72%, #0d111d) 100%); }
 .value-meter { background: linear-gradient(90deg, var(--pass), var(--amber) 48%, var(--profit)); }
-.scanner-frame { background: linear-gradient(90deg, var(--brand), var(--info)); animation: scan-line 1.35s ease-in-out infinite alternate; }
-@keyframes scan-line { from { transform: translateY(0); } to { transform: translateY(150px); } }
+.scanner-frame { background: linear-gradient(90deg, transparent, var(--info) 20%, #fff 50%, var(--brand) 80%, transparent); box-shadow: 0 0 14px color-mix(in srgb, var(--info) 72%, transparent); animation: scan-line 1.25s ease-in-out infinite alternate; }
+@keyframes scan-line { from { transform: translateY(0); } to { transform: translateY(116px); } }
 @keyframes field-gradient { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 @keyframes field-orbit { from { transform: translate3d(0, 0, 0) scale(.9); } to { transform: translate3d(-3rem, 4rem, 0) scale(1.15); } }
 @keyframes money-rise { 0% { transform: translateY(18px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }

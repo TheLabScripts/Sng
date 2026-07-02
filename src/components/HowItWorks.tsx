@@ -1,4 +1,4 @@
-﻿import { Section } from "./Section";
+import { Section } from "./Section";
 
 // A real 3-step sequence, so numbered markers actually encode order.
 const steps = [
@@ -10,12 +10,12 @@ const steps = [
   {
     n: "02",
     title: "Get the verdict",
-    body: "Drop in a listing â€” paste the text, a link, or run the Analyzer. Snagd scores it 0â€“100 and calls it: Buy, Maybe, or Pass, with profit and a max offer.",
+    body: "Drop in a listing - paste the text, a link, or run the Analyzer. Snagd scores it 0-100 and calls it: Buy, Maybe, or Pass, with profit and a max offer.",
   },
   {
     n: "03",
     title: "Move before they do",
-    body: "Snagd hands you a suggested offer and a ready-to-send message. You message the seller knowing the numbers â€” instead of guessing and hoping.",
+    body: "Snagd hands you a suggested offer and a ready-to-send message. You message the seller knowing the numbers - instead of guessing and hoping.",
   },
 ];
 
@@ -42,5 +42,3 @@ export function HowItWorks() {
     </Section>
   );
 }
-
-
