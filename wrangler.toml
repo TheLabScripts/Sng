@@ -3,9 +3,7 @@ pages_build_output_dir = "./out"
 compatibility_date = "2026-07-01"
 compatibility_flags = ["nodejs_compat"]
 
-# Add the production D1 database ID after running:
-#   npx wrangler d1 create snagd-production
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "snagd-production"
-# database_id = "replace-with-cloudflare-d1-id"
+[[d1_databases]]
+binding = "DB"
+database_name = "snagd-production"
+database_id = "c98c80bc-9976-4a3c-b647-3fd4e646fa9c"
