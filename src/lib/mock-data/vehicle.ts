@@ -21,7 +21,7 @@ export const mockVehicleVinResult: VehicleVinResult = {
   marketDemand: "High",
   comparableVehicleCount: 18,
   daysToSellEstimate: "10-21 days",
-  aiSummary: "Possible flip if the title is clean, mileage checks out, and inspection does not reveal overheating or major front-end work.",
+  intelligenceSummary: "Possible flip if the title is clean, mileage checks out, and inspection does not reveal overheating or major front-end work.",
   recommendation: "MAYBE",
   savedChecks: 2,
   walkAwayWarnings: [

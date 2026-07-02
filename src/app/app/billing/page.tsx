@@ -2,6 +2,7 @@
 import { AppCard } from "@/components/app/AppCard";
 import { UsageMeter } from "@/components/app/UsageMeter";
 import { addOnPacks, annualPlanCopy, goodPaywalls, mockUsage, pricingPlans } from "@/lib/mock-data";
+import { stripeBillingPlaceholder, stripeIntegrationTodos } from "@/lib/services/stripeBilling";
 
 export default function BillingPage() {
   const remainingChecks = mockUsage.dealChecksLimit - mockUsage.dealChecksUsed;
@@ -54,6 +55,12 @@ export default function BillingPage() {
           <p className="mt-4 text-xs leading-5 text-muted">{annualPlanCopy.note}</p>
         </AppCard>
       </div>
+
+      <AppCard className="mt-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"><div><p className="text-sm font-bold text-brand">Billing connection placeholder</p><h3 className="mt-1 text-lg font-bold text-ink">Subscription record</h3><p className="mt-1 text-sm text-muted">No payment keys or customer secrets are stored in this frontend.</p></div><span className="rounded-full border border-amber/30 bg-amber/10 px-3 py-1 text-xs font-bold text-amber">Customer portal TODO</span></div>
+        <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4"><BillingField label="Customer ID" value={stripeBillingPlaceholder.stripeCustomerId || "Not connected"} /><BillingField label="Subscription ID" value={stripeBillingPlaceholder.subscriptionId || "Not connected"} /><BillingField label="Price ID" value={stripeBillingPlaceholder.priceId || "Environment TODO"} /><BillingField label="Billing interval" value={stripeBillingPlaceholder.billingInterval} /><BillingField label="Plan status" value={stripeBillingPlaceholder.planStatus} /><BillingField label="Renewal date" value={stripeBillingPlaceholder.renewalDate || "Webhook TODO"} /></div>
+        <div className="mt-4 flex flex-wrap gap-2">{stripeIntegrationTodos.map((item) => <span key={item} className="rounded-card border border-line bg-surface-2 px-2.5 py-1 text-xs text-muted">{item}</span>)}</div>
+      </AppCard>
 
       <div className="mt-5 grid items-stretch gap-4 lg:grid-cols-3">
         {pricingPlans.map((plan) => (
@@ -115,6 +122,8 @@ export default function BillingPage() {
     </div>
   );
 }
+
+function BillingField({ label, value }: { label: string; value: string }) { return <div className="rounded-card border border-line bg-surface-2 p-3"><p className="text-[11px] text-muted">{label}</p><p className="mt-1 break-all text-sm font-bold text-ink">{value}</p></div>; }
 
 function PriceBlock({ label, value, sub, savings }: { label: string; value: string; sub: string; savings?: string }) {
   return (
