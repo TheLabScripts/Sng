@@ -1,7 +1,7 @@
 ﻿import { AppCard } from "@/components/app/AppCard";
 
-const plannedAreas = ["Users", "Subscriptions", "Deal checks usage", "Creator codes", "Referrals", "Payouts", "Reported listings", "API usage/costs", "System health", "Feature flags", "Support tools", "Audit logs"];
-const requirements = ["MFA required for production admin access", "Role-based access control", "Server-side authorization on every admin API action", "Audit log every admin change", "No secret keys in frontend bundles", "Rate limit sensitive endpoints", "Separate production and staging environments", "Protect admin with Cloudflare Access or equivalent", "Backup owner account recovery plan"];
+const plannedAreas = ["Users", "Subscriptions", "Stripe customers", "Creator codes", "Referrals", "Commissions", "Payouts", "Deal Check usage", "VIN Check usage", "API usage and costs", "Feature flags", "Reports", "Support tools", "Audit logs"];
+const requirements = ["Cloudflare Access or an equivalent access layer", "MFA required in production", "Server-side admin authorization on every request", "Never trust frontend-only admin flags", "No secrets in frontend bundles", "Audit every admin action", "Verify and protect Stripe webhooks", "Rate-limit sensitive endpoints", "Separate production and staging environments"];
 
 export default function AdminAccessPage() {
   const session = { isAdmin: false };

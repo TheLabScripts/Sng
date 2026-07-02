@@ -39,6 +39,14 @@ export type Deal = {
   risk: RiskLevel;
   source: string;
   category: string;
+  vehicleYear?: number;
+  vehicleMake?: string;
+  vehicleModel?: string;
+  vehicleMileage?: number;
+  cleanTitle?: boolean;
+  vinChecked?: boolean;
+  auctionHistorySignals?: boolean;
+  priceDropped?: boolean;
   condition: string;
   timePosted: string;
   reason: string;
@@ -57,7 +65,7 @@ export type Alert = { id: string; type: string; item: string; score: number; pro
 export type Watchlist = { id: string; name: string; nichePreset: string; everythingMode: boolean; location: string; radius: number; maxPickupDistance: number; category: string; includeKeywords: string; excludeKeywords: string; maxBuyPrice: number; minimumEstimatedProfit: number; minimumSnagdScore: number; conditionPreference: string; alertSpeedPreference: string; notificationMethod: string; producingDeals?: number; hotToday?: boolean; };
 export type PricingPlan = { id: "starter" | "pro" | "power"; name: string; price: number; monthlyPrice: number; annualPrice: number; annualSavings: number; annualLabel: string; summary: string; features: string[]; monthlyLimits: string[]; highlighted?: boolean; badge?: string; trialDays: number; };
 export type UsageSummary = { plan: string; dealChecksUsed: number; dealChecksLimit: number; watchlistsUsed: number; watchlistsLimit: number; everythingMode: boolean; billingCycleEnds: string; vinChecksUsed?: number; vinChecksLimit?: number; };
-export type CreatorStats = { creatorCode: string; referralClicks: number; trialSignups: number; paidSubscribers: number; activeSubscribers: number; monthlyRecurringCommission: number; estimatedPayout: number; conversionRate: number; };
+export type CreatorStats = { creatorCode: string; referralLink: string; referralClicks: number; trialSignups: number; paidSubscribers: number; activeSubscribers: number; monthlyRecurringCommission: number; lifetimeCommission: number; estimatedPayout: number; payoutStatus: string; nextPayoutDate: string; conversionRate: number; };
 export type OnboardingProfile = { preset: string; location: string; searchRadius: number; maxPickupDistance: number; maxBuyPrice: number; minimumProfitTarget: number; minimumSnagdScore: number; alertPreference: string; everythingMode: boolean; automotiveMode?: boolean; defaultFeedCategories?: string[]; };
 export type DealAnalysisInput = { title: string; askingPrice: number; category: string; condition: string; location: string; description: string; listingUrl?: string; estimatedPickupDistance: number; notes?: string; };
 export type DealAnalysisResult = { recommendation: Recommendation; snagdScore: number; askingPrice: number; estimatedResaleValue: number; estimatedProfit: number; suggestedMaxOffer: number; confidenceLevel: ConfidenceLevel; riskLevel: RiskLevel; pickupCostEstimate: number; repairCostEstimate: number; timeToSellEstimate: string; suggestedSellerMessage: string; redFlags: string[]; explanation: string; similarSalesCount: number; underMarketPercent: number; demand: DemandLevel; competition: CompetitionLevel; similarSales: SimilarSale[]; };
@@ -102,7 +110,7 @@ export type VehicleVinResult = {
   marketDemand?: DemandLevel;
   comparableVehicleCount?: number;
   daysToSellEstimate?: string;
-  aiSummary?: string;
+  intelligenceSummary?: string;
   recommendation?: Recommendation;
   savedChecks?: number;
 };

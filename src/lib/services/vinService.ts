@@ -95,7 +95,7 @@ export const vinService: VinService = {
       estimatedFlipProfit: "Add your resale target",
       walkAwayWarnings: ["Verify the physical VIN matches the title.", "Use an approved history provider for title, theft, flood, and odometer checks."],
       riskLevel: recallDetails.length ? "Medium" : "Low",
-      aiSummary: `${vehicle.year} ${vehicle.make} ${vehicle.model} decoded from NHTSA manufacturer data.`,
+      intelligenceSummary: `${vehicle.year} ${vehicle.make} ${vehicle.model} matched to its manufacturer configuration.`,
     };
   },
 

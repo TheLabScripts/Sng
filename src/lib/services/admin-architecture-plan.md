@@ -2,7 +2,7 @@
 
 Admin is intentionally separate from the normal user app. Prefer `admin.yourdomain.com` later, or keep `/admin` only when protected by server-side authorization and an access layer.
 
-Planned panels: users, subscriptions, deal checks usage, creator codes, referrals, payouts, reported listings, API usage/costs, system health, feature flags, support tools, and audit logs.
+Planned panels: users, subscriptions, Stripe customers, creator codes, referrals, commissions, payouts, Deal Check usage, VIN Check usage, API usage/costs, feature flags, reports, support tools, and audit logs.
 
 Security requirements:
 - Require MFA for production admin access.
@@ -11,6 +11,7 @@ Security requirements:
 - Audit log every admin change.
 - Never trust frontend-only admin flags.
 - Never expose secret keys to the frontend.
+- Verify Stripe webhook signatures and keep webhook handlers server-side.
 - Rate limit sensitive endpoints.
 - Separate production and staging environments.
 - Use Cloudflare Access or equivalent in front of admin.

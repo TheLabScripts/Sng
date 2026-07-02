@@ -4,6 +4,7 @@ import { DealCard } from "@/components/app/DealCard";
 import { UsageMeter } from "@/components/app/UsageMeter";
 import { bestDealToday, lifetimeStats, mockAlerts, mockDeals, mockUsage, mockWatchlists, priceAlerts, savedDealSeeds, todaysProfitOpportunities, trendingCategories } from "@/lib/mock-data";
 import { currency } from "@/lib/format";
+import { LocationPreferenceBar } from "@/components/app/LocationPreferenceBar";
 
 const tools = [
   { label: "Analyze Listing", href: "/app/analyze/", copy: "Paste a listing and price-check it" },
@@ -23,8 +24,10 @@ export default function DashboardPage() {
         <p className="text-sm font-bold text-profit">Today&apos;s Profit Opportunities</p>
         <p className="mt-2 font-mono text-5xl font-extrabold tracking-tight text-profit">{currency(todaysProfitOpportunities.total)}</p>
         <p className="mt-2 text-base font-semibold text-ink">in profit opportunities nearby</p>
-        <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs"><Mini value={`${todaysProfitOpportunities.lastHourDeals}`} label="new / hr" /><Mini value={`${todaysProfitOpportunities.highScoreDeals}`} label="AI picks" /><Mini value={`${todaysProfitOpportunities.underMarketDeals}`} label="30%+ under" /></div>
+        <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs"><Mini value={`${todaysProfitOpportunities.lastHourDeals}`} label="new / hr" /><Mini value={`${todaysProfitOpportunities.highScoreDeals}`} label="top picks" /><Mini value={`${todaysProfitOpportunities.underMarketDeals}`} label="30%+ under" /></div>
       </section>
+
+      <LocationPreferenceBar />
 
       <section><div className="mb-3 flex items-center justify-between"><h2 className="text-lg font-bold text-ink">Best Deal Today</h2><span className="text-sm font-bold text-profit">{bestDealToday.estimatedProfit}</span></div><DealCard deal={bestDealToday} /></section>
 

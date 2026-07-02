@@ -32,6 +32,7 @@ export default function AccountPage() {
           <CreatorMetric label="Paid subscribers" value={numberCompact(mockCreatorStats.paidSubscribers)} />
           <CreatorMetric label="Active subscribers" value={numberCompact(mockCreatorStats.activeSubscribers)} />
           <CreatorMetric label="Monthly commission" value={currency(mockCreatorStats.monthlyRecurringCommission)} accent />
+          <CreatorMetric label="Lifetime commission" value={currency(mockCreatorStats.lifetimeCommission)} accent />
           <CreatorMetric label="Estimated payout" value={currency(mockCreatorStats.estimatedPayout)} accent />
           <CreatorMetric label="Conversion rate" value={`${mockCreatorStats.conversionRate}%`} />
         </div>

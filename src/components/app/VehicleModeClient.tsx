@@ -72,21 +72,21 @@ export function VehicleModeClient() {
       <div className="grid content-start gap-4">
         <AppCard>
           <p className="text-sm font-bold text-brand">Vehicle Mode</p>
-          <h1 className="mt-1 text-2xl font-bold text-ink">Fast VIN check</h1>
-          <p className="mt-2 text-sm leading-6 text-muted">Scan a door-jamb or registration barcode, then pull verified vehicle details and safety recalls from NHTSA.</p>
-          <button type="button" onClick={openScanner} className="motion-press mt-5 h-14 w-full rounded-[16px] bg-brand text-base font-extrabold tracking-wide text-white shadow-card">OPEN VIN SCANNER</button>
+          <h1 className="mt-1 text-2xl font-bold text-ink">Vehicle Intelligence</h1>
+          <p className="mt-2 text-sm leading-6 text-muted">Scan a door-jamb barcode to open a Vehicle Intelligence Report with verified specifications and Recall &amp; Risk Signals.</p>
+          <button type="button" onClick={openScanner} className="motion-press mt-5 h-16 w-full rounded-[16px] bg-brand text-lg font-extrabold tracking-[0.12em] text-white shadow-card">SCAN</button>
 
           <div className="mt-4 grid gap-3 rounded-[18px] border border-line bg-surface-2 p-4">
             <div className="flex items-center justify-between gap-3"><p className="text-sm font-bold text-ink">Manual VIN</p><button type="button" onClick={() => setVin(sampleVin)} className="text-xs font-bold text-brand">Use test VIN</button></div>
             <label><span className="text-xs text-muted">17-character VIN</span><input value={vin} maxLength={17} autoCapitalize="characters" autoCorrect="off" spellCheck={false} onChange={(event) => setVin(normalizeVin(event.target.value))} placeholder="1HGCM82633A004352" className="mt-1 w-full rounded-card border border-line bg-surface p-3 font-mono text-sm uppercase text-ink" /></label>
-            <button type="button" disabled={loading} onClick={async () => { await primeScanAudio(); await runLookup(); }} className="motion-press h-11 rounded-card border border-brand/35 bg-brand/10 text-sm font-bold text-brand disabled:cursor-wait disabled:opacity-60">{loading ? "Checking NHTSA..." : "Decode VIN"}</button>
+            <button type="button" disabled={loading} onClick={async () => { await primeScanAudio(); await runLookup(); }} className="motion-press h-11 rounded-card border border-brand/35 bg-brand/10 text-sm font-bold text-brand disabled:cursor-wait disabled:opacity-60">{loading ? "Building report..." : "Manual VIN lookup"}</button>
             {error && <p className="rounded-card border border-pass/30 bg-pass/10 p-3 text-sm text-pass" role="alert">{error}</p>}
           </div>
         </AppCard>
 
         <AppCard>
           <h2 className="text-lg font-bold text-ink">Deal math</h2>
-          <p className="mt-1 text-xs leading-5 text-muted">Free government APIs verify the vehicle and recalls, but they do not provide market prices. Add your target resale to calculate a real ceiling.</p>
+          <p className="mt-1 text-xs leading-5 text-muted">Vehicle details and recall signals are checked first. Add your own target resale and repair budget until Market Value Signals are connected.</p>
           <div className="mt-4 grid grid-cols-2 gap-3">
             <NumberInput label="Mileage" value={mileage} setValue={setMileage} suffix="mi" />
             <NumberInput label="Seller asking" value={asking} setValue={setAsking} money />
@@ -105,15 +105,16 @@ export function VehicleModeClient() {
         {loading ? <LoadingReport /> : result ? (
           <AppCard className="overflow-hidden rounded-[24px] p-0">
             <div className="px-5 pt-6 text-center">
-              <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-profit/30 bg-profit/10 px-3 py-1 text-xs font-bold text-profit"><span className="scan-success grid h-5 w-5 place-items-center rounded-full bg-profit text-white">OK</span>VIN DECODED</div>
+              <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-profit/30 bg-profit/10 px-3 py-1 text-xs font-bold text-profit"><span className="scan-success grid h-5 w-5 place-items-center rounded-full bg-profit text-white">OK</span>VIN INTELLIGENCE READY</div>
+              <p className="mt-3 text-xs font-bold uppercase tracking-[0.14em] text-brand">Vehicle Intelligence Report</p>
               <h2 className="mt-4 text-2xl font-bold text-ink">{result.year} {result.make} {result.model}</h2>
               <p className="mt-1 text-sm font-semibold text-muted">{result.trim || result.bodyClass}</p>
               <p className="mt-3 font-mono text-sm text-muted">{result.vin}</p>
             </div>
 
             <div className="mx-5 mt-5 rounded-[20px] border border-line image-card-vehicle p-5">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-brand">Verified manufacturer data</p>
-              <p className="mt-2 text-sm leading-6 text-ink">{result.aiSummary}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-brand">VIN Intelligence</p>
+              <p className="mt-2 text-sm leading-6 text-ink">{result.intelligenceSummary}</p>
             </div>
 
             <div className="mt-5 grid grid-cols-3 border-y border-line px-5 py-4 text-center">
@@ -136,7 +137,7 @@ export function VehicleModeClient() {
               </section>
 
               <section>
-                <div className="flex items-end justify-between gap-3"><div><h3 className="font-bold text-ink">Safety recalls</h3><p className="mt-1 text-xs text-muted">Matched by year, make, and model through NHTSA.</p></div><span className={`rounded-full px-2.5 py-1 text-xs font-bold ${result.recallDetails?.length ? "bg-amber/15 text-amber" : "bg-profit/15 text-profit"}`}>{result.recallDetails?.length || 0} found</span></div>
+                <div className="flex items-end justify-between gap-3"><div><h3 className="font-bold text-ink">Recall &amp; Risk Signals</h3><p className="mt-1 text-xs text-muted">Matched to this vehicle configuration.</p></div><span className={`rounded-full px-2.5 py-1 text-xs font-bold ${result.recallDetails?.length ? "bg-amber/15 text-amber" : "bg-profit/15 text-profit"}`}>{result.recallDetails?.length || 0} found</span></div>
                 <div className="mt-3 grid gap-2">
                   {result.recallDetails?.length ? result.recallDetails.slice(0, 5).map((recall) => <details key={recall.campaignNumber} className="rounded-card border border-amber/30 bg-amber/5 p-3"><summary className="cursor-pointer text-sm font-bold text-ink">{recall.component}</summary><p className="mt-2 text-xs leading-5 text-muted">Campaign {recall.campaignNumber}. {recall.summary}</p>{recall.remedy && <p className="mt-2 text-xs leading-5 text-muted"><strong className="text-ink">Remedy:</strong> {recall.remedy}</p>}</details>) : <p className="rounded-card border border-profit/30 bg-profit/10 p-3 text-sm text-profit">No campaigns were returned for this year, make, and model.</p>}
                   {(result.recallDetails?.length || 0) > 5 && <p className="text-xs text-muted">Showing 5 of {result.recallDetails?.length} campaigns.</p>}
@@ -144,8 +145,8 @@ export function VehicleModeClient() {
               </section>
 
               <section className="rounded-card border border-line bg-surface-2 p-4">
-                <h3 className="font-bold text-ink">What still needs a provider</h3>
-                <p className="mt-2 text-sm leading-6 text-muted">Market value, title brands, accidents, theft, flood, and odometer history are not included in free NHTSA data. Snagd will never label those checks as complete until a licensed provider is connected.</p>
+                <h3 className="font-bold text-ink">Signals not connected yet</h3>
+                <p className="mt-2 text-sm leading-6 text-muted">Market Value Signals, Title/History Signals, Similar Vehicle Sales, and Auction/Sales History Signals remain unavailable until production data connections are enabled.</p>
               </section>
             </div>
 
@@ -171,6 +172,9 @@ function VinScannerOverlay({ onClose, onDetected }: { onClose: () => void; onDet
   const controlsRef = useRef<{ stop: () => void } | null>(null);
   const detectedRef = useRef(false);
   const [status, setStatus] = useState("Starting rear camera...");
+  const [torchOn, setTorchOn] = useState(false);
+  const [torchAvailable, setTorchAvailable] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     let mounted = true;
@@ -199,7 +203,12 @@ function VinScannerOverlay({ onClose, onDetected }: { onClose: () => void; onDet
             }
           },
         );
-        if (mounted) setStatus("Aim at the door-jamb VIN barcode");
+        const track = (videoRef.current?.srcObject as MediaStream | null)?.getVideoTracks()[0];
+        const capabilities = track?.getCapabilities() as MediaTrackCapabilities & { torch?: boolean };
+        if (mounted) {
+          setTorchAvailable(Boolean(capabilities?.torch));
+          setStatus("Line up the VIN barcode or door-jamb label");
+        }
       } catch {
         if (mounted) setStatus("Camera unavailable. Use HTTPS and allow camera access, or choose a photo below.");
       }
@@ -210,7 +219,24 @@ function VinScannerOverlay({ onClose, onDetected }: { onClose: () => void; onDet
       mounted = false;
       controlsRef.current?.stop();
     };
-  }, [onDetected]);
+  }, [attempt, onDetected]);
+
+  async function toggleTorch() {
+    const track = (videoRef.current?.srcObject as MediaStream | null)?.getVideoTracks()[0];
+    if (!track) return;
+    const next = !torchOn;
+    try {
+      await track.applyConstraints({ advanced: [{ torch: next } as MediaTrackConstraintSet] });
+      setTorchOn(next);
+    } catch { setStatus("Phone light is not available in this browser."); }
+  }
+
+  function tryAgain() {
+    controlsRef.current?.stop();
+    detectedRef.current = false;
+    setStatus("Restarting rear camera...");
+    setAttempt((value) => value + 1);
+  }
 
   async function scanPhoto(file?: File) {
     if (!file) return;
@@ -236,14 +262,16 @@ function VinScannerOverlay({ onClose, onDetected }: { onClose: () => void; onDet
         <div className="flex items-center justify-between"><button onClick={onClose} className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-bold">Close</button><span className="rounded-full border border-white/20 bg-white/10 px-3 py-2 text-xs font-bold">LIVE</span></div>
         <div className="grid flex-1 place-items-center py-5">
           <div className="w-full">
+            <p className="mb-2 text-center text-lg font-bold">Line up the VIN barcode or door-jamb label</p>
             <p className="mb-4 text-center text-sm text-white/70" aria-live="polite">{status}</p>
-            <div className="relative mx-auto aspect-[4/3] w-full overflow-hidden rounded-[24px] border border-white/25 bg-white/[0.04] shadow-card">
+            <div className="relative mx-auto aspect-[3/4] max-h-[62svh] w-full overflow-hidden rounded-[24px] border border-white/25 bg-white/[0.04] shadow-card">
               <video ref={videoRef} autoPlay muted playsInline className="h-full w-full object-cover" />
-              <span className="absolute left-4 top-4 h-10 w-10 rounded-tl-xl border-l-4 border-t-4 border-brand" /><span className="absolute right-4 top-4 h-10 w-10 rounded-tr-xl border-r-4 border-t-4 border-brand" /><span className="absolute bottom-4 left-4 h-10 w-10 rounded-bl-xl border-b-4 border-l-4 border-brand" /><span className="absolute bottom-4 right-4 h-10 w-10 rounded-br-xl border-b-4 border-r-4 border-brand" />
-              <span className="scanner-frame absolute left-8 right-8 top-8 h-0.5 rounded-full" />
+              <div className="absolute inset-x-5 top-1/2 h-36 -translate-y-1/2 rounded-[18px] border-2 border-brand bg-black/10 shadow-[0_0_0_999px_rgba(0,0,0,.28)]"><span className="scanner-frame absolute inset-x-3 top-1/2 h-0.5 rounded-full" /></div>
             </div>
-            <label className="motion-press mt-5 inline-flex h-12 w-full cursor-pointer items-center justify-center rounded-[14px] border border-white/20 bg-white/10 text-sm font-bold text-white">Scan from a photo<input type="file" accept="image/*" capture="environment" className="sr-only" onChange={(event) => void scanPhoto(event.target.files?.[0])} /></label>
-            <button onClick={onClose} className="mt-3 h-11 w-full rounded-[14px] border border-white/20 bg-white/10 text-sm font-bold text-white">Enter VIN manually</button>
+            <div className="mt-4 grid grid-cols-2 gap-2"><button type="button" onClick={() => void toggleTorch()} disabled={!torchAvailable} className="h-11 rounded-[14px] border border-white/20 bg-white/10 text-sm font-bold disabled:opacity-40">{torchOn ? "Light off" : "Phone light"}</button><button type="button" onClick={tryAgain} className="h-11 rounded-[14px] border border-white/20 bg-white/10 text-sm font-bold">Try Again</button></div>
+            <button type="button" onClick={() => onDetected(sampleVin)} className="mt-2 h-11 w-full rounded-[14px] border border-brand/60 bg-brand/20 text-sm font-bold text-white">Simulate successful scan</button>
+            <label className="motion-press mt-2 inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-[14px] border border-white/20 bg-white/10 text-sm font-bold text-white">Scan from a photo<input type="file" accept="image/*" capture="environment" className="sr-only" onChange={(event) => void scanPhoto(event.target.files?.[0])} /></label>
+            <button onClick={onClose} className="mt-2 h-11 w-full rounded-[14px] border border-white/20 bg-white/10 text-sm font-bold text-white">Manual VIN fallback</button>
             <p className="mt-4 text-center text-xs leading-5 text-white/55">Camera access requires HTTPS on your phone. The scanner reads barcodes; plain windshield text still needs manual entry.</p>
           </div>
         </div>
