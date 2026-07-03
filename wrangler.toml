@@ -3,6 +3,15 @@ pages_build_output_dir = "./out"
 compatibility_date = "2026-07-01"
 compatibility_flags = ["nodejs_compat"]
 
+[vars]
+CRAWLER_ENABLED = "true"
+CRAWLER_INTERVAL_MINUTES = "30"
+MOCK_MARKETPLACE_ENABLED = "true"
+MAX_CRAWLER_RESULTS_PER_RUN = "50"
+CRAWLER_REQUEST_TIMEOUT_MS = "12000"
+CRAWLER_USER_AGENT = "SnagdCrawler/1.0 (+https://snagd.app/crawler-policy)"
+ALLOW_DEV_AUTH = "true"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "snagd-production"
